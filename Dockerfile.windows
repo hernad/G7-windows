@@ -17,7 +17,8 @@ RUN cd innosetup && \
     wine "./innounp.exe" -e "is-unicode.exe"
 
 # installer components
-ENV INSTALLER_VERSION 17.03.0-ce
+ENV INSTALLER_VERSION 17.03.1
+
 ENV DOCKER_VERSION 17.03.0-ce
 ENV DOCKER_MACHINE_VERSION 0.10.0
 ENV DOCKER_COMPOSE_VERSION 1.11.2
@@ -25,7 +26,7 @@ ENV BOOT2DOCKER_ISO_VERSION $DOCKER_VERSION
 ENV KITEMATIC_VERSION 0.13.1
 ENV VIRTUALBOX_VERSION 5.1.14
 ENV VIRTUALBOX_REVISION 112924
-ENV GIT_VERSION 2.9.0
+ENV GIT_VERSION 2.12.0
 ENV MIXPANEL_TOKEN c306ae65c33d7d09fe3e546f36493a6e
 
 RUN mkdir /bundle
@@ -45,7 +46,7 @@ RUN curl -fsSL -o docker-machine.exe "https://github.com/docker/machine/releases
 
 RUN curl -fsSL -o docker-compose.exe "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-Windows-x86_64.exe"
 
-RUN curl -fsSL -o boot2docker.iso https://github.com/boot2docker/boot2docker/releases/download/v$BOOT2DOCKER_ISO_VERSION/boot2docker.iso
+# RUN curl -fsSL -o boot2docker.iso https://github.com/boot2docker/boot2docker/releases/download/v$BOOT2DOCKER_ISO_VERSION/boot2docker.iso
 
 RUN curl -fsSL -o kitematic.zip "https://github.com/kitematic/kitematic/releases/download/v$KITEMATIC_VERSION/Kitematic-$KITEMATIC_VERSION-Windows.zip" && \
     mkdir kitematic && \
@@ -59,6 +60,8 @@ RUN wine virtualbox.exe -extract -silent -path . && \
 	  rm virtualbox.exe && \
 	  rm *x86.msi && \
 	  mv *_amd64.msi VirtualBox_amd64.msi
+
+COPY blobs/vs2013_vcredist_x86.exe /bundle/
 
 # Add installer resources
 COPY windows /installer

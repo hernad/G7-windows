@@ -1,9 +1,10 @@
-#define MyAppName "Docker Toolbox"
-#define MyAppPublisher "Docker"
-#define MyAppURL "https://docker.com"
-#define MyAppContact "https://docker.com"
+#define MyAppName "b21 Server Launcher 64bit"
+#define MyAppExe "b21_S4_L6r_x64"
+#define MyAppPublisher "bring.out"
+#define MyAppURL "https://www.bring.out.ba"
+#define MyAppContact "https://www.bring.out.ba"
 
-#define b2dIsoPath "..\bundle\boot2docker.iso"
+;#define b2dIsoPath "..\bundle\boot2docker.iso"
 #define dockerCli "..\bundle\docker.exe"
 #define dockerMachineCli "..\bundle\docker-machine.exe"
 #define dockerComposeCli "..\bundle\docker-compose.exe"
@@ -11,10 +12,11 @@
 #define git "..\bundle\Git.exe"
 #define virtualBoxCommon "..\bundle\common.cab"
 #define virtualBoxMsi "..\bundle\VirtualBox_amd64.msi"
+#define vs2013_vcredist_x86 "..\bundle\vs2013_vcredist_x86.exe"
 
 [Setup]
 AppCopyright={#MyAppPublisher}
-AppId={{FC4417F0-D7F3-48DB-BCE1-F5ED5BAFFD91}
+AppId={{BB4417F0-D7F3-48DC-BCE1-F5ED5BAFFD00}
 AppContact={#MyAppContact}
 AppComments={#MyAppURL}
 AppName={#MyAppName}
@@ -29,7 +31,7 @@ DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName=Docker
 DisableProgramGroupPage=yes
 DisableWelcomePage=no
-OutputBaseFilename=DockerToolbox
+OutputBaseFilename={#MyAppExe}
 Compression=lzma
 SolidCompression=yes
 WizardImageFile=windows-installer-side.bmp
@@ -62,6 +64,7 @@ Name: "DockerCompose"; Description: "Docker Compose for Windows" ; Types: full c
 Name: "VirtualBox"; Description: "VirtualBox"; Types: full custom; Flags: disablenouninstallwarning
 Name: "Kitematic"; Description: "Kitematic for Windows (Alpha)" ; Types: full custom
 Name: "Git"; Description: "Git for Windows"; Types: full custom; Flags: disablenouninstallwarning
+Name: "VCRedist2013"; Description: "VC Redistribution package VS2013"; Types: full custom; Flags: fixed
 
 [Files]
 Source: ".\docker-quickstart-terminal.ico"; DestDir: "{app}"; Flags: ignoreversion
@@ -70,10 +73,12 @@ Source: ".\start.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Docke
 Source: "{#dockerMachineCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerMachine"
 Source: "{#dockerComposeCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerCompose"
 Source: "{#kitematic}\*"; DestDir: "{app}\kitematic"; Flags: ignoreversion recursesubdirs; Components: "Kitematic"
-Source: "{#b2dIsoPath}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerMachine"; AfterInstall: CopyBoot2DockerISO()
+;Source: "{#b2dIsoPath}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerMachine"; AfterInstall: CopyBoot2DockerISO()
 Source: "{#git}"; DestDir: "{app}\installers\git"; DestName: "git.exe"; AfterInstall: RunInstallGit();  Components: "Git"
 Source: "{#virtualBoxCommon}"; DestDir: "{app}\installers\virtualbox"; Components: "VirtualBox"
 Source: "{#virtualBoxMsi}"; DestDir: "{app}\installers\virtualbox"; DestName: "virtualbox.msi"; AfterInstall: RunInstallVirtualBox(); Components: "VirtualBox"
+Source: "{#vs2013_vcredist_x86}";  DestDir: "{app}\installers\vs2013_vcredist_x86"; DestName: "vcredist_x86.exe"; AfterInstall: RunInstallVCRedistX86(); Components: "VCRedist2013"
+
 
 [Icons]
 Name: "{userprograms}\Docker\Kitematic (Alpha)"; WorkingDir: "{app}"; Filename: "{app}\kitematic\Kitematic.exe"; Components: "Kitematic"
@@ -274,6 +279,22 @@ begin
   else begin
     // handle failure if necessary; ResultCode contains the error code
     MsgBox('git install failure', mbInformation, MB_OK);
+  end;
+end;
+
+procedure RunInstallVCRedistX86();
+var
+  ResultCode: Integer;
+begin
+  WizardForm.FilenameLabel.Caption := 'installing VS2013 VC redist x86 package'
+  if Exec(ExpandConstant('{app}\installers\vs2013_vcredist_x86\\vcredist_x86.exe'), '/sp- /verysilent /norestart', '', SW_HIDE, ewWaitUntilTerminated, ResultCode) then
+  begin
+    // handle success if necessary; ResultCode contains the exit code
+    //MsgBox('git installed OK', mbInformation, MB_OK);
+  end
+  else begin
+    // handle failure if necessary; ResultCode contains the error code
+    MsgBox('VC MS2013 x86 install failure', mbInformation, MB_OK);
   end;
 end;
 

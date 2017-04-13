@@ -24,8 +24,11 @@ ENV DOCKER_MACHINE_VERSION 0.10.0
 ENV DOCKER_COMPOSE_VERSION 1.11.2
 ENV BOOT2DOCKER_ISO_VERSION $DOCKER_VERSION
 ENV KITEMATIC_VERSION 0.13.1
-ENV VIRTUALBOX_VERSION 5.1.14
-ENV VIRTUALBOX_REVISION 112924
+
+# 5.0.x works on Windows XP
+ENV VIRTUALBOX_VERSION 5.0.36
+ENV VIRTUALBOX_REVISION 114008
+
 ENV GIT_VERSION 2.12.0
 ENV MIXPANEL_TOKEN c306ae65c33d7d09fe3e546f36493a6e
 
@@ -42,9 +45,12 @@ RUN curl -fsSL -o dockerbins.zip "https://${DOCKER_ENDPOINT}/builds/Windows/x86_
     mv docker/docker.exe . && \
     rm -r docker/ dockerbins.zip
 
-RUN curl -fsSL -o docker-machine.exe "https://github.com/docker/machine/releases/download/v$DOCKER_MACHINE_VERSION/docker-machine-Windows-x86_64.exe"
+#RUN curl -fsSL -o docker-machine.exe "https://github.com/docker/machine/releases/download/v$DOCKER_MACHINE_VERSION/docker-machine-Windows-x86_64.exe"
+#RUN curl -fsSL -o docker-compose.exe "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-Windows-x86_64.exe"
 
-RUN curl -fsSL -o docker-compose.exe "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-Windows-x86_64.exe"
+RUN curl -fsSL -o docker-machine.exe "https://github.com/docker/machine/releases/download/v$DOCKER_MACHINE_VERSION/docker-machine-Windows-i386.exe"
+RUN curl -fsSL -o docker-compose.exe "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-Windows-i386.exe"
+
 
 # RUN curl -fsSL -o boot2docker.iso https://github.com/boot2docker/boot2docker/releases/download/v$BOOT2DOCKER_ISO_VERSION/boot2docker.iso
 
@@ -53,13 +59,22 @@ RUN curl -fsSL -o kitematic.zip "https://github.com/kitematic/kitematic/releases
     cd kitematic && \
     unzip ../kitematic.zip && \
     rm ../kitematic.zip
+
 RUN curl -fsSL -o Git.exe "https://github.com/git-for-windows/git/releases/download/v$GIT_VERSION.windows.1/Git-$GIT_VERSION-64-bit.exe"
 RUN curl -fsSL -o virtualbox.exe "http://download.virtualbox.org/virtualbox/$VIRTUALBOX_VERSION/VirtualBox-$VIRTUALBOX_VERSION-$VIRTUALBOX_REVISION-Win.exe" \
 	&& echo "$(curl -fsSL 'https://virtualbox.org/download/hashes/'"$VIRTUALBOX_VERSION"'/SHA256SUMS' | awk '$2 ~ /-Win.exe$/ { print $1 }') *virtualbox.exe" | sha256sum -c -
+
+#RUN wine virtualbox.exe -extract -silent -path . && \
+#	  rm virtualbox.exe && \
+#	  rm *x86.msi && \
+#	  mv *_amd64.msi VirtualBox_amd64.msi
+
+# nas interesuje instalacija na 32bitnu masinu
 RUN wine virtualbox.exe -extract -silent -path . && \
-	  rm virtualbox.exe && \
-	  rm *x86.msi && \
-	  mv *_amd64.msi VirtualBox_amd64.msi
+    	  rm virtualbox.exe && \
+    	  rm *_amd64.msi && \
+    	  mv *x86.msi VirtualBox.msi
+
 
 COPY blobs/vs2013_vcredist_x86.exe /bundle/
 

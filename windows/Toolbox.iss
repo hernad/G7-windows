@@ -11,7 +11,7 @@
 #define kitematic "..\bundle\kitematic"
 #define git "..\bundle\Git.exe"
 #define virtualBoxCommon "..\bundle\common.cab"
-#define virtualBoxMsi "..\bundle\VirtualBox_amd64.msi"
+#define virtualBoxMsi "..\bundle\VirtualBox.msi"
 #define vs2013_vcredist_x86 "..\bundle\vs2013_vcredist_x86.exe"
 
 [Setup]

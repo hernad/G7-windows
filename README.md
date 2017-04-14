@@ -4,14 +4,13 @@ Docker Toolbox
 [![docker toolbox logo](https://cloud.githubusercontent.com/assets/251292/9585188/2f31d668-4fca-11e5-86c9-826d18cf45fd.png)](https://www.docker.com/toolbox)
 
 The Docker Toolbox installs everything you need to get started with
-Docker on Mac OS X and Windows. It includes the Docker client, Compose,
-Machine, Kitematic, and VirtualBox.
+Docker on Mac OS X and Windows. It includes the Docker client, Machine and VirtualBox.
 
 ## Installation and documentation
 
 Documentation for Mac [is available here](https://docs.docker.com/toolbox/toolbox_install_mac/).
 
-Documentation for Windows [is available here](https://docs.docker.com/toolbox/toolbox_install_windows/). 
+Documentation for Windows [is available here](https://docs.docker.com/toolbox/toolbox_install_windows/).
 
 *Note:* Some Windows and Mac computers may not have VT-X enabled by default. It is required for VirtualBox. To check if VT-X is enabled on Windows follow this guide [here](http://amiduos.com/support/knowledge-base/article/how-can-i-get-to-know-my-processor-supports-virtualization-technology). To enable VT-X on Windows, please see the guide [here](http://www.howtogeek.com/213795/how-to-enable-intel-vt-x-in-your-computers-bios-or-uefi-firmware). To enable VT-X on Intel-based Macs, refer to this Apple guide [here](https://support.apple.com/en-us/HT203296).
 Also note that if the Virtual Machine was created before enabling VT-X it can be necessary to remove and reinstall the VM for Docker Toolbox to work.

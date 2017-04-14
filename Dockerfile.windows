@@ -52,16 +52,15 @@ RUN curl -fsSL -o dockerbins.zip "https://${DOCKER_ENDPOINT}/builds/Windows/x86_
 #RUN curl -fsSL -o docker-compose.exe "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-Windows-x86_64.exe"
 
 RUN curl -fsSL -o docker-machine.exe "https://github.com/docker/machine/releases/download/v$DOCKER_MACHINE_VERSION/docker-machine-Windows-i386.exe"
-RUN curl -fsSL -o docker-compose.exe "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-Windows-i386.exe"
 
 
 # RUN curl -fsSL -o boot2docker.iso https://github.com/boot2docker/boot2docker/releases/download/v$BOOT2DOCKER_ISO_VERSION/boot2docker.iso
 
-RUN curl -fsSL -o kitematic.zip "https://github.com/kitematic/kitematic/releases/download/v$KITEMATIC_VERSION/Kitematic-$KITEMATIC_VERSION-Windows.zip" && \
-    mkdir kitematic && \
-    cd kitematic && \
-    unzip ../kitematic.zip && \
-    rm ../kitematic.zip
+#RUN curl -fsSL -o kitematic.zip "https://github.com/kitematic/kitematic/releases/download/v$KITEMATIC_VERSION/Kitematic-$KITEMATIC_VERSION-Windows.zip" && \
+#    mkdir kitematic && \
+#    cd kitematic && \
+#    unzip ../kitematic.zip && \
+#    rm ../kitematic.zip
 
 #RUN curl -fsSL -o Git.exe "https://github.com/git-for-windows/git/releases/download/v$GIT_VERSION.windows.1/Git-$GIT_VERSION-64-bit.exe"
 RUN curl -fsSL -o Git.exe "https://github.com/git-for-windows/git/releases/download/v$GIT_VERSION.windows.1/Git-$GIT_VERSION-32-bit.exe"

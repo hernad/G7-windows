@@ -2,10 +2,10 @@
 
 set -e
 
-INSTALER_EXE=b21_S4_L6r_x64
+INSTALER_EXE=G7-windows-i386.exe
 
 docker build -t windows-installer -f Dockerfile.windows .
 CONTAINER="$(docker run -d windows-installer)"
 mkdir -p dist
-docker cp "${CONTAINER}":/installer/Output/b21_S4_L6r_x64.exe dist/
+docker cp "${CONTAINER}":/installer/Output/$INSTALER_EXE dist/
 docker rm "${CONTAINER}" 2>/dev/null || true

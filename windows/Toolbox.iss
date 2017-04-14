@@ -1,5 +1,5 @@
-#define MyAppName "b21 Server Launcher 64bit"
-#define MyAppExe "b21_S4_L6r_x64"
+#define MyAppName "G7 greenbox windows 32-bit"
+#define MyAppExe "G7-windows-i386"
 #define MyAppPublisher "bring.out"
 #define MyAppURL "https://www.bring.out.ba"
 #define MyAppContact "https://www.bring.out.ba"

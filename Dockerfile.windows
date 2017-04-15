@@ -17,7 +17,8 @@ RUN cd innosetup && \
     wine "./innounp.exe" -e "is-unicode.exe"
 
 # installer components
-ENV INSTALLER_VERSION 3.6.0
+ENV GREENBOX_VERSION
+ENV INSTALLER_VERSION $GREENBOX_VERSION
 
 ENV DOCKER_VERSION 17.04.0-ce
 #ENV ARCH x86_64
@@ -26,7 +27,7 @@ ENV ARCH i386
 
 ENV DOCKER_MACHINE_VERSION 0.10.0
 #ENV DOCKER_COMPOSE_VERSION 1.11.2
-ENV GREENBOX_ISO_VERSION $INSTALLER_VERSION
+
 #ENV KITEMATIC_VERSION 0.13.1
 
 # 5.0.x works on Windows XP
@@ -59,7 +60,7 @@ RUN curl -fsSL -o dockerbins.zip "https://${DOCKER_ENDPOINT}/builds/Windows/${AR
 RUN curl -fsSL -o docker-machine.exe "https://github.com/docker/machine/releases/download/v$DOCKER_MACHINE_VERSION/docker-machine-Windows-i386.exe"
 
 
-RUN curl -kfsSL -o greenbox.iso https://download.bring.out.ba/greenbox.iso
+RUN curl -kfsSL -o greenbox.iso https://download.bring.out.ba/greenbox-${GREENBOX_VERSION}.iso
 
 
 #RUN curl -fsSL -o kitematic.zip "https://github.com/kitematic/kitematic/releases/download/v$KITEMATIC_VERSION/Kitematic-$KITEMATIC_VERSION-Windows.zip" && \

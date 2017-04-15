@@ -12,10 +12,13 @@ VM=${DOCKER_MACHINE_NAME-greenbox}
 #ako zelimo vec gotovu vm importovati --virtualbox-import-greenbox-vm
 
 GREENBOX_VBOX_PARAMS="  --virtualbox-memory 1024"
-GREENBOX_VBOX_PARAMS+=" --virtualbox-greenbox-url http://download.bring.out.ba/greenbox.iso"
+GREENBOX_VBOX_PARAMS+=" --virtualbox-boot2docker-url http://download.bring.out.ba/greenbox.iso"
 GREENBOX_VBOX_PARAMS+=" --virtualbox-disk-size 99000"
 GREENBOX_VBOX_PARAMS+=" --virtualbox-hostonly-cidr 192.168.97.1/24"
 GREENBOX_VBOX_PARAMS+=" --virtualbox-hostonly-nicpromisc deny"
+
+# docker-machine expects boot2docker.iso:
+ln -s ~/.docker/machine/cache/greenbox.iso ~/.docker/machine/boot2docker.iso
 
 DOCKER_MACHINE=./docker-machine.exe
 

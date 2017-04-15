@@ -1,4 +1,4 @@
-#define MyAppName "G7 greenbox windows 32-bit"
+#define MyAppName "G7_greenbox"
 #define MyAppExe "G7-windows-i386"
 #define MyAppPublisher "bring.out"
 #define MyAppURL "https://www.bring.out.ba"

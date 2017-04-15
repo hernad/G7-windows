@@ -60,7 +60,7 @@ Name: vbox_ndis5; Description: "Install VirtualBox with NDIS5 driver[default NDI
 [Components]
 Name: "Docker"; Description: "Docker Client for Windows" ; Types: full custom; Flags: fixed
 Name: "DockerMachine"; Description: "Docker Machine for Windows" ; Types: full custom; Flags: fixed
-Name: "DockerCompose"; Description: "Docker Compose for Windows" ; Types: full custom
+;Name: "DockerCompose"; Description: "Docker Compose for Windows" ; Types: full custom
 Name: "VirtualBox"; Description: "VirtualBox"; Types: full custom; Flags: disablenouninstallwarning
 ;Name: "Kitematic"; Description: "Kitematic for Windows (Alpha)" ; Types: full custom
 Name: "Git"; Description: "Git for Windows"; Types: full custom; Flags: disablenouninstallwarning
@@ -83,8 +83,8 @@ Source: "{#vs2013_vcredist_x86}";  DestDir: "{app}\installers\vs2013_vcredist_x8
 [Icons]
 ;Name: "{userprograms}\Docker\Kitematic (Alpha)"; WorkingDir: "{app}"; Filename: "{app}\kitematic\Kitematic.exe"; Components: "Kitematic"
 ;Name: "{commondesktop}\Kitematic (Alpha)"; WorkingDir: "{app}"; Filename: "{app}\kitematic\Kitematic.exe"; Tasks: desktopicon; Components: "Kitematic"
-Name: "{userprograms}\Docker\Docker Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Components: "Docker"
-Name: "{commondesktop}\Docker Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Tasks: desktopicon; Components: "Docker"
+Name: "{userprograms}\Docker\GreenBox Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Components: "Docker"
+Name: "{commondesktop}\GreenBox Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Tasks: desktopicon; Components: "Docker"
 
 [UninstallRun]
 Filename: "{app}\docker-machine.exe"; Parameters: "rm -f default"
@@ -99,9 +99,6 @@ Root: HKCU; Subkey: "Environment"; ValueType:string; ValueName:"DOCKER_TOOLBOX_I
 #include "base64.iss"
 #include "guid.iss"
 
-var
-  TrackingDisabled: Boolean;
-  TrackingCheckBox: TNewCheckBox;
 
 function uuid(): String;
 var
@@ -142,30 +139,11 @@ begin
   end;
 end;
 
-procedure TrackEventWithProperties(name: String; properties: String);
-var
-  payload: String;
-  WinHttpReq: Variant;
-begin
-  if TrackingDisabled or WizardSilent() then
-    exit;
 
-  if Length(properties) > 0 then
-    properties := ', ' + properties;
-
-  try
-    payload := Encode64(Format(ExpandConstant('{{"event": "%s", "properties": {{"token": "{#MixpanelToken}", "distinct_id": "%s", "os": "win32", "os version": "%s", "version": "{#MyAppVersion}" %s}}'), [name, uuid(), WindowsVersionString(), properties]));
-    WinHttpReq := CreateOleObject('WinHttp.WinHttpRequest.5.1');
-    WinHttpReq.Open('POST', 'https://api.mixpanel.com/track/?data=' + payload, false);
-    WinHttpReq.SetRequestHeader('Content-Type', 'application/json');
-    WinHttpReq.Send('');
-  except
-  end;
-end;
 
 procedure TrackEvent(name: String);
 begin
-  TrackEventWithProperties(name, '');
+  //TrackEventWithProperties(name, '');
 end;
 
 function NeedToInstallVirtualBox(): Boolean;
@@ -195,33 +173,11 @@ end;
 procedure InitializeWizard;
 var
   WelcomePage: TWizardPage;
-  TrackingLabel: TLabel;
 begin
 
   WelcomePage := PageFromID(wpWelcome)
 
   WizardForm.WelcomeLabel2.AutoSize := True;
-
-  TrackingCheckBox := TNewCheckBox.Create(WizardForm);
-  TrackingCheckBox.Top := WizardForm.WelcomeLabel2.Top + WizardForm.WelcomeLabel2.Height + 10;
-  TrackingCheckBox.Left := WizardForm.WelcomeLabel2.Left;
-  TrackingCheckBox.Width := WizardForm.WelcomeLabel2.Width;
-  TrackingCheckBox.Height := 28;
-  TrackingCheckBox.Caption := 'Help Docker improve Toolbox.';
-  TrackingCheckBox.Checked := True;
-  TrackingCheckBox.Parent := WelcomePage.Surface;
-
-  TrackingLabel := TLabel.Create(WizardForm);
-  TrackingLabel.Parent := WelcomePage.Surface;
-  TrackingLabel.Font := WizardForm.WelcomeLabel2.Font;
-  TrackingLabel.Font.Color := clGray;
-  TrackingLabel.Caption := 'This collects anonymous data to help us detect installation problems and improve the overall experience. We only use it to aggregate statistics and will never share it with third parties.';
-  TrackingLabel.WordWrap := True;
-  TrackingLabel.Visible := True;
-  TrackingLabel.Left := WizardForm.WelcomeLabel2.Left;
-  TrackingLabel.Width := WizardForm.WelcomeLabel2.Width;
-  TrackingLabel.Top := TrackingCheckBox.Top + TrackingCheckBox.Height + 5;
-  TrackingLabel.Height := 100;
 
     // Don't do this until we can compare versions
     // Wizardform.ComponentsList.Checked[3] := NeedToInstallVirtualBox();
@@ -238,16 +194,8 @@ end;
 function NextButtonClick(CurPageID: Integer): Boolean;
 begin
   if CurPageID = wpWelcome then begin
-      if TrackingCheckBox.Checked then begin
-        TrackEventWithProperties('Continued from Overview', '"Tracking Enabled": "Yes"');
-        TrackingDisabled := False;
-        DeleteFile(ExpandConstant('{userappdata}\..\.docker\machine\no-error-report'));
-      end else begin
-        TrackEventWithProperties('Continued from Overview', '"Tracking Enabled": "No"');
-        TrackingDisabled := True;
-        CreateDir(ExpandConstant('{userappdata}\..\.docker\machine'));
-        SaveStringToFile(ExpandConstant('{userappdata}\..\.docker\machine\no-error-report'), '', False);
-      end;
+      CreateDir(ExpandConstant('{userappdata}\..\.docker\machine'));
+      SaveStringToFile(ExpandConstant('{userappdata}\..\.docker\machine\no-error-report'), '', False);
   end;
   Result := True
 end;

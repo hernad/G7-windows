@@ -20,8 +20,12 @@ RUN cd innosetup && \
 ENV INSTALLER_VERSION 3.6.0
 
 ENV DOCKER_VERSION 17.04.0-ce
+#ENV ARCH x86_64
+ENV ARCH i386
+
+
 ENV DOCKER_MACHINE_VERSION 0.10.0
-ENV DOCKER_COMPOSE_VERSION 1.11.2
+#ENV DOCKER_COMPOSE_VERSION 1.11.2
 ENV GREENBOX_ISO_VERSION $INSTALLER_VERSION
 #ENV KITEMATIC_VERSION 0.13.1
 
@@ -32,8 +36,9 @@ ENV VIRTUALBOX_REVISION 114008
 #ENV GIT_VERSION 2.12.0
 # Git 2.10.0 is the last version compatible with Windows XP
 ENV GIT_VERSION 2.10.0
+ENV GIT_ARCH 32
 
-ENV MIXPANEL_TOKEN c306ae65c33d7d09fe3e546f36493a6e
+#ENV MIXPANEL_TOKEN c316ae65c33d7d09ff3e546f36493a70
 
 RUN mkdir /bundle
 
@@ -43,7 +48,7 @@ WORKDIR /bundle
 # releases.
 ENV DOCKER_ENDPOINT get.docker.com
 
-RUN curl -fsSL -o dockerbins.zip "https://${DOCKER_ENDPOINT}/builds/Windows/x86_64/docker-${DOCKER_VERSION}.zip" && \
+RUN curl -fsSL -o dockerbins.zip "https://${DOCKER_ENDPOINT}/builds/Windows/${ARCH}/docker-${DOCKER_VERSION}.zip" && \
     unzip dockerbins.zip && \
     mv docker/docker.exe . && \
     rm -r docker/ dockerbins.zip
@@ -64,7 +69,7 @@ RUN curl -kfsSL -o greenbox.iso https://download.bring.out.ba/greenbox.iso
 #    rm ../kitematic.zip
 
 #RUN curl -fsSL -o Git.exe "https://github.com/git-for-windows/git/releases/download/v$GIT_VERSION.windows.1/Git-$GIT_VERSION-64-bit.exe"
-RUN curl -fsSL -o Git.exe "https://github.com/git-for-windows/git/releases/download/v$GIT_VERSION.windows.1/Git-$GIT_VERSION-32-bit.exe"
+RUN curl -fsSL -o Git.exe "https://github.com/git-for-windows/git/releases/download/v$GIT_VERSION.windows.1/Git-$GIT_VERSION-${GIT_ARCH}-bit.exe"
 
 RUN curl -fsSL -o virtualbox.exe "http://download.virtualbox.org/virtualbox/$VIRTUALBOX_VERSION/VirtualBox-$VIRTUALBOX_VERSION-$VIRTUALBOX_REVISION-Win.exe" \
 	&& echo "$(curl -fsSL 'https://virtualbox.org/download/hashes/'"$VIRTUALBOX_VERSION"'/SHA256SUMS' | awk '$2 ~ /-Win.exe$/ { print $1 }') *virtualbox.exe" | sha256sum -c -
@@ -88,4 +93,4 @@ COPY windows /installer
 
 WORKDIR /installer
 RUN rm -rf /tmp/.wine-0/
-RUN wine ../innosetup/ISCC.exe Toolbox.iss /DMyAppVersion=$INSTALLER_VERSION /DMixpanelToken=$MIXPANEL_TOKEN
+RUN wine ../innosetup/ISCC.exe Toolbox.iss /DMyAppVersion=$INSTALLER_VERSION

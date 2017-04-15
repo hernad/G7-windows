@@ -22,7 +22,7 @@
 
 - (void) willEnterPane:(InstallerSectionDirection)dir {
     BOOL kitematicInstalled = [[NSFileManager defaultManager] fileExistsAtPath:@"/Applications/Docker/Kitematic (Beta).app"];
-    BOOL quickstartInstalled = [[NSFileManager defaultManager] fileExistsAtPath:@"/Applications/Docker/Docker Quickstart Terminal.app"];
+    BOOL quickstartInstalled = [[NSFileManager defaultManager] fileExistsAtPath:@"/Applications/Docker/GreenBox Quickstart Terminal.app"];
     
     self.kitematicImageView.image = [[NSImage alloc] initWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"kitematic" ofType:@"png"]];
     self.quickstartImageView.image = [[NSImage alloc] initWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"quickstart" ofType:@"png"]];
@@ -52,7 +52,7 @@
     [Mixpanel trackEvent:@"Installer Finished" forPane:self withProperties:[[NSDictionary alloc] initWithObjectsAndKeys:@"Quickstart Terminal", @"action", nil]];
     NSTask *task = [[NSTask alloc] init];
     task.launchPath = @"/usr/bin/open";
-    task.arguments = @[@"/Applications/Docker/Docker Quickstart Terminal.app"];
+    task.arguments = @[@"/Applications/Docker/GreenBox Quickstart Terminal.app"];
     [task launch];
 }
 

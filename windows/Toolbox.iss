@@ -85,6 +85,7 @@ Source: "{#virtualBoxMsi}"; DestDir: "{app}\installers\virtualbox"; DestName: "v
 ;Name: "{commondesktop}\Kitematic (Alpha)"; WorkingDir: "{app}"; Filename: "{app}\kitematic\Kitematic.exe"; Tasks: desktopicon; Components: "Kitematic"
 Name: "{userprograms}\Docker\GreenBox Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Components: "Docker"
 Name: "{commondesktop}\GreenBox Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Tasks: desktopicon; Components: "Docker"
+Name: "{commondesktop}\GreenBox git bash"; WorkingDir: "{app}"; Filename: "{pf}\Git\git-bash.exe"; Parameters: ""; IconFilename: "{app}/toolbox.ico"; Tasks: desktopicon; Components: "Docker"
 
 [UninstallRun]
 Filename: "{app}\docker-machine.exe"; Parameters: "rm -f default"
@@ -179,7 +180,7 @@ begin
     //1 Name: "DockerMachine";
     //2 Name: "VirtualBox";
     //3 Name: "Git";
-    //4 Name: "VCRedist2013";
+
 
     // Don't do this until we can compare versions
     // Wizardform.ComponentsList.Checked[2] := NeedToInstallVirtualBox();

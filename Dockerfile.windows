@@ -17,7 +17,7 @@ RUN cd innosetup && \
     wine "./innounp.exe" -e "is-unicode.exe"
 
 # installer components
-ENV GREENBOX_VERSION
+ENV GREENBOX_VERSION 3.6.0
 ENV INSTALLER_VERSION $GREENBOX_VERSION
 
 ENV DOCKER_VERSION 17.04.0-ce

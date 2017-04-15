@@ -187,7 +187,7 @@ end;
 
 function InitializeSetup(): boolean;
 begin
-  TrackEvent('Installer Started');
+  //TrackEvent('Installer Started');
   Result := True;
 end;
 
@@ -238,7 +238,7 @@ begin
   if Exec(ExpandConstant('{app}\installers\vs2013_vcredist_x86\\vcredist_x86.exe'), '/sp- /verysilent /norestart', '', SW_HIDE, ewWaitUntilTerminated, ResultCode) then
   begin
     // handle success if necessary; ResultCode contains the exit code
-    //MsgBox('git installed OK', mbInformation, MB_OK);
+    //MsgBox('vcredist OK', mbInformation, MB_OK);
   end
   else begin
     // handle failure if necessary; ResultCode contains the error code

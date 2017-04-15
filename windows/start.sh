@@ -5,17 +5,17 @@ trap '[ "$?" -eq 0 ] || read -p "Looks like something went wrong in step ´$STEP
 # TODO: I'm sure this is not very robust.  But, it is needed for now to ensure
 # that binaries provided by G7_greenbox over-ride binaries provided by
 # Docker for Windows when launching using the Quickstart.
-export PATH="/c/Program Files/G7_greenbox:$PATH"
+export PATH="`cygpath $PROGRAMFILES`/G7_greenbox:$PATH"
 # default virtualbox name: greenbox
 VM=${DOCKER_MACHINE_NAME-greenbox}
 
-#ako zelimo vec gotovu vm importovati --virtualbox-import-boot2docker-vm
+#ako zelimo vec gotovu vm importovati --virtualbox-import-greenbox-vm
 
 GREENBOX_VBOX_PARAMS="  --virtualbox-memory 1024"
-GREENBOX_VBOX_PARAMS+=" --virtualbox-boot2docker-url http://download.bring.out.ba/greenbox.iso"
-GREENBOX_VBOX_PARAMS+=" --virtualbox-disk-size \"99000\""
-GREENBOX_VBOX_PARAMS+=" --virtualbox-hostonly-cidr \"192.168.97.1/24\""
-GREENBOX_VBOX_PARAMS+=" --virtualbox-hostonly-nicpromisc \"deny\""
+GREENBOX_VBOX_PARAMS+=" --virtualbox-greenbox-url http://download.bring.out.ba/greenbox.iso"
+GREENBOX_VBOX_PARAMS+=" --virtualbox-disk-size 99000"
+GREENBOX_VBOX_PARAMS+=" --virtualbox-hostonly-cidr 192.168.97.1/24"
+GREENBOX_VBOX_PARAMS+=" --virtualbox-hostonly-nicpromisc deny"
 
 DOCKER_MACHINE=./docker-machine.exe
 

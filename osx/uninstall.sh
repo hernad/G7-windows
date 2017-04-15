@@ -25,13 +25,13 @@ rm -f /usr/local/bin/docker-machine
 rm -r /usr/local/bin/docker-machine-driver*
 rm -f /usr/local/bin/docker-compose
 
-echo "Removing boot2docker.iso"
-rm -rf /usr/local/share/boot2docker
+echo "Removing greenbox.iso"
+rm -rf /usr/local/share/greenbox
 
 echo "Forget packages"
 pkgutil --forget io.docker.pkg.docker
 pkgutil --forget io.docker.pkg.dockercompose
 pkgutil --forget io.docker.pkg.dockermachine
-pkgutil --forget io.boot2dockeriso.pkg.boot2dockeriso
+pkgutil --forget io.greenboxiso.pkg.greenboxiso
 
 echo "All Done!"

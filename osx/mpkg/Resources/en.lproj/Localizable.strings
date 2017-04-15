@@ -9,8 +9,8 @@
 'choiceDockerComposeCLI_title' = 'Docker Compose %DOCKERCOMPOSE_VERSION%';
 'choiceDockerComposeCLI_msg' = 'Installs the Docker Compose binary into /usr/local/bin/';
 
-'choiceBoot2DockerISO_title' = 'Boot2Docker ISO %BOOT2DOCKER_ISO_VERSION%';
-'choiceBoot2DockerISO_msg' = 'Installs the boot2docker.iso into /usr/local/share/';
+'choiceGreenboxISO_title' = 'Boot2Docker ISO %BOOT2DOCKER_ISO_VERSION%';
+'choiceGreenboxISO_msg' = 'Installs the greenbox.iso into /usr/local/share/';
 
 'choiceDockerQuickstartTerminalAPP_title' = 'GreenBox Quickstart Terminal';
 'choiceDockerQuickstartTerminalAPP_msg' = 'Installs the GreenBox Quickstart Terminal application into /Applications/Docker/';

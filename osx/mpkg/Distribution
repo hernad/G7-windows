@@ -11,7 +11,7 @@
         <line choice="choiceDockerQuickstartTerminalAPP"/>
         <line choice="choiceKitematicAPP"/>
         <line choice="choiceVBox"/>
-        <line choice="choiceBoot2DockerISO"/>
+        <line choice="choiceGreenboxISO"/>
     </choices-outline>
     <choice id="choiceDockerCLI" title="choiceDockerCLI_title" description="choiceDockerCLI_msg" start_enabled="false" start_selected="true" start_visible="true">
         <pkg-ref id="io.docker.pkg.docker"/>
@@ -55,11 +55,11 @@
     <pkg-ref id="org.virtualbox.pkg.virtualboxcli">
         <bundle-version/>
     </pkg-ref>
-    <choice id="choiceBoot2DockerISO" title="choiceBoot2DockerISO_title" description="choiceBoot2DockerISO_msg" start_selected="true" start_enabled="true" start_visible="false">
-        <pkg-ref id="io.boot2dockeriso.pkg.boot2dockeriso"/>
+    <choice id="choiceGreenboxISO" title="choiceGreenboxISO_title" description="choiceGreenboxISO_msg" start_selected="true" start_enabled="true" start_visible="false">
+        <pkg-ref id="io.greenboxiso.pkg.greenboxiso"/>
     </choice>
-    <pkg-ref id="io.boot2dockeriso.pkg.boot2dockeriso" auth="Root" version="%BOOT2DOCKER_ISO_VERSION%" installKBytes="%BOOT2DOCKER_ISO_INSTALL_KBYTES%">#boot2dockeriso.pkg</pkg-ref>
-    <pkg-ref id="io.boot2dockeriso.pkg.boot2dockeriso">
+    <pkg-ref id="io.greenboxiso.pkg.greenboxiso" auth="Root" version="%BOOT2DOCKER_ISO_VERSION%" installKBytes="%BOOT2DOCKER_ISO_INSTALL_KBYTES%">#greenboxiso.pkg</pkg-ref>
+    <pkg-ref id="io.greenboxiso.pkg.greenboxiso">
         <bundle-version/>
     </pkg-ref>
     <choice id="choiceDockerQuickstartTerminalAPP" title="choiceDockerQuickstartTerminalAPP_title" description="choiceDockerQuickstartTerminalAPP_msg" start_selected="true" start_enabled="true" start_visible="true">

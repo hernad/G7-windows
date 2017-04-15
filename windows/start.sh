@@ -6,7 +6,15 @@ trap '[ "$?" -eq 0 ] || read -p "Looks like something went wrong in step ´$STEP
 # that binaries provided by G7_greenbox over-ride binaries provided by
 # Docker for Windows when launching using the Quickstart.
 export PATH="/c/Program Files/G7_greenbox:$PATH"
-VM=${DOCKER_MACHINE_NAME-default}
+# default virtualbox name: greenbox
+VM=${DOCKER_MACHINE_NAME-greenbox}
+
+GREENBOX_VBOX_PARAMS="  --virtualbox-boot2docker-vm greenbox"
+GREENBOX_VBOX_PARAMS+=" --virtualbox-boot2docker-url http://download.bring.out.ba/greenbox.iso"
+GREENBOX_VBOX_PARAMS+=" --virtualbox-disk-size \"99000\""
+GREENBOX_VBOX_PARAMS+=" --virtualbox-hostonly-cidr \"192.168.97.1/24\""
+GREENBOX_VBOX_PARAMS+=" --virtualbox-hostonly-nicpromisc \"deny\""
+
 DOCKER_MACHINE=./docker-machine.exe
 
 STEP="Looking for vboxmanage.exe"
@@ -57,7 +65,7 @@ if [ $VM_EXISTS_CODE -eq 1 ]; then
   if [ "${NO_PROXY}" ]; then
     PROXY_ENV="$PROXY_ENV --engine-env NO_PROXY=$NO_PROXY"
   fi
-  "${DOCKER_MACHINE}" create -d virtualbox $PROXY_ENV "${VM}"
+  "${DOCKER_MACHINE}" create -d virtualbox $PROXY_ENV $GREENBOX_VBOX_PARAMS "${VM}"
 fi
 
 STEP="Checking status on $VM"

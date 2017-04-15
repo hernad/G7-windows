@@ -9,7 +9,9 @@ export PATH="/c/Program Files/G7_greenbox:$PATH"
 # default virtualbox name: greenbox
 VM=${DOCKER_MACHINE_NAME-greenbox}
 
-GREENBOX_VBOX_PARAMS="  --virtualbox-boot2docker-vm greenbox"
+#ako zelimo vec gotovu vm importovati --virtualbox-import-boot2docker-vm
+
+GREENBOX_VBOX_PARAMS="  --virtualbox-memory 1024"
 GREENBOX_VBOX_PARAMS+=" --virtualbox-boot2docker-url http://download.bring.out.ba/greenbox.iso"
 GREENBOX_VBOX_PARAMS+=" --virtualbox-disk-size \"99000\""
 GREENBOX_VBOX_PARAMS+=" --virtualbox-hostonly-cidr \"192.168.97.1/24\""

@@ -283,7 +283,7 @@ function UpgradeVM() : Boolean;
 var
   ResultCode: Integer;
 begin
-  WizardForm.StatusLabel.Caption := 'Upgrading Docker Toolbox VM...'
+  WizardForm.StatusLabel.Caption := 'Upgrading G7_greenbox VM...'
   ExecAsOriginalUser(ExpandConstant('{app}\docker-machine.exe'), 'stop default', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
   if (ResultCode = 0) or (ResultCode = 1) then
   begin

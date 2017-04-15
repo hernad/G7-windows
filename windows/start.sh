@@ -3,9 +3,9 @@
 trap '[ "$?" -eq 0 ] || read -p "Looks like something went wrong in step ´$STEP´... Press any key to continue..."' EXIT
 
 # TODO: I'm sure this is not very robust.  But, it is needed for now to ensure
-# that binaries provided by Docker Toolbox over-ride binaries provided by
+# that binaries provided by G7_greenbox over-ride binaries provided by
 # Docker for Windows when launching using the Quickstart.
-export PATH="/c/Program Files/Docker Toolbox:$PATH"
+export PATH="/c/Program Files/G7_greenbox:$PATH"
 VM=${DOCKER_MACHINE_NAME-default}
 DOCKER_MACHINE=./docker-machine.exe
 

@@ -1,4 +1,4 @@
-'docker_title' = 'Docker Toolbox';
+'docker_title' = 'G7_greenbox';
 
 'choiceDockerCLI_title' = 'Docker Client %DOCKER_VERSION%';
 'choiceDockerCLI_msg' = 'Installs the Docker Client for Mac OS X into /usr/local/bin/';

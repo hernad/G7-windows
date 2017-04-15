@@ -175,10 +175,16 @@ begin
 
   WizardForm.WelcomeLabel2.AutoSize := True;
 
+    //0 Name: "Docker";
+    //1 Name: "DockerMachine";
+    //2 Name: "VirtualBox";
+    //3 Name: "Git";
+    //4 Name: "VCRedist2013";
+
     // Don't do this until we can compare versions
-    // Wizardform.ComponentsList.Checked[3] := NeedToInstallVirtualBox();
-    Wizardform.ComponentsList.ItemEnabled[3] := not NeedToInstallVirtualBox();
-    Wizardform.ComponentsList.Checked[5] := NeedToInstallGit();
+    // Wizardform.ComponentsList.Checked[2] := NeedToInstallVirtualBox();
+    Wizardform.ComponentsList.ItemEnabled[2] := not NeedToInstallVirtualBox();
+    Wizardform.ComponentsList.Checked[3] := NeedToInstallGit();
 end;
 
 function InitializeSetup(): boolean;

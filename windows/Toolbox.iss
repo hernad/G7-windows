@@ -4,7 +4,7 @@
 #define MyAppURL "https://www.bring.out.ba"
 #define MyAppContact "https://www.bring.out.ba"
 
-;#define b2dIsoPath "..\bundle\boot2docker.iso"
+#define greenboxIsoPath "..\bundle\greenbox.iso"
 #define dockerCli "..\bundle\docker.exe"
 #define dockerMachineCli "..\bundle\docker-machine.exe"
 ;#define dockerComposeCli "..\bundle\docker-compose.exe"
@@ -54,7 +54,7 @@ Filename: "{win}\explorer.exe"; Parameters: "{userprograms}\Docker\"; Flags: pos
 [Tasks]
 Name: desktopicon; Description: "{cm:CreateDesktopIcon}"
 Name: modifypath; Description: "Add docker binaries to &PATH"
-Name: upgradevm; Description: "Upgrade Boot2Docker VM"
+Name: upgradevm; Description: "Upgrade greenbox VM"
 Name: vbox_ndis5; Description: "Install VirtualBox with NDIS5 driver[default NDIS6]"; Components: VirtualBox; Flags: unchecked
 
 [Components]
@@ -73,7 +73,7 @@ Source: ".\start.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Docke
 Source: "{#dockerMachineCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerMachine"
 ;Source: "{#dockerComposeCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerCompose"
 ;Source: "{#kitematic}\*"; DestDir: "{app}\kitematic"; Flags: ignoreversion recursesubdirs; Components: "Kitematic"
-;Source: "{#b2dIsoPath}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerMachine"; AfterInstall: CopyBoot2DockerISO()
+Source: "{#greenboxIsoPath}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerMachine"; AfterInstall: CopyGreenboxISO()
 Source: "{#git}"; DestDir: "{app}\installers\git"; DestName: "git.exe"; AfterInstall: RunInstallGit();  Components: "Git"
 Source: "{#virtualBoxCommon}"; DestDir: "{app}\installers\virtualbox"; Components: "VirtualBox"
 Source: "{#virtualBoxMsi}"; DestDir: "{app}\installers\virtualbox"; DestName: "virtualbox.msi"; AfterInstall: RunInstallVirtualBox(); Components: "VirtualBox"
@@ -83,8 +83,8 @@ Source: "{#vs2013_vcredist_x86}";  DestDir: "{app}\installers\vs2013_vcredist_x8
 [Icons]
 ;Name: "{userprograms}\Docker\Kitematic (Alpha)"; WorkingDir: "{app}"; Filename: "{app}\kitematic\Kitematic.exe"; Components: "Kitematic"
 ;Name: "{commondesktop}\Kitematic (Alpha)"; WorkingDir: "{app}"; Filename: "{app}\kitematic\Kitematic.exe"; Tasks: desktopicon; Components: "Kitematic"
-Name: "{userprograms}\Docker\Docker Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf64}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Components: "Docker"
-Name: "{commondesktop}\Docker Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf64}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Tasks: desktopicon; Components: "Docker"
+Name: "{userprograms}\Docker\Docker Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Components: "Docker"
+Name: "{commondesktop}\Docker Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Tasks: desktopicon; Components: "Docker"
 
 [UninstallRun]
 Filename: "{app}\docker-machine.exe"; Parameters: "rm -f default"
@@ -298,12 +298,12 @@ begin
   end;
 end;
 
-procedure CopyBoot2DockerISO();
+procedure CopyGreenboxISO();
 begin
-  WizardForm.FilenameLabel.Caption := 'copying boot2docker iso'
+  WizardForm.FilenameLabel.Caption := 'copying greenbox iso'
   if not ForceDirectories(ExpandConstant('{userappdata}\..\.docker\machine\cache')) then
       MsgBox('Failed to create docker machine cache dir', mbError, MB_OK);
-  if not FileCopy(ExpandConstant('{app}\boot2docker.iso'), ExpandConstant('{userappdata}\..\.docker\machine\cache\boot2docker.iso'), false) then
+  if not FileCopy(ExpandConstant('{app}\greenbox.iso'), ExpandConstant('{userappdata}\..\.docker\machine\cache\greenbox.iso'), false) then
       MsgBox('File moving failed!', mbError, MB_OK);
 end;
 
@@ -339,7 +339,7 @@ begin
   ExecAsOriginalUser(ExpandConstant('{app}\docker-machine.exe'), 'stop default', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
   if (ResultCode = 0) or (ResultCode = 1) then
   begin
-    FileCopy(ExpandConstant('{userappdata}\..\.docker\machine\cache\boot2docker.iso'), ExpandConstant('{userappdata}\..\.docker\machine\machines\default\boot2docker.iso'), false)
+    FileCopy(ExpandConstant('{userappdata}\..\.docker\machine\cache\greenbox.iso'), ExpandConstant('{userappdata}\..\.docker\machine\machines\default\greenbox.iso'), false)
     TrackEvent('VM Upgrade Succeeded');
   end
   else begin

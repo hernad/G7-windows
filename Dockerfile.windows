@@ -86,7 +86,7 @@ RUN wine virtualbox.exe -extract -silent -path . && \
     	  mv *x86.msi VirtualBox.msi
 
 
-COPY blobs/vs2013_vcredist_x86.exe /bundle/
+#COPY blobs/vs2013_vcredist_x86.exe /bundle/
 
 # Add installer resources
 COPY windows /installer

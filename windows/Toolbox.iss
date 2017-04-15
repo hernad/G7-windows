@@ -12,7 +12,7 @@
 #define git "..\bundle\Git.exe"
 #define virtualBoxCommon "..\bundle\common.cab"
 #define virtualBoxMsi "..\bundle\VirtualBox.msi"
-#define vs2013_vcredist_x86 "..\bundle\vs2013_vcredist_x86.exe"
+;#define vs2013_vcredist_x86 "..\bundle\vs2013_vcredist_x86.exe"
 
 [Setup]
 AppCopyright={#MyAppPublisher}
@@ -64,7 +64,7 @@ Name: "DockerMachine"; Description: "Docker Machine for Windows" ; Types: full c
 Name: "VirtualBox"; Description: "VirtualBox"; Types: full custom; Flags: disablenouninstallwarning
 ;Name: "Kitematic"; Description: "Kitematic for Windows (Alpha)" ; Types: full custom
 Name: "Git"; Description: "Git for Windows"; Types: full custom; Flags: disablenouninstallwarning
-Name: "VCRedist2013"; Description: "VC Redistribution package VS2013"; Types: full custom; Flags: fixed
+;Name: "VCRedist2013"; Description: "VC Redistribution package VS2013"; Types: full custom; Flags: fixed
 
 [Files]
 Source: ".\docker-quickstart-terminal.ico"; DestDir: "{app}"; Flags: ignoreversion
@@ -77,7 +77,7 @@ Source: "{#greenboxIsoPath}"; DestDir: "{app}"; Flags: ignoreversion; Components
 Source: "{#git}"; DestDir: "{app}\installers\git"; DestName: "git.exe"; AfterInstall: RunInstallGit();  Components: "Git"
 Source: "{#virtualBoxCommon}"; DestDir: "{app}\installers\virtualbox"; Components: "VirtualBox"
 Source: "{#virtualBoxMsi}"; DestDir: "{app}\installers\virtualbox"; DestName: "virtualbox.msi"; AfterInstall: RunInstallVirtualBox(); Components: "VirtualBox"
-Source: "{#vs2013_vcredist_x86}";  DestDir: "{app}\installers\vs2013_vcredist_x86"; DestName: "vcredist_x86.exe"; AfterInstall: RunInstallVCRedistX86(); Components: "VCRedist2013"
+;Source: "{#vs2013_vcredist_x86}";  DestDir: "{app}\installers\vs2013_vcredist_x86"; DestName: "vcredist_x86.exe"; AfterInstall: RunInstallVCRedistX86(); Components: "VCRedist2013"
 
 
 [Icons]
@@ -231,6 +231,7 @@ begin
   end;
 end;
 
+(*
 procedure RunInstallVCRedistX86();
 var
   ResultCode: Integer;
@@ -246,6 +247,7 @@ begin
     MsgBox('VC MS2013 x86 install failure', mbInformation, MB_OK);
   end;
 end;
+*)
 
 procedure CopyGreenboxISO();
 begin

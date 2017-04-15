@@ -28,7 +28,7 @@ AppUpdatesURL={#MyAppURL}
 ;ArchitecturesAllowed=x64
 ;ArchitecturesInstallIn64BitMode=x64
 DefaultDirName={pf}\{#MyAppName}
-DefaultGroupName=Docker
+DefaultGroupName=Greenbox
 DisableProgramGroupPage=yes
 DisableWelcomePage=no
 OutputBaseFilename={#MyAppExe}
@@ -141,10 +141,6 @@ end;
 
 
 
-procedure TrackEvent(name: String);
-begin
-  //TrackEventWithProperties(name, '');
-end;
 
 function NeedToInstallVirtualBox(): Boolean;
 begin
@@ -187,7 +183,6 @@ end;
 
 function InitializeSetup(): boolean;
 begin
-  //TrackEvent('Installer Started');
   Result := True;
 end;
 
@@ -282,16 +277,13 @@ function UpgradeVM() : Boolean;
 var
   ResultCode: Integer;
 begin
-  TrackEvent('VM Upgrade Started');
   WizardForm.StatusLabel.Caption := 'Upgrading Docker Toolbox VM...'
   ExecAsOriginalUser(ExpandConstant('{app}\docker-machine.exe'), 'stop default', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
   if (ResultCode = 0) or (ResultCode = 1) then
   begin
     FileCopy(ExpandConstant('{userappdata}\..\.docker\machine\cache\greenbox.iso'), ExpandConstant('{userappdata}\..\.docker\machine\machines\default\greenbox.iso'), false)
-    TrackEvent('VM Upgrade Succeeded');
   end
   else begin
-    TrackEvent('VM Upgrade Failed');
     MsgBox('VM Upgrade Failed because the VirtualBox VM could not be stopped.', mbCriticalError, MB_OK);
     Result := false
     WizardForm.Close;
@@ -318,7 +310,6 @@ begin
   Success := True;
   if CurStep = ssPostInstall then
   begin
-    trackEvent('Installing Files Succeeded');
     if IsTaskSelected(ModPathName) then
       ModPath();
     if not WizardSilent() then
@@ -331,7 +322,5 @@ begin
       end;
     end;
 
-    if Success then
-      trackEvent('Installer Finished');
   end;
 end;

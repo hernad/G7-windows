@@ -4,7 +4,7 @@
 #define MyAppURL "https://www.bring.out.ba"
 #define MyAppContact "https://www.bring.out.ba"
 
-#define greenboxIsoPath "..\bundle\greenbox.iso"
+;#define greenboxIsoPath "..\bundle\greenbox.iso"
 #define dockerCli "..\bundle\docker.exe"
 #define dockerMachineCli "..\bundle\docker-machine.exe"
 ;#define dockerComposeCli "..\bundle\docker-compose.exe"
@@ -73,7 +73,7 @@ Source: ".\start.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Docke
 Source: "{#dockerMachineCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerMachine"
 ;Source: "{#dockerComposeCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerCompose"
 ;Source: "{#kitematic}\*"; DestDir: "{app}\kitematic"; Flags: ignoreversion recursesubdirs; Components: "Kitematic"
-Source: "{#greenboxIsoPath}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerMachine"; AfterInstall: CopyGreenboxISO()
+;Source: "{#greenboxIsoPath}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerMachine"; AfterInstall: CopyGreenboxISO()
 Source: "{#git}"; DestDir: "{app}\installers\git"; DestName: "git.exe"; AfterInstall: RunInstallGit();  Components: "Git"
 Source: "{#virtualBoxCommon}"; DestDir: "{app}\installers\virtualbox"; Components: "VirtualBox"
 Source: "{#virtualBoxMsi}"; DestDir: "{app}\installers\virtualbox"; DestName: "virtualbox.msi"; AfterInstall: RunInstallVirtualBox(); Components: "VirtualBox"

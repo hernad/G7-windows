@@ -60,7 +60,7 @@ fi
 "${VBOXMANAGE}" list vms | grep \""${VM}"\" &> /dev/null
 VM_EXISTS_CODE=$?
 
-set -e
+#set -e
 
 STEP="Checking if machine $VM exists"
 if [ $VM_EXISTS_CODE -eq 1 ]; then
@@ -83,7 +83,10 @@ STEP="Checking status on $VM"
 VM_STATUS="$(${DOCKER_MACHINE} status ${VM} 2>&1)"
 if [ "${VM_STATUS}" != "Running" ]; then
   "${DOCKER_MACHINE}" start "${VM}"
-  yes | "${DOCKER_MACHINE}" regenerate-certs "${VM}"
+  if ! "${DOCKER_MACHINE}" env "${VM}"
+  then
+     "${DOCKER_MACHINE}" regenerate-certs -f "${VM}"
+  fi
 fi
 
 STEP="Setting env"
@@ -102,10 +105,15 @@ cat << EOF
            \______ o           __/
              \    \         __/
               \____\_______/
+     __ _ _ __ ___  ___ _ __ | |__   _____  __
+    / _` | '__/ _ \/ _ \ '_ \| '_ \ / _ \ \/ /
+   | (_| | | |  __/  __/ | | | |_) | (_) >  <
+    \__, |_|  \___|\___|_| |_|_.__/ \___/_/\_\
+    |___/
 
 EOF
 echo -e "${BLUE}docker${NC} is configured to use the ${GREEN}${VM}${NC} machine with IP ${GREEN}$(${DOCKER_MACHINE} ip ${VM})${NC}"
-echo "For help getting started, check out the docs at https://docs.docker.com"
+echo "For help getting started, check out the docs at https://github.com/hernad/G7-windows"
 echo
 cd
 

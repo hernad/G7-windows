@@ -23,8 +23,8 @@ GREENBOX_VBOX_PARAMS+=" --virtualbox-hostonly-nicpromisc deny"
 DOCKER_APPDATA=$(cygpath $APPDATA/../.docker | sed -e 's/\n//')
 
 # docker-machine expects boot2docker.iso:
-mkdir -p ~/.docker/machine/cache/
-cp -av "$DOCKER_APPDATA/machine/cache/greenbox.iso"  ~/.docker/machine/cache/boot2docker.iso
+#mkdir -p ~/.docker/machine/cache/
+#cp -av "$DOCKER_APPDATA/machine/cache/greenbox.iso"  ~/.docker/machine/cache/boot2docker.iso
 
 DOCKER_MACHINE=./docker-machine.exe
 

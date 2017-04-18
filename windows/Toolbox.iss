@@ -70,6 +70,11 @@ Name: "Git"; Description: "Git for Windows"; Types: full custom; Flags: disablen
 Source: ".\docker-quickstart-terminal.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#dockerCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "Docker"
 Source: ".\start.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Docker"
+
+Source: ".\sshd_service.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Git"
+Source: ".\cygrunsrv.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: "Git"
+Source: ".\editrights.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: "Git"
+
 Source: "{#dockerMachineCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerMachine"
 ;Source: "{#dockerComposeCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerCompose"
 ;Source: "{#kitematic}\*"; DestDir: "{app}\kitematic"; Flags: ignoreversion recursesubdirs; Components: "Kitematic"
@@ -84,6 +89,8 @@ Source: "{#virtualBoxMsi}"; DestDir: "{app}\installers\virtualbox"; DestName: "v
 ;Name: "{userprograms}\Docker\Kitematic (Alpha)"; WorkingDir: "{app}"; Filename: "{app}\kitematic\Kitematic.exe"; Components: "Kitematic"
 ;Name: "{commondesktop}\Kitematic (Alpha)"; WorkingDir: "{app}"; Filename: "{app}\kitematic\Kitematic.exe"; Tasks: desktopicon; Components: "Kitematic"
 Name: "{userprograms}\Docker\GreenBox Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Components: "Docker"
+Name: "{userprograms}\Docker\GreenBox SSHD setup"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\sshd_service.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Components: "Git"
+
 Name: "{commondesktop}\GreenBox Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Tasks: desktopicon; Components: "Docker"
 Name: "{commondesktop}\GreenBox git bash"; WorkingDir: "{app}"; Filename: "{pf}\Git\git-bash.exe"; Parameters: ""; IconFilename: "{app}/toolbox.ico"; Tasks: desktopicon; Components: "Docker"
 

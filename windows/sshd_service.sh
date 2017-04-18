@@ -5,14 +5,16 @@
 #  - https://ghc.haskell.org/trac/ghc/wiki/Building/Windows/SSHD
 #  - gist https://gist.github.com/samhocevar/00eec26d9e9988d080ac
 
-set -e
+#set -e
 
 #
 # Configuration
 #
 
-PRIV_USER=sshd_privileged
-PRIV_NAME="Privileged user for sshd"
+SERVICE_NAME=sshgit
+PRIV_USER=sshgit
+PRIV_NAME="Privileged user for sshd git"
+
 UNPRIV_USER=sshd # DO NOT CHANGE; this username is hardcoded in the openssh code
 UNPRIV_NAME="Privilege separation user for sshd"
 
@@ -23,7 +25,8 @@ EMPTY_DIR=/var/empty
 
 [ -f /etc/ssh/ssh_host_rsa_key ] || ssh-keygen -P "" -f /etc/ssh/ssh_host_rsa_key
 
-mkpasswd > /etc/passwd
+#mkpasswd > /etc/passwd
+mkgroup > /etc/group
 
 cp -av cygrunsrv.exe /usr/bin/
 cp -av editrights.exe /usr/bin/
@@ -62,7 +65,7 @@ for flag in SeAssignPrimaryTokenPrivilege SeCreateTokenPrivilege \
 
   if ! editrights -a "${flag}" -u "${PRIV_USER}"; then
         echo "ERROR: Unable to give ${flag} rights to user ${PRIV_USER}"
-	exit 
+	exit
   fi
 
 done
@@ -97,13 +100,13 @@ done
 # Finally, register service with cygrunsrv and start it
 #
 
-cygrunsrv -R sshd_git || true
-cygrunsrv -I sshd_git -d "SSHD on Git for Windows" -p \
+cygrunsrv -R $SERVICE_NAME || true
+cygrunsrv -I $SERVICE_NAME -d "SSHD Git" -p \
           /usr/bin/sshd.exe -a "-D -e" -y tcpip -u "${PRIV_USER}" -w "${tmp_pass}"
 
 # The SSH service should start automatically when Windows is rebooted. You can
 # manually restart the service by running `net stop sshd` + `net start sshd`
-if ! net start sshd_git; then
+if ! net start $SERVICE_NAME; then
     echo "ERROR: Unable to start sshd service"
     exit 1
 fi

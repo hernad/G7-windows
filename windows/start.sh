@@ -100,6 +100,31 @@ if [ $VM_EXISTS_CODE -eq 1 ]; then
     PROXY_ENV="$PROXY_ENV --engine-env NO_PROXY=$NO_PROXY"
   fi
   "${DOCKER_MACHINE}" create -d virtualbox $PROXY_ENV $GREENBOX_VBOX_PARAMS "${VM}"
+
+  STEP="Waiting for greenbox to install docker ...."
+
+  FAIL=1
+  while ! "${DOCKER_MACHINE}" ssh "${VM}" "cat /opt/docker/VERSION"
+  do
+    echo "$FAIL : $STEP"
+    sleep 10
+  done
+
+  STEP="Waiting for greenbox to run dockerd ...."
+  FAIL=1
+  while ! "${DOCKER_MACHINE}" env "${VM}"
+  do
+     echo "$FAIL : $STEP"
+     sleep 5
+     "${DOCKER_MACHINE}" regenerate-certs -f "${VM}"
+     let "FAIL+=1"
+
+     if [ $FAIL -gt 5 ]
+     then
+       exit 1
+     fi
+  done
+
 fi
 
 STEP="Checking status on $VM"
@@ -109,22 +134,6 @@ then
   "${DOCKER_MACHINE}" start "${VM}"
 fi
 
-STEP="Waiting for greenbox to install/setup dockerd ...."
-
-FAIL=1
-while ! "${DOCKER_MACHINE}" env "${VM}"
-do
-   echo "$FAIL : $STEP"
-   sleep 4
-   "${DOCKER_MACHINE}" regenerate-certs -f "${VM}"
-   let "FAIL+=1"
-
-   if [ $FAIL -gt 5 ]
-   then
-     exit 1
-   fi
-
-done
 
 STEP="Setting env"
 eval "$(${DOCKER_MACHINE} env --shell=bash --no-proxy ${VM})"

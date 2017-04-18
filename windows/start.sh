@@ -160,8 +160,10 @@ cat << EOF
 EOF
 echo -e "${BLUE}docker${NC} is configured to use the ${GREEN}${VM}${NC} machine with IP ${GREEN}$(${DOCKER_MACHINE} ip ${VM})${NC}"
 echo "For help getting started, check out the docs at https://github.com/hernad/G7-windows"
-echo
-cd
+echo -e
+echo "Try these commands: docker-machine ssh ${VM} \"cat /opt/docker/VERSION\", docker-machine env ${VM}, docker-machine ip ${VER}"
+echo "                    docker run -ti alpine sh, docker images, docker ps -a"
+
 
 docker () {
   MSYS_NO_PATHCONV=1 docker.exe "$@"

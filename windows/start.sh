@@ -28,9 +28,12 @@ fi
 PF=$(cygpath $PROGRAMFILES)
 PF=$(echo $PF | sed -e 's/\n//')
 export PATH="$PF/G7_greenbox:$PATH"
-echo "exe PATH=$PATH"
+#echo "exe PATH=$PATH"
+
 # default virtualbox name: greenbox
 VM=${DOCKER_MACHINE_NAME:-greenbox}
+
+echo "Setting up vbox machine with 1280 MB RAM/99 GB HDD ..."
 
 #ako zelimo vec gotovu vm importovati --virtualbox-import-greenbox-vm
 
@@ -106,10 +109,22 @@ then
   "${DOCKER_MACHINE}" start "${VM}"
 fi
 
-if ! "${DOCKER_MACHINE}" env "${VM}"
-then
+STEP="Waiting for greenbox to install/setup dockerd ...."
+
+FAIL=1
+while ! "${DOCKER_MACHINE}" env "${VM}"
+do
+   echo "$FAIL : $STEP"
+   sleep 4
    "${DOCKER_MACHINE}" regenerate-certs -f "${VM}"
-fi
+   let "FAIL+=1"
+
+   if [ $FAIL -gt 5 ]
+   then
+     exit 1
+   fi
+
+done
 
 STEP="Setting env"
 eval "$(${DOCKER_MACHINE} env --shell=bash --no-proxy ${VM})"

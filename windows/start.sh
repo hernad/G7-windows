@@ -2,6 +2,26 @@
 
 trap '[ "$?" -eq 0 ] || read -p "Looks like something went wrong in step ´$STEP´... Press any key to continue..."' EXIT
 
+function isadmin()
+{
+    net session > /dev/null 2>&1
+    if [ $? -eq 0 ]
+    then
+       echo "running as admin"
+       return 0
+    else
+       echo "running as standard user"
+       return 1
+    fi
+}
+
+STEP="Check running privileges"
+if isadmin
+then
+  echo "You have to run this script as standard user!"
+  exit 1
+fi
+
 # TODO: I'm sure this is not very robust.  But, it is needed for now to ensure
 # that binaries provided by G7_greenbox over-ride binaries provided by
 # Docker for Windows when launching using the Quickstart.
@@ -84,10 +104,11 @@ VM_STATUS="$(${DOCKER_MACHINE} status ${VM} 2>&1)"
 if [ "${VM_STATUS}" != "Running" ]
 then
   "${DOCKER_MACHINE}" start "${VM}"
-  if ! "${DOCKER_MACHINE}" env "${VM}"
-  then
-     "${DOCKER_MACHINE}" regenerate-certs -f "${VM}"
-  fi
+fi
+
+if ! "${DOCKER_MACHINE}" env "${VM}"
+then
+   "${DOCKER_MACHINE}" regenerate-certs -f "${VM}"
 fi
 
 STEP="Setting env"
@@ -100,17 +121,17 @@ cat << EOF
 
                         ##         .
                   ## ## ##        ==
-               ## ## ## ## ##    ===
-           /"""""""""""""""""\___/ ===
-      ~~~ {~~ ~~~~ ~~~ ~~~~ ~~~ ~ /  ===- ~~~ 
-           \______ o           __/
-             \    \         __/
-              \____\_______/
-     __ _ _ __ ___  ___ _ __ | |__   _____  __
-    / _' | '__/ _ \/ _ \ '_ \| '_ \ / _ \ \/ /
-   | (_| | | |  __/  __/ | | | |_) | (_) >  <
-    \__, |_|  \___|\___|_| |_|_.__/ \___/_/\_\
-    |___/
+               ## ## ## ## ##    ===                 |
+           /"""""""""""""""""\___/ ===               | b
+      ~~~ {~~ ~~~~ ~~~ ~~~~ ~~~ ~ /  ===- ~~~        | r
+           \______ o           __/                   | i
+             \    \         __/                      | n
+              \____\_______/                         | g
+     __ _ _ __ ___  ___ _ __ | |__   _____  __       | .
+    / _' | '__/ _ \/ _ \ '_ \| '_ \ / _ \ \/ /       | o
+   | (_| | | |  __/  __/ | | | |_) | (_) >  <        | u
+    \__, |_|  \___|\___|_| |_|_.__/ \___/_/\_\       | t
+    |___/                                            |
 
 EOF
 echo -e "${BLUE}docker${NC} is configured to use the ${GREEN}${VM}${NC} machine with IP ${GREEN}$(${DOCKER_MACHINE} ip ${VM})${NC}"

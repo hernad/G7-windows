@@ -11,6 +11,30 @@
 # Configuration
 #
 
+trap '[ "$?" -eq 0 ] || read -p "Looks like something went wrong ... Press any key to continue..."' EXIT
+
+
+function isadmin()
+{
+    net session > /dev/null 2>&1
+    if [ $? -eq 0 ]
+    then
+       echo "running as admin"
+       return 0
+    else
+       echo "running as standard user"
+       return 1
+    fi
+}
+
+
+if ! isadmin
+then
+  echo "You have to run this script as admin!"
+  exit 1
+fi
+
+
 SERVICE_NAME=sshgit
 PRIV_USER=sshgit
 PRIV_NAME="Privileged user for sshd git"

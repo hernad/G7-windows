@@ -59,7 +59,7 @@ Name: vbox_ndis5; Description: "Install VirtualBox with NDIS5 driver[default NDI
 
 [Components]
 Name: "Greenbox"; Description: "G7 greenbox docker host for windows" ; Types: full custom; Flags: fixed
-Name: "DockerMachin"; Description: "Docker Machine for Windows" ; Types: full custom; Flags: fixed
+Name: "DockerMachine"; Description: "Docker Machine for Windows" ; Types: full custom; Flags: fixed
 ;Name: "DockerCompose"; Description: "Docker Compose for Windows" ; Types: full custom
 Name: "VirtualBox"; Description: "VirtualBox"; Types: full custom; Flags: disablenouninstallwarning
 ;Name: "Kitematic"; Description: "Kitematic for Windows (Alpha)" ; Types: full custom

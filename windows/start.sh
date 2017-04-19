@@ -2,6 +2,12 @@
 
 trap '[ "$?" -eq 0 ] || read -p "Looks like something went wrong in step ´$STEP´... Press any key to continue..."' EXIT
 
+START_PARAM="interactive"
+if [ ! -z "$1"  ]
+then
+  START_PARAM="$1"
+fi
+
 function isadmin()
 {
     net session > /dev/null 2>&1
@@ -100,10 +106,21 @@ VM_EXISTS_CODE=$?
 
 #set -e
 
+if [ $START_PARAM == "boot" ]
+then
+   echo "--- start via task scheduler on boot $(date) ---"
+   set >> ~/start_on_boot.log
+   $VBOX_MANAGE list vms >> ~/start_on_boot.log
+fi
+
 STEP="Checking if machine $VM exists"
-if [ $VM_EXISTS_CODE -eq 1 ]; then
+if [  $START_PARAM == "interactive" ] && [ $VM_EXISTS_CODE -eq 1 ]; then
+
+  # kada se via task scheduler pokrene ovo ne radi kako treba
   "${DOCKER_MACHINE}" rm -f "${VM}" &> /dev/null || :
   rm -rf ~/.docker/machine/machines/"${VM}"
+
+
   #set proxy variables if they exists
   if [ "${HTTP_PROXY}" ]; then
     PROXY_ENV="$PROXY_ENV --engine-env HTTP_PROXY=$HTTP_PROXY"

@@ -30,6 +30,13 @@ PF=$(echo $PF | sed -e 's/\n//')
 export PATH="$PF/G7_greenbox:$PATH"
 #echo "exe PATH=$PATH"
 
+if [ ! -z "$VBOX_MSI_INSTALL_PATH" ]; then
+  PATH="${VBOX_MSI_INSTALL_PATH}":$PATH
+else
+  VBOX_INSTALL_PATH=${VBOX_INSTALL_PATH:-$PF/Oracle/VirtualBox/}
+  PATH="${VBOX_INSTALL_PATH}":$PATH
+fi
+
 # default virtualbox name: greenbox
 VM=${DOCKER_MACHINE_NAME:-greenbox}
 
@@ -42,6 +49,7 @@ GREENBOX_VBOX_PARAMS+=" --virtualbox-boot2docker-url http://download.bring.out.b
 GREENBOX_VBOX_PARAMS+=" --virtualbox-disk-size 99000"
 #GREENBOX_VBOX_PARAMS+=" --virtualbox-hostonly-cidr 192.168.97.1/24"
 #GREENBOX_VBOX_PARAMS+=" --virtualbox-hostonly-nicpromisc deny"
+GREENBOX_VBOX_PARAMS+="--virtualbox-no-vtx-check"
 
 DOCKER_APPDATA=$(cygpath $APPDATA/../.docker | sed -e 's/\n//')
 
@@ -49,14 +57,9 @@ DOCKER_APPDATA=$(cygpath $APPDATA/../.docker | sed -e 's/\n//')
 #mkdir -p ~/.docker/machine/cache/
 #cp -av "$DOCKER_APPDATA/machine/cache/greenbox.iso"  ~/.docker/machine/cache/boot2docker.iso
 
-DOCKER_MACHINE=./docker-machine.exe
+DOCKER_MACHINE=docker-machine.exe
+VBOX_MANAGE=VBoxManage.exe
 
-STEP="Looking for vboxmanage.exe"
-if [ ! -z "$VBOX_MSI_INSTALL_PATH" ]; then
-  VBOXMANAGE="${VBOX_MSI_INSTALL_PATH}VBoxManage.exe"
-else
-  VBOXMANAGE="${VBOX_INSTALL_PATH}VBoxManage.exe"
-fi
 
 BLUE='\033[1;34m'
 GREEN='\033[0;32m'
@@ -70,7 +73,7 @@ if  [[ $all_proxy != socks* ]]; then
   unset all_proxy
 fi
 
-if [ ! -f "${DOCKER_MACHINE}" ]; then
+if ! which $DOCKER_MACHINE 2> /dev/null ; then
   echo "Docker Machine is not installed. Please re-run the Toolbox Installer and try again."
   exit 1
 fi

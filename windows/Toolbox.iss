@@ -72,7 +72,7 @@ Source: "{#dockerCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "Gre
 Source: ".\start.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 
 Source: ".\tasks.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
-Source: ".\sshd_stop.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
+Source: ".\stop_sshd.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\create_tasks.cmd"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\delete_tasks.cmd"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 

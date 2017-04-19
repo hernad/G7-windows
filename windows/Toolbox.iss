@@ -58,8 +58,8 @@ Name: upgradevm; Description: "Upgrade greenbox VM"
 Name: vbox_ndis5; Description: "Install VirtualBox with NDIS5 driver[default NDIS6]"; Components: VirtualBox; Flags: unchecked
 
 [Components]
-Name: "Docker"; Description: "Docker Client for Windows" ; Types: full custom; Flags: fixed
-Name: "DockerMachine"; Description: "Docker Machine for Windows" ; Types: full custom; Flags: fixed
+Name: "Greenbox"; Description: "G7 greenbox docker host for windows" ; Types: full custom; Flags: fixed
+Name: "DockerMachin"; Description: "Docker Machine for Windows" ; Types: full custom; Flags: fixed
 ;Name: "DockerCompose"; Description: "Docker Compose for Windows" ; Types: full custom
 Name: "VirtualBox"; Description: "VirtualBox"; Types: full custom; Flags: disablenouninstallwarning
 ;Name: "Kitematic"; Description: "Kitematic for Windows (Alpha)" ; Types: full custom
@@ -68,10 +68,11 @@ Name: "Git"; Description: "Git for Windows"; Types: full custom; Flags: disablen
 
 [Files]
 Source: ".\docker-quickstart-terminal.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#dockerCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "Docker"
-Source: ".\start.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Docker"
+Source: "{#dockerCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
+Source: ".\start.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 
-Source: ".\create_tasks.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Git"
+Source: ".\create_tasks.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Green"
+Source: ".\create_tasks.cmd"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 ;Source: ".\cygrunsrv.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: "Git"
 ;Source: ".\editrights.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: "Git"
 
@@ -88,11 +89,11 @@ Source: "{#virtualBoxMsi}"; DestDir: "{app}\installers\virtualbox"; DestName: "v
 [Icons]
 ;Name: "{userprograms}\Docker\Kitematic (Alpha)"; WorkingDir: "{app}"; Filename: "{app}\kitematic\Kitematic.exe"; Components: "Kitematic"
 ;Name: "{commondesktop}\Kitematic (Alpha)"; WorkingDir: "{app}"; Filename: "{app}\kitematic\Kitematic.exe"; Tasks: desktopicon; Components: "Kitematic"
-Name: "{userprograms}\Docker\GreenBox Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Components: "Docker"
-Name: "{userprograms}\Docker\GreenBox Create Tasks RunAsAdmin"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\create_tasks.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Components: "Git"
+Name: "{userprograms}\Docker\GreenBox Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Components: "Greenbox"
+Name: "{userprograms}\Docker\GreenBox Create Tasks RunAsAdmin"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\create_tasks.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Components: "Greenbox"
 
-Name: "{commondesktop}\GreenBox Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Tasks: desktopicon; Components: "Docker"
-Name: "{commondesktop}\GreenBox git bash"; WorkingDir: "{app}"; Filename: "{pf}\Git\git-bash.exe"; Parameters: ""; IconFilename: "{app}/toolbox.ico"; Tasks: desktopicon; Components: "Docker"
+Name: "{commondesktop}\GreenBox Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Tasks: desktopicon; Components: "Greenbox"
+Name: "{commondesktop}\GreenBox git bash"; WorkingDir: "{app}"; Filename: "{pf}\Git\git-bash.exe"; Parameters: ""; IconFilename: "{app}\toolbox.ico"; Tasks: desktopicon; Components: "GreenBox"
 
 [UninstallRun]
 Filename: "{app}\docker-machine.exe"; Parameters: "rm -f default"

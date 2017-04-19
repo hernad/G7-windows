@@ -2,11 +2,38 @@
 
 trap '[ "$?" -eq 0 ] || read -p "Looks like something went wrong in step ´$STEP´... Press any key to continue..."' EXIT
 
+
+
+#NT-5.0 = W2000
+#NT-5.1 = XP
+#NT-6.0 = Vista
+#NT-6.1 = W7
+OS="W10"
+
+if uname -s | grep -q 5.1
+then
+  OS="WXP"
+fi
+
+if uname -s | grep -q 6.1
+then
+  OS="W7"
+fi
+
+# http://www.askvg.com/list-of-environment-variables-in-windows-xp-vista-and-7/
+
 START_PARAM="interactive"
 if [ ! -z "$1"  ]
 then
-  START_PARAM="$1"
-  export VBOX_USER_HOME="$HOMEPATH/.VirtualBox"
+  START_PARAM="$1" # boot
+
+  if [ $OS == "W7" ] || [ $OS == "W10" ]
+  then
+     export HOMEPATH="\\Users\\greenbox"
+  else
+     export HOMEPATH="C:\\Documents and Settings\\greenbox"
+  fi
+  export VBOX_USER_HOME="$HOMEPATH\\.VirtualBox"
 fi
 
 function isadmin()
@@ -53,7 +80,7 @@ else
   export PATH="${VBOX_INSTALL_PATH}":$PATH
 fi
 
-echo $PATH
+#echo $PATH
 
 # default virtualbox name: greenbox
 VM=${DOCKER_MACHINE_NAME:-greenbox}
@@ -110,7 +137,7 @@ VM_EXISTS_CODE=$?
 if [ "$START_PARAM" == "boot" ]
 then
    echo "--- start via task scheduler on boot $(date) ---"
-   set >> ~/start_on_boot.log
+   echo "PATH: $PATH" >> ~/start_on_boot.log
    echo "VBOX_USER_HOME: $VBOX_USER_HOME" >> ~/start_on_boot.log
    $VBOX_MANAGE list vms >> ~/start_on_boot.log
 fi

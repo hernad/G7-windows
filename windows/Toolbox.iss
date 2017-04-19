@@ -71,7 +71,7 @@ Source: ".\docker-quickstart-terminal.ico"; DestDir: "{app}"; Flags: ignoreversi
 Source: "{#dockerCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\start.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 
-Source: ".\create_tasks.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Green"
+Source: ".\create_tasks.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\create_tasks.cmd"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 ;Source: ".\cygrunsrv.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: "Git"
 ;Source: ".\editrights.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: "Git"

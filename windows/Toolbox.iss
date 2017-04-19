@@ -100,8 +100,8 @@ Name: "{commondesktop}\GreenBox git bash"; WorkingDir: "{app}"; Filename: "{pf}\
 
 [UninstallRun]
 ;Filename: "{app}\docker-machine.exe"; Parameters: "rm -f default"
-Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\stop_sshd.sh"""
-Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\tasks.sh"" delete"
+WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\stop_sshd.sh"""
+WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\tasks.sh"" delete"
 
 [UninstallDelete]
 ;Type: filesandordirs; Name: "{localappdata}\..\Roaming\Kitematic"

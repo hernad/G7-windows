@@ -6,6 +6,7 @@ START_PARAM="interactive"
 if [ ! -z "$1"  ]
 then
   START_PARAM="$1"
+  export VBOX_USER_HOME="$HOMEPATH/.VirtualBox"
 fi
 
 function isadmin()
@@ -110,6 +111,7 @@ if [ "$START_PARAM" == "boot" ]
 then
    echo "--- start via task scheduler on boot $(date) ---"
    set >> ~/start_on_boot.log
+   echo "VBOX_USER_HOME: $VBOX_USER_HOME" >> ~/start_on_boot.log
    $VBOX_MANAGE list vms >> ~/start_on_boot.log
 fi
 

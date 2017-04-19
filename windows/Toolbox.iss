@@ -71,9 +71,9 @@ Source: ".\docker-quickstart-terminal.ico"; DestDir: "{app}"; Flags: ignoreversi
 Source: "{#dockerCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "Docker"
 Source: ".\start.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Docker"
 
-Source: ".\sshd_service.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Git"
-Source: ".\cygrunsrv.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: "Git"
-Source: ".\editrights.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: "Git"
+Source: ".\create_tasks.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Git"
+;Source: ".\cygrunsrv.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: "Git"
+;Source: ".\editrights.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: "Git"
 
 Source: "{#dockerMachineCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerMachine"
 ;Source: "{#dockerComposeCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerCompose"

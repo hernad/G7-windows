@@ -106,7 +106,7 @@ VM_EXISTS_CODE=$?
 
 #set -e
 
-if [ $START_PARAM == "boot" ]
+if [ "$START_PARAM" == "boot" ]
 then
    echo "--- start via task scheduler on boot $(date) ---"
    set >> ~/start_on_boot.log

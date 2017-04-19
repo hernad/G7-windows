@@ -96,7 +96,9 @@ Name: "{commondesktop}\GreenBox Quickstart Terminal"; WorkingDir: "{app}"; Filen
 Name: "{commondesktop}\GreenBox git bash"; WorkingDir: "{app}"; Filename: "{pf}\Git\git-bash.exe"; Parameters: ""; IconFilename: "{app}\toolbox.ico"; Tasks: desktopicon; Components: "GreenBox"
 
 [UninstallRun]
-Filename: "{app}\docker-machine.exe"; Parameters: "rm -f default"
+;Filename: "{app}\docker-machine.exe"; Parameters: "rm -f default"
+Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\stop_sshd.sh"""
+
 
 [UninstallDelete]
 ;Type: filesandordirs; Name: "{localappdata}\..\Roaming\Kitematic"

@@ -18,19 +18,22 @@ function isadmin()
 STEP="Is running user greenbox?"
 if [ `whoami` != greenbox ]
 then
-   echo "User mora biti greenbox!"
+   echo User mora biti greenbox
    exit 1
 fi
 
 STEP="Check running privileges"
 if ! isadmin
 then
-  echo "You have to run this script as elevated/privileged user!"
+  echo "You have to run this script as admin user!"
   exit 1
 fi
 
-STEP="run cmd for creating tasks and opening firewall"
 
-echo $STEP
+SSHDPIDS=$(ps ax | grep sshd | grep -v grep | awk '{ print $1 }')
 
-./create_tasks.cmd
+for pid in $SSHDPIDS
+do
+  echo "killing sshd pid $pid"
+  kill $pid
+done

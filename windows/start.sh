@@ -31,11 +31,15 @@ export PATH="$PF/G7_greenbox:$PATH"
 #echo "exe PATH=$PATH"
 
 if [ ! -z "$VBOX_MSI_INSTALL_PATH" ]; then
-  PATH="${VBOX_MSI_INSTALL_PATH}":$PATH
+  VBOX_INSTALL_PATH=$(cygpath $VBOX_MSI_INSTALL_PATH)
+  VBOX_INSTALL_PATH=$(echo $VBOX_INSTALL_PATH | sed -e 's/\n//')
+  export PATH="${VBOX_INSTALL_PATH}":$PATH
 else
   VBOX_INSTALL_PATH=${VBOX_INSTALL_PATH:-$PF/Oracle/VirtualBox/}
-  PATH="${VBOX_INSTALL_PATH}":$PATH
+  export PATH="${VBOX_INSTALL_PATH}":$PATH
 fi
+
+echo $PATH
 
 # default virtualbox name: greenbox
 VM=${DOCKER_MACHINE_NAME:-greenbox}
@@ -78,12 +82,13 @@ if ! which $DOCKER_MACHINE 2> /dev/null ; then
   exit 1
 fi
 
-if [ ! -f "${VBOXMANAGE}" ]; then
+
+if  ! which $VBOX_MANAGE 2> /dev/null ; then
   echo "VirtualBox is not installed. Please re-run the Toolbox Installer and try again."
   exit 1
 fi
 
-"${VBOXMANAGE}" list vms | grep \""${VM}"\" &> /dev/null
+"${VBOX_MANAGE}" list vms | grep \""${VM}"\" &> /dev/null
 VM_EXISTS_CODE=$?
 
 #set -e

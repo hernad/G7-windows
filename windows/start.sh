@@ -15,6 +15,13 @@ function isadmin()
     fi
 }
 
+STEP="Is running user greenbox?"
+if [ `whoami` != greenbox ]
+then
+   echo User mora biti greenbox
+   exit 1
+fi
+
 STEP="Check running privileges"
 if isadmin
 then

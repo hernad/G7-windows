@@ -2,6 +2,12 @@
 
 trap '[ "$?" -eq 0 ] || read -p "Looks like something went wrong in step ´$STEP´... Press any key to continue..."' EXIT
 
+if [ -z "$1" ]
+then
+   echo "./$0 [create|delete]"
+   exit 1
+fi
+
 function isadmin()
 {
     net session > /dev/null 2>&1
@@ -29,8 +35,18 @@ then
   exit 1
 fi
 
-STEP="run cmd for creating tasks and opening firewall"
+
 
 echo $STEP
 
-./create_tasks.cmd
+if [ "$1" == "create" ]
+then
+   STEP="run cmd for creating tasks and opening firewall"
+   ./create_tasks.cmd
+fi
+
+if [ "$1" == "delete" ]
+then
+   STEP="run cmd for deleting tasks"
+   ./delete_tasks.cmd
+fi

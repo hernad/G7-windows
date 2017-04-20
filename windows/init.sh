@@ -28,6 +28,15 @@ then
 else
      export HOMEPATH="C:\\Documents and Settings\\$GREEN_USER"
 fi
+GREEN_SSH_HOME=$(cygpath $HOMEPATH/.ssh)
+
+if [ -f $GREEN_SSH_HOME/${GREEN_USER}_password ]
+then
+   echo "User $GREEN_USER exists"
+   random_password=$(cat $GREEN_SSH_HOME/${GREEN_USER}_password)
+   $PF/create_tasks.cmd $GREEN_USER $random_password
+   exit 0
+fi
 
 # Create greenbox user
 add="$(if ! net user "${GREEN_USER}" >/dev/null; then echo "//add"; fi)"
@@ -37,7 +46,6 @@ if ! net user "${GREEN_USER}" "${random_password}" ${add} //fullname:"${GREEN_NA
     exit 1
 fi
 
-GREEN_SSH_HOME=$(cygpath $HOMEPATH/.ssh)
 
 mkdir -p $GREEN_SSH_HOME
 echo $random_password > $GREEN_SSH_HOME/${GREEN_USER}_password

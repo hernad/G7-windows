@@ -68,6 +68,7 @@ Name: "Git"; Description: "Git for Windows"; Types: full custom; Flags: disablen
 [Files]
 Source: ".\docker-quickstart-terminal.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#dockerCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
+Source: ".\set_path.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\start.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\tasks.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\init.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"

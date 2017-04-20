@@ -75,15 +75,12 @@ then
 fi
 
 STEP="Check running privileges"
-if isadmin
+if ! isadmin
 then
-  echo "You have to run this script as standard user!"
+  echo "You have to run this script with admin privileges!"
   exit 1
 fi
 
-# TODO: I'm sure this is not very robust.  But, it is needed for now to ensure
-# that binaries provided by G7_greenbox over-ride binaries provided by
-# Docker for Windows when launching using the Quickstart.
 PF=$(cygpath $PROGRAMFILES)
 PF=$(echo $PF | sed -e 's/\n//')
 export PATH="$PF/G7_greenbox:$PATH"

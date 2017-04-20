@@ -50,22 +50,26 @@ else
      export HOMEPATH="C:\\Documents and Settings\\$GREEN_USER"
 fi
 GREEN_SSH_HOME=$(cygpath $HOMEPATH/.ssh)
+GREEN_HOME=$(cygpath $HOMEPATH)
 
 STEP="$GREEN_USER exists?"
-if [ -f "$GREEN_SSH_HOME/${GREEN_USER}_password" ]
+if net user "${GREEN_USER}" >/dev/null
 then
    echo "User $GREEN_USER exists"
    random_password=$(cat "$GREEN_SSH_HOME/${GREEN_USER}_password" )
-   $PF/create_tasks.cmd $GREEN_USER $random_password
+   "$PF/create_tasks.cmd" $GREEN_USER $random_password
    exit 0
 fi
 
 STEP="Create $GREEN_USER user"
-add="$(if ! net user "${GREEN_USER}" >/dev/null; then echo "//add"; fi)"
-if ! net user "${GREEN_USER}" "${random_password}" ${add} //fullname:"${GREEN_NAME}" \
+if ! net user "${GREEN_USER}" >/dev/null
+then
+   rm -rf "$HOMEPATH"
+   if ! net user "${GREEN_USER}" "${random_password}" //add //fullname:"${GREEN_NAME}" \
               //homedir:"$HOMEPATH" //yes; then
     echo "ERROR: Unable to create Windows user ${GREEN_USER}"
     exit 1
+   fi
 fi
 
 STEP="Add user $GREEN_USER to the Administrators group if necessary"
@@ -84,6 +88,8 @@ cp "$PF/authorized_keys" $GREEN_SSH_HOME/
 chmod 700 "$GREEN_SSH_HOME"
 chmod 600 "$GREEN_SSH_HOME/authorized_keys"
 chmod 600 "$GREEN_SSH_HOME/${GREEN_USER}_password"
+
+echo "source \"$PF/set_path.sh\"" > $GREEN_HOME/.bash_profile
 
 "$PF/create_tasks.cmd" $GREEN_USER $random_password
 

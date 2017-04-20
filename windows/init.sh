@@ -1,5 +1,27 @@
 #!/bin/bash
 
+trap '[ "$?" -eq 0 ] || read -p "init.sh: Looks like something went wrong in step ´$STEP´... Press any key to continue..."' EXIT
+
+function isadmin()
+{
+    net session > /dev/null 2>&1
+    if [ $? -eq 0 ]
+    then
+       echo "running as admin"
+       return 0
+    else
+       echo "running as standard user"
+       return 1
+    fi
+}
+
+STEP="Check running privileges"
+if ! isadmin
+then
+  echo "You have to run this script as admin user!"
+  exit 1
+fi
+
 PF=$(cygpath $PROGRAMFILES)
 PF=$(echo $PF | sed -e 's/\n//')
 PF=$PF/G7_greenbox
@@ -11,7 +33,6 @@ GREEN_NAME="greenbox system"
 # Some random password; this is only needed internally by cygrunsrv and
 # is limited to 14 characters by Windows (lol)
 random_password="$(tr -dc 'a-zA-Z0-9' < /dev/urandom | dd count=6 bs=1 2>/dev/null)"
-
 OS="W10"
 if uname -s | grep -q 5.1
 then
@@ -30,6 +51,7 @@ else
 fi
 GREEN_SSH_HOME=$(cygpath $HOMEPATH/.ssh)
 
+STEP="$GREEN_USER exists?"
 if [ -f "$GREEN_SSH_HOME/${GREEN_USER}_password" ]
 then
    echo "User $GREEN_USER exists"
@@ -38,7 +60,7 @@ then
    exit 0
 fi
 
-# Create greenbox user
+STEP="Create $GREEN_USER user"
 add="$(if ! net user "${GREEN_USER}" >/dev/null; then echo "//add"; fi)"
 if ! net user "${GREEN_USER}" "${random_password}" ${add} //fullname:"${GREEN_NAME}" \
               //homedir:"$HOMEPATH" //yes; then
@@ -46,7 +68,7 @@ if ! net user "${GREEN_USER}" "${random_password}" ${add} //fullname:"${GREEN_NA
     exit 1
 fi
 
-# Add user to the Administrators group if necessary
+STEP="Add user $GREEN_USER to the Administrators group if necessary"
 admingroup="$(mkgroup -l | awk -F: '{if ($2 == "S-1-5-32-544") print $1;}')"
 if ! (net localgroup "${admingroup}" | grep -q '^'"${GREEN_USER}"'$'); then
     if ! net localgroup "${admingroup}" "${GREEN_USER}" //add; then
@@ -55,13 +77,13 @@ if ! (net localgroup "${admingroup}" | grep -q '^'"${GREEN_USER}"'$'); then
     fi
 fi
 
+STEP="mkdir $GREEN_SSH_HOME"
 mkdir -p "$GREEN_SSH_HOME"
 echo $random_password > "$GREEN_SSH_HOME/${GREEN_USER}_password"
 cp "$PF/authorized_keys" $GREEN_SSH_HOME/
 chmod 700 "$GREEN_SSH_HOME"
 chmod 600 "$GREEN_SSH_HOME/authorized_keys"
 chmod 600 "$GREEN_SSH_HOME/${GREEN_USER}_password"
-
 
 "$PF/create_tasks.cmd" $GREEN_USER $random_password
 

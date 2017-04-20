@@ -73,6 +73,7 @@ Source: ".\docker-quickstart-terminal.ico"; DestDir: "{app}"; Flags: ignoreversi
 Source: "{#dockerCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\start.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\tasks.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
+Source: ".\init.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\stop_sshd.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\create_tasks.cmd"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\delete_tasks.cmd"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"

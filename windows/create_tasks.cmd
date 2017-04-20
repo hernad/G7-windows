@@ -1,6 +1,6 @@
 
-set TASK_USER=greenbox
-set TASK_PASSWORD=test01
+set TASK_USER=%1
+set TASK_PASSWORD=%2
 
 
 REM SchTasks /Create /F /SC ONSTART /TN "Hello world" /ru %TASK_USER% /rp %TASK_PASSWORD% ^

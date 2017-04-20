@@ -39,11 +39,12 @@ fi
 
 echo $STEP
 
-if [ "$1" == "create" ]
-then
-   STEP="run cmd for creating tasks and opening firewall"
-   ./create_tasks.cmd
-fi
+# ovo je sada u init proceduri
+#if [ "$1" == "create" ]
+#then
+#   STEP="run cmd for creating tasks and opening firewall"
+#   ./create_tasks.cmd
+#fi
 
 if [ "$1" == "delete" ]
 then

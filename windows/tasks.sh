@@ -1,6 +1,6 @@
 #!/bin/bash
 
-trap '[ "$?" -eq 0 ] || read -p "Looks like something went wrong in step ´$STEP´... Press any key to continue..."' EXIT
+trap '[ "$?" -eq 0 ] || read -p "tasks.sh $1: Looks like something went wrong in step ´$STEP´... Press any key to continue..."' EXIT
 
 if [ -z "$1" ]
 then
@@ -21,12 +21,12 @@ function isadmin()
     fi
 }
 
-STEP="Is running user greenbox?"
-if [ `whoami` != greenbox ]
-then
-   echo "User mora biti greenbox!"
-   exit 1
-fi
+#STEP="Is running user greenbox?"
+#if [ `whoami` != greenbox ]
+#then
+#   echo "User mora biti greenbox!"
+#   exit 1
+#fi
 
 STEP="Check running privileges"
 if ! isadmin

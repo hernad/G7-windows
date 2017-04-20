@@ -13,7 +13,7 @@ SchTasks /Create /F /SC ONSTART /TN "sshd greenbox admin 2222"  /ru %TASK_USER% 
     /TR "\"C:\Program Files\Git\bin\bash.exe\"  --login -i \"C:\Program Files\G7_greenbox\sshd.sh\" 2222"
 
 SchTasks /Create /F /SC ONSTART /TN "geenbox start"  /ru %TASK_USER% /rp %TASK_PASSWORD% ^
-        /TR "\"C:\Program Files\Git\bin\bash.exe\"  --login -i \"C:\Program Files\G7_greenbox\start.sh\" boot"
+        /TR "\"C:\Program Files\Git\bin\bash.exe\"  --login -i \"C:\Program Files\G7_greenbox\start.sh \" boot"
 
 
 echo windows xp port 2222

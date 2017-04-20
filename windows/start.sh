@@ -129,26 +129,34 @@ if  ! which $VBOX_MANAGE 2> /dev/null ; then
   exit 1
 fi
 
-"${VBOX_MANAGE}" list vms | grep \""${VM}"\" &> /dev/null
-VM_EXISTS_CODE=$?
-
-#set -e
 
 if [ "$START_PARAM" == "boot" ]
 then
-   echo "--- start via task scheduler on boot $(date) ---"
+   echo "--- start via task scheduler on boot $(date) ---" > ~/start_on_boot.log
    echo "PATH: $PATH" >> ~/start_on_boot.log
    echo "VBOX_USER_HOME: $VBOX_USER_HOME" >> ~/start_on_boot.log
    $VBOX_MANAGE list vms >> ~/start_on_boot.log
 fi
 
+"${VBOX_MANAGE}" list vms | grep \""${VM}"\" &> /dev/null
+VM_EXISTS_CODE=$?
+
+#set -e
+
 STEP="Checking if machine $VM exists"
-if [  $START_PARAM == "interactive" ] && [ $VM_EXISTS_CODE -eq 1 ]; then
+
+if [ $VM_EXISTS_CODE != 0 ] && [  $START_PARAM == "boot" ]
+then
+   echo "VM $VM error!" >> ~/start_on_boot.log
+   exit 1
+fi
+
+if [ $VM_EXISTS_CODE != 0 ]
+then
 
   # kada se via task scheduler pokrene ovo ne radi kako treba
   "${DOCKER_MACHINE}" rm -f "${VM}" &> /dev/null || :
   rm -rf ~/.docker/machine/machines/"${VM}"
-
 
   #set proxy variables if they exists
   if [ "${HTTP_PROXY}" ]; then

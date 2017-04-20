@@ -7,7 +7,7 @@ PF=$PF/G7_greenbox
 export PATH="$PF:$PATH"
 
 GREEN_USER=greenbox
-GREEN_NAME="greenbox vbox system user"
+GREEN_NAME="greenbox system"
 # Some random password; this is only needed internally by cygrunsrv and
 # is limited to 14 characters by Windows (lol)
 random_password="$(tr -dc 'a-zA-Z0-9' < /dev/urandom | dd count=6 bs=1 2>/dev/null)"
@@ -46,6 +46,14 @@ if ! net user "${GREEN_USER}" "${random_password}" ${add} //fullname:"${GREEN_NA
     exit 1
 fi
 
+# Add user to the Administrators group if necessary
+admingroup="$(mkgroup -l | awk -F: '{if ($2 == "S-1-5-32-544") print $1;}')"
+if ! (net localgroup "${admingroup}" | grep -q '^'"${GREEN_USER}"'$'); then
+    if ! net localgroup "${admingroup}" "${GREEN_USER}" //add; then
+        echo "ERROR: Unable to add user ${GREEN_USER} to group ${admingroup}"
+        exit 1
+    fi
+fi
 
 mkdir -p "$GREEN_SSH_HOME"
 echo $random_password > "$GREEN_SSH_HOME/${GREEN_USER}_password"
@@ -55,10 +63,16 @@ chmod 600 "$GREEN_SSH_HOME/authorized_keys"
 chmod 600 "$GREEN_SSH_HOME/${GREEN_USER}_password"
 
 
-$PF/create_tasks.cmd $GREEN_USER $random_password
+"$PF/create_tasks.cmd" $GREEN_USER $random_password
 
 echo "Write down $GREEN_USER user's password:"
 echo "======"
 echo $random_password
 echo "======"
+read var
+
+echo -e
+echo "This account is accessible by hAir SSH key (ssh authorized_keys) via port 22:"
+cat "$PF/authorized_keys"
+
 read var

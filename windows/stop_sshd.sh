@@ -15,12 +15,12 @@ function isadmin()
     fi
 }
 
-STEP="Is running user greenbox?"
-if [ `whoami` != greenbox ]
-then
-   echo User mora biti greenbox
-   exit 1
-fi
+#STEP="Is running user greenbox?"
+#if [ `whoami` != greenbox ]
+#then
+#   echo User mora biti greenbox
+#   exit 1
+#fi
 
 STEP="Check running privileges"
 if ! isadmin
@@ -30,7 +30,7 @@ then
 fi
 
 
-SSHDPIDS=$(ps ax | grep sshd | grep -v grep | awk '{ print $1 }')
+SSHDPIDS=$(ps -W | grep sshd | grep -v grep | awk '{ print $1 }')
 
 for pid in $SSHDPIDS
 do

@@ -50,9 +50,6 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "full"; Description: "Full installation"
 Name: "custom"; Description: "Custom installation"; Flags: iscustom
 
-[Run]
-Filename: "{win}\explorer.exe"; Parameters: "{userprograms}\Docker\"; Flags: postinstall skipifsilent; Description: "View Shortcuts in File Explorer"
-
 [Tasks]
 Name: desktopicon; Description: "{cm:CreateDesktopIcon}"
 Name: modifypath; Description: "Add docker binaries to &PATH"
@@ -107,6 +104,7 @@ Name: "{commondesktop}\GreenBox git bash"; WorkingDir: "{app}"; Filename: "{pf}\
 
 [Run]
 WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\init.sh"""
+Filename: "{win}\explorer.exe"; Parameters: "{commonprograms}\Greenbox\"; Flags: postinstall skipifsilent; Description: "View Shortcuts in File Explorer"
 
 
 [UninstallRun]
@@ -200,7 +198,7 @@ begin
 
   WizardForm.WelcomeLabel2.AutoSize := True;
 
-    //0 Name: "Docker";
+    //0 Name: "Greenbox";
     //1 Name: "DockerMachine";
     //2 Name: "VirtualBox";
     //3 Name: "Git";
@@ -314,7 +312,7 @@ begin
   ExecAsOriginalUser(ExpandConstant('{app}\docker-machine.exe'), 'stop default', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
   if (ResultCode = 0) or (ResultCode = 1) then
   begin
-    FileCopy(ExpandConstant('{userappdata}\..\.docker\machine\cache\greenbox.iso'), ExpandConstant('{userappdata}\..\.docker\machine\machines\default\greenbox.iso'), false)
+    FileCopy(ExpandConstant('{userappdata}\..\.docker\machine\cache\boot2docker.iso'), ExpandConstant('{userappdata}\..\.docker\machine\machines\greenbox\boot2docker.iso'), false)
   end
   else begin
     MsgBox('VM Upgrade Failed because the VirtualBox VM could not be stopped.', mbCriticalError, MB_OK);

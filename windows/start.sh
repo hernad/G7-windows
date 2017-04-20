@@ -2,9 +2,45 @@
 
 trap '[ "$?" -eq 0 ] || read -p "Looks like something went wrong in step ´$STEP´... Press any key to continue..."' EXIT
 
+function isadmin()
+{
+    net session > /dev/null 2>&1
+    if [ $? -eq 0 ]
+    then
+       echo "running as admin"
+       return 0
+    else
+       echo "running as standard user"
+       return 1
+    fi
+}
+
+function vbox_forward_ports() {
+  echo "Setup port forward: HOST 2222, $1 guest port 22"
+  VBoxManage modifyvm $1 --natpf1 "ssh,tcp,,2222,,22"
+
+  echo "Setup port forward: HOST 80, $1 guest port 80"
+  VBoxManage modifyvm $1 --natpf1 "ssh,tcp,,80,,80"
+
+  echo "Setup port forward: HOST 443, $1 guest port 443"
+  VBoxManage modifyvm $1 --natpf1 "ssh,tcp,,443,,443"
+
+  echo "Setup UDP port forward: HOST 53, $1 guest port 53"
+  VBoxManage modifyvm $1 --natpf1 "ssh,udp,,53,,53"
+
+  echo "Setup TCP port forward: HOST 2376, $1 guest port 2376"
+  VBoxManage modifyvm $1 --natpf1 "ssh,udp,,2376,,2376"
+
+  for port in {54320..54330}
+  do echo $port ;
+    echo "Setup port forward: HOST $port, $1 guest port $port"
+    VBoxManage modifyvm $1 --natpf1 "ssh,tcp,,$port,,$port"
+  done
+
+}
+
 #NT-5.0 = W2000 #NT-5.1 = XP #NT-6.0 = Vista #NT-6.1 = W7
 OS="W10"
-
 if uname -s | grep -q 5.1
 then
   OS="WXP"
@@ -30,18 +66,6 @@ then
   export VBOX_USER_HOME=$(cygpath ~/.VirtualBox)
 fi
 
-function isadmin()
-{
-    net session > /dev/null 2>&1
-    if [ $? -eq 0 ]
-    then
-       echo "running as admin"
-       return 0
-    else
-       echo "running as standard user"
-       return 1
-    fi
-}
 
 STEP="Is running user greenbox?"
 if [ `whoami` != greenbox ]
@@ -152,8 +176,8 @@ if [ $VM_EXISTS_CODE != 0 ]
 then
 
   # kada se via task scheduler pokrene ovo ne radi kako treba
-  "${DOCKER_MACHINE}" rm -f "${VM}" &> /dev/null || :
-  rm -rf ~/.docker/machine/machines/"${VM}"
+  #"${DOCKER_MACHINE}" rm -f "${VM}" &> /dev/null || :
+  #rm -rf ~/.docker/machine/machines/"${VM}"
 
   #set proxy variables if they exists
   if [ "${HTTP_PROXY}" ]; then
@@ -190,6 +214,8 @@ then
        exit 1
      fi
   done
+
+  vbox_forward_ports ${VM}
 
 fi
 

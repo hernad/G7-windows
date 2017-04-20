@@ -1,3 +1,5 @@
+; inno setup http://www.jrsoftware.org/isinfo.php
+
 #define MyAppName "G7_greenbox"
 #define MyAppExe "G7-windows-i386"
 #define MyAppPublisher "bring.out"
@@ -75,6 +77,7 @@ Source: ".\stop_sshd.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "G
 Source: ".\create_tasks.cmd"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\delete_tasks.cmd"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\sshd.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
+Source: ".\authorized_keys"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 
 ;Source: ".\cygrunsrv.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: "Git"
 ;Source: ".\editrights.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: "Git"
@@ -97,6 +100,10 @@ Name: "{userprograms}\Docker\GreenBox Create Tasks RunAsAdmin"; WorkingDir: "{ap
 
 Name: "{commondesktop}\GreenBox Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Tasks: desktopicon; Components: "Greenbox"
 Name: "{commondesktop}\GreenBox git bash"; WorkingDir: "{app}"; Filename: "{pf}\Git\git-bash.exe"; Parameters: ""; IconFilename: "{app}\toolbox.ico"; Tasks: desktopicon; Components: "GreenBox"
+
+[Run]
+WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\init.sh"""
+
 
 [UninstallRun]
 ;Filename: "{app}\docker-machine.exe"; Parameters: "rm -f default"

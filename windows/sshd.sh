@@ -1,10 +1,21 @@
 #!/bin/bash
 
-echo "=== start sshd from task scheddduler $(date)  ==" >> ~/sshd_task.txt
+# default virtualbox name: greenbox
+VM=${DOCKER_MACHINE_NAME:-greenbox}
+
+echo "=== start sshd / vbox ${VM} from task scheduler $(date)  ==" >> ~/sshd_task.txt
+
+if [ ! -z "$VBOX_MSI_INSTALL_PATH" ]; then
+  VBOX_INSTALL_PATH=$(cygpath $VBOX_MSI_INSTALL_PATH)
+  VBOX_INSTALL_PATH=$(echo $VBOX_INSTALL_PATH | sed -e 's/\n//')
+  export PATH="${VBOX_INSTALL_PATH}":$PATH
+else
+  VBOX_INSTALL_PATH=${VBOX_INSTALL_PATH:-$PF/Oracle/VirtualBox/}
+  export PATH="${VBOX_INSTALL_PATH}":$PATH
+fi
 
 [ -d /var/log ] || mkdir -p /var/log
 [ -f /etc/ssh/ssh_host_rsa_key ] || ssh-keygen -P "" -f /etc/ssh/ssh_host_rsa_key
-
 
 EMPTY_DIR="/var/empty"
 [ -d /var/empty ] || mkdir -p /var/empty
@@ -30,6 +41,9 @@ then
   PORT=" -p $1"
 fi
 
-echo $PORT >> ~/sshd_task.txt
+echo "sshd port: $PORT" >> ~/sshd_task.txt
+which VBoxHeadless >> ~/sshd_tasks.txt
+
+VBoxHeadless -startvm ${VM} &
 
 /usr/bin/sshd -D $PORT

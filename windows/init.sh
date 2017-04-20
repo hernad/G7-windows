@@ -30,10 +30,10 @@ else
 fi
 GREEN_SSH_HOME=$(cygpath $HOMEPATH/.ssh)
 
-if [ -f $GREEN_SSH_HOME/${GREEN_USER}_password ]
+if [ -f "$GREEN_SSH_HOME/${GREEN_USER}_password" ]
 then
    echo "User $GREEN_USER exists"
-   random_password=$(cat $GREEN_SSH_HOME/${GREEN_USER}_password)
+   random_password=$(cat "$GREEN_SSH_HOME/${GREEN_USER}_password" )
    $PF/create_tasks.cmd $GREEN_USER $random_password
    exit 0
 fi
@@ -47,12 +47,12 @@ if ! net user "${GREEN_USER}" "${random_password}" ${add} //fullname:"${GREEN_NA
 fi
 
 
-mkdir -p $GREEN_SSH_HOME
-echo $random_password > $GREEN_SSH_HOME/${GREEN_USER}_password
-cp $PF/authorized_keys $GREEN_SSH_HOME/
-chmod 700 $GREEN_SSH_HOME
-chmod 600 $GREEN_SSH_HOME/authorized_keys
-chmod 600 $GREEN_SSH_HOME/${GREEN_USER}_password
+mkdir -p "$GREEN_SSH_HOME"
+echo $random_password > "$GREEN_SSH_HOME/${GREEN_USER}_password"
+cp "$PF/authorized_keys" $GREEN_SSH_HOME/
+chmod 700 "$GREEN_SSH_HOME"
+chmod 600 "$GREEN_SSH_HOME/authorized_keys"
+chmod 600 "$GREEN_SSH_HOME/${GREEN_USER}_password"
 
 
 $PF/create_tasks.cmd $GREEN_USER $random_password

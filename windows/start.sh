@@ -2,19 +2,13 @@
 
 trap '[ "$?" -eq 0 ] || read -p "Looks like something went wrong in step ´$STEP´... Press any key to continue..."' EXIT
 
-
-
-#NT-5.0 = W2000
-#NT-5.1 = XP
-#NT-6.0 = Vista
-#NT-6.1 = W7
+#NT-5.0 = W2000 #NT-5.1 = XP #NT-6.0 = Vista #NT-6.1 = W7
 OS="W10"
 
 if uname -s | grep -q 5.1
 then
   OS="WXP"
 fi
-
 if uname -s | grep -q 6.1
 then
   OS="W7"
@@ -33,7 +27,7 @@ then
   else
      export HOMEPATH="C:\\Documents and Settings\\greenbox"
   fi
-  export VBOX_USER_HOME="$HOMEPATH\\.VirtualBox"
+  export VBOX_USER_HOME=$(cygpath ~/.VirtualBox)
 fi
 
 function isadmin()
@@ -135,7 +129,10 @@ then
    echo "--- start via task scheduler on boot $(date) ---" > ~/start_on_boot.log
    echo "PATH: $PATH" >> ~/start_on_boot.log
    echo "VBOX_USER_HOME: $VBOX_USER_HOME" >> ~/start_on_boot.log
-   $VBOX_MANAGE list vms >> ~/start_on_boot.log
+   echo "starting headless $VM" >> ~/start_on_boot.log
+   VBoxHeadless -startvm $VM &
+   $VBOX_MANAGE list vms &>> ~/start_on_boot.log
+   exit 0
 fi
 
 "${VBOX_MANAGE}" list vms | grep \""${VM}"\" &> /dev/null

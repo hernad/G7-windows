@@ -70,11 +70,11 @@ Name: "Git"; Description: "Git for Windows"; Types: full custom; Flags: disablen
 Source: ".\docker-quickstart-terminal.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#dockerCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\start.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
-
 Source: ".\tasks.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\stop_sshd.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\create_tasks.cmd"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\delete_tasks.cmd"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
+Source: ".\sshd.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 
 ;Source: ".\cygrunsrv.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: "Git"
 ;Source: ".\editrights.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: "Git"
@@ -87,7 +87,7 @@ Source: "{#git}"; DestDir: "{app}\installers\git"; DestName: "git.exe"; AfterIns
 Source: "{#virtualBoxCommon}"; DestDir: "{app}\installers\virtualbox"; Components: "VirtualBox"
 Source: "{#virtualBoxMsi}"; DestDir: "{app}\installers\virtualbox"; DestName: "virtualbox.msi"; AfterInstall: RunInstallVirtualBox(); Components: "VirtualBox"
 ;Source: "{#vs2013_vcredist_x86}";  DestDir: "{app}\installers\vs2013_vcredist_x86"; DestName: "vcredist_x86.exe"; AfterInstall: RunInstallVCRedistX86(); Components: "VCRedist2013"
-Source: ".\sshd.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Git"
+
 
 [Icons]
 ;Name: "{userprograms}\Docker\Kitematic (Alpha)"; WorkingDir: "{app}"; Filename: "{app}\kitematic\Kitematic.exe"; Components: "Kitematic"

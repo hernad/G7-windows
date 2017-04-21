@@ -1,6 +1,6 @@
 ; inno setup http://www.jrsoftware.org/isinfo.php
 
-#define MyAppName "G7_greenbox"
+#define MyAppName "G7_bringout"
 #define MyAppExe "G7-windows-i386"
 #define MyAppPublisher "bring.out"
 #define MyAppURL "https://www.bring.out.ba"
@@ -309,7 +309,7 @@ function UpgradeVM() : Boolean;
 var
   ResultCode: Integer;
 begin
-  WizardForm.StatusLabel.Caption := 'Upgrading G7_greenbox VM...'
+  WizardForm.StatusLabel.Caption := 'Upgrading G7_bringout VM...'
   ExecAsOriginalUser(ExpandConstant('{app}\docker-machine.exe'), 'stop default', '', SW_HIDE, ewWaitUntilTerminated, ResultCode)
   if (ResultCode = 0) or (ResultCode = 1) then
   begin

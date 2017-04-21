@@ -29,9 +29,13 @@ then
   exit 1
 fi
 
-GREENBOX_INSTALL_PATH=$1
+GREENBOX_INSTALL_PATH="$1"
+echo "GREENBOX_INSTALL_PATH_DEBUG: $GREENBOX_INSTALL_PATH"
+
 GREENBOX_INSTALL_PATH=$(cygpath $GREENBOX_INSTALL_PATH)
 GREENBOX_INSTALL_PATH=$(echo $GREENBOX_INSTALL_PATH | sed -e 's/\n//')
+
+echo "GREENBOX_INSTALL_PATH: $GREENBOX_INSTALL_PATH"
 
 
 export PATH="$PF:$PATH"
@@ -58,25 +62,25 @@ fi
 #     HOMEPATH="C:\\Documents and Settings\\$GREEN_USER"
 #fi
 HOMEPATH="$GREENBOX_INSTALL_PATH"
-
 GREEN_SSH_HOME=$(cygpath $HOMEPATH/.ssh)
-GREEN_HOME=$(cygpath $HOMEPATH)
+
+GREEN_WINDOWS_HOME=$(cygpath -w $HOMEPATH)
 
 STEP="$GREEN_USER exists?"
 if net user "${GREEN_USER}" >/dev/null
 then
    echo "User $GREEN_USER exists"
    random_password=$(cat "$GREEN_SSH_HOME/${GREEN_USER}_password" )
-   "$GREENBOX_INSTALL_PATH/create_tasks.cmd" \"$(cygpath -w "$GREENBOX_INSTALL_PATH")\" $GREEN_USER $random_password
+   "$GREENBOX_INSTALL_PATH/create_tasks.cmd" \"$GREEN_WINDOWS_HOME\" $GREEN_USER $random_password
    exit 0
 fi
 
 STEP="Create $GREEN_USER user"
-if ! net user "${GREEN_USER}" >/dev/null
+if ! net user "${GREEN_USER}" &>/dev/null
 then
    rm -rf "$HOMEPATH"
    if ! net user "${GREEN_USER}" "${random_password}" //add //fullname:"${GREEN_NAME}" \
-              //homedir:"$(cygpath -w $HOMEPATH)" //expires:never //passwordchg:no //yes; then
+              //homedir:"$GREEN_WINDOWS_HOME" //expires:never //passwordchg:no //yes; then
     echo "ERROR: Unable to create Windows user ${GREEN_USER}"
     exit 1
    fi

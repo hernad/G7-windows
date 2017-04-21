@@ -57,13 +57,13 @@ if [ ! -z "$1"  ]
 then
   START_PARAM="$1" # boot
 
-  if [ $OS == "W7" ] || [ $OS == "W10" ]
-  then
-     export HOMEPATH="\\Users\\greenbox"
-  else
-     export HOMEPATH="C:\\Documents and Settings\\greenbox"
-  fi
-  export VBOX_USER_HOME=$(cygpath ~/.VirtualBox)
+  #if [ $OS == "W7" ] || [ $OS == "W10" ]
+  #then
+  #   export HOMEPATH="\\Users\\greenbox"
+  #else
+  #   export HOMEPATH="C:\\Documents and Settings\\greenbox"
+  #fi
+  export VBOX_USER_HOME="$(cygpath -w $GREENBOX_INSTALL_PATH/.VirtualBox)"
 fi
 
 
@@ -81,7 +81,7 @@ then
   exit 1
 fi
 
-./set_path.sh
+$GREENBOX_INSTALL_PATH/set_path.sh
 
 #echo $PATH
 

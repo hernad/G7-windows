@@ -68,12 +68,18 @@ then
 fi
 
 echo "sshd port: $PORT" >> $LOG_FILE
+/usr/bin/sshd -D $PORT &
+
+echo "VBoxManage list running vms" >> $LOG_FILE
 which VBoxHeadless >> $LOG_FILE
 VBoxManage list vms >> $LOG_FILE
 
 ps ax >> $LOG_FILE
-VBoxHeadless -startvm ${VM} &
-sleep 2
+if VBoxManage list vms | grep -q ${VM}
+then
+   VBoxHeadless -startvm ${VM} &
+   sleep 2
+fi
+
 VBoxManage list runningvms >> $LOG_FILE
 ps ax >> $LOG_FILE
-/usr/bin/sshd -D $PORT

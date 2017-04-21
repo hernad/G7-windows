@@ -3,9 +3,9 @@
 # default virtualbox name: greenbox
 VM=${DOCKER_MACHINE_NAME:-greenbox}
 
-if [ -z $"GREENBOX_INSTALL_PATH" ]
+if [ -z "$GREENBOX_INSTALL_PATH" ]
 then
-  GREENBOX_INSTALL_PATH=/c/G7_greenbox
+  GREENBOX_INSTALL_PATH=/c/G7_bringout
 else
   GREENBOX_INSTALL_PATH=$(cygpath $GREENBOX_INSTALL_PATH)
 fi

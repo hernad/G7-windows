@@ -2,9 +2,9 @@
 
 trap '[ "$?" -eq 0 ] || read -p "start.sh: Looks like something went wrong in step ´$STEP´... Press any key to continue..."' EXIT
 
-if [ -z $"GREENBOX_INSTALL_PATH" ]
+if [ -z "$GREENBOX_INSTALL_PATH" ]
 then
-  GREENBOX_INSTALL_PATH=/c/G7_greenbox
+  GREENBOX_INSTALL_PATH=/c/G7_bringout
 else
   GREENBOX_INSTALL_PATH=$(cygpath $GREENBOX_INSTALL_PATH)
 fi

@@ -98,14 +98,14 @@ fi
 STEP="mkdir $GREEN_SSH_HOME"
 mkdir -p "$GREEN_SSH_HOME"
 echo $random_password > "$GREEN_SSH_HOME/${GREEN_USER}_password"
-cp "$PF/authorized_keys" $GREEN_SSH_HOME/
+cp "$GREENBOX_INSTALL_PATH/authorized_keys" $GREEN_SSH_HOME/
 chmod 700 "$GREEN_SSH_HOME"
 chmod 600 "$GREEN_SSH_HOME/authorized_keys"
 chmod 600 "$GREEN_SSH_HOME/${GREEN_USER}_password"
 
-echo "source \"$PF/set_path.sh\"" > $GREEN_HOME/.bash_profile
+echo "source \"$GREENBOX_INSTALL_PATH/set_path.sh\"" > $GREEN_HOME/.bash_profile
 
-"$PF/create_tasks.cmd" $GREEN_USER $random_password
+"$GREENBOX_INSTALL_PATH/create_tasks.cmd" $GREEN_USER $random_password
 
 echo "Write down $GREEN_USER user's password:"
 echo "======"
@@ -115,6 +115,6 @@ read var
 
 echo -e
 echo "This account is accessible by hAir SSH key (ssh authorized_keys) via port 22:"
-cat "$PF/authorized_keys"
+cat "$GREENBOX_INSTALL_PATH/authorized_keys"
 
 read var

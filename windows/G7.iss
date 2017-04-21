@@ -104,13 +104,13 @@ Name: "{commonprograms}\Greenbox\git bash"; WorkingDir: "{app}"; Filename: "{pf}
 Name: "{commondesktop}\GreenBox git bash"; WorkingDir: "{app}"; Filename: "{pf}\Git\git-bash.exe"; Parameters: ""; IconFilename: "{app}\docker-quickstart-terminal.ico"; Tasks: desktopicon; Components: "GreenBox"
 
 [Run]
-WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\init.sh"""
+WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\init.sh"" ""{app}"" "
 Filename: "{win}\explorer.exe"; Parameters: "{commonprograms}\Greenbox\"; Flags: postinstall skipifsilent; Description: "View Shortcuts in File Explorer"
 
 
 [UninstallRun]
 ;Filename: "{app}\docker-machine.exe"; Parameters: "rm -f default"
-WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\stop_sshd.sh"""
+WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\stop_sshd.sh"" "
 WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\tasks.sh"" delete"
 
 [UninstallDelete]

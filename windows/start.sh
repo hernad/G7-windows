@@ -1,6 +1,7 @@
 #!/bin/bash
 
 trap '[ "$?" -eq 0 ] || read -p "start.sh: Looks like something went wrong in step ´$STEP´... Press any key to continue..."' EXIT
+first_install=0
 
 if [ -z "$GREENBOX_INSTALL_PATH" ]
 then
@@ -54,6 +55,8 @@ function vbox_forward_ports() {
   done
 
   VBoxManage startvm ${VM}  --type headless
+  echo "Wait 5 sec ..."
+  sleep 5
 
 }
 
@@ -177,6 +180,7 @@ fi
 if [ $VM_EXISTS_CODE != 0 ]
 then
 
+  first_install=1
   # kada se via task scheduler pokrene ovo ne radi kako treba
   #"${DOCKER_MACHINE}" rm -f "${VM}" &> /dev/null || :
   #rm -rf ~/.docker/machine/machines/"${VM}"
@@ -233,7 +237,8 @@ STEP="Setting env"
 eval "$(${DOCKER_MACHINE} env --shell=bash --no-proxy ${VM})"
 
 STEP="Finalize"
-clear
+[  "$first_install" == "0" ] && clear
+
 cat << EOF
 
 

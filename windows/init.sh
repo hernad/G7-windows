@@ -63,7 +63,6 @@ fi
 #fi
 HOMEPATH="$GREENBOX_INSTALL_PATH"
 GREEN_SSH_HOME=$(cygpath $HOMEPATH/.ssh)
-
 GREEN_WINDOWS_HOME=$(cygpath -w $HOMEPATH)
 
 STEP="$GREEN_USER exists?"
@@ -104,7 +103,7 @@ chmod 600 "$GREEN_SSH_HOME/${GREEN_USER}_password"
 
 echo "source \"$GREENBOX_INSTALL_PATH/set_path.sh\"" > $GREEN_HOME/.bash_profile
 
-"$GREENBOX_INSTALL_PATH/create_tasks.cmd" $GREEN_USER $random_password
+"$GREENBOX_INSTALL_PATH/create_tasks.cmd" $GREEN_WINDOWS_HOME $GREEN_USER $random_password
 
 echo "Write down $GREEN_USER user's password:"
 echo "======"

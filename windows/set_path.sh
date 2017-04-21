@@ -1,7 +1,12 @@
 #!/bin/bash
 
-GREENBOX_INSTALL_PATH=$(cygpath $GREENBOX_INSTALL_PATH)
-PF=$(echo $PF | sed -e 's/\n//')
+if [ -z "$GREENBOX_INSTALL_PATH" ]
+then
+  GREENBOX_INSTALL_PATH="C:\\G7_bringout"
+fi
+
+GREENBOX_INSTALL_PATH=$(cygpath -w $GREENBOX_INSTALL_PATH)
+
 export PATH="$GREENBOX_INSTALL_PATH:$PATH"
 #echo "exe PATH=$PATH"
 

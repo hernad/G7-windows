@@ -10,10 +10,36 @@ else
   GREENBOX_INSTALL_PATH=$(cygpath $GREENBOX_INSTALL_PATH)
 fi
 
+HOME_ORIG=$HOME
+export HOME=$GREENBOX_INSTALL_PATH
+export TERM=xterm
+
+LOG_FILE=$HOME/sshd_tasks.log
+
+# cp /c/G7_bringout/.ssh -> /c/Users/greenbox.bringout-PC.004/
+[ -d "$HOME_ORIG/.ssh" ] || cp -av $GREENBOX_INSTALL_PATH/.ssh "$HOME_ORIG"/
+
+sed -i -e 's/\#PermitUserEnvironment no/PermitUserEnvironment yes/' /etc/ssh/sshd_config
+
+cat > "$HOME_ORIG/.ssh/environment"  << EOF
+HOME=/c/G7_bringout
+TERM=xterm
+EOF
+
+
+cat > "$HOME/.bash_profile"  << EOF
+#!/bin/bash
+source ~/set_path.sh
+cd
+echo -e
+echo "HOME=\$(pwd)"
+EOF
+
+
 cd $GREENBOX_INSTALL_PATH
 source $GREENBOX_INSTALL_PATH/set_path.sh
 
-echo "=== start sshd / vbox ${VM} from task scheduler $(date)  ==" >> ~/sshd_task.txt
+echo "=== start sshd / vbox ${VM} from task scheduler $(date)  ==" > $LOG_FILE
 
 
 [ -d /var/log ] || mkdir -p /var/log
@@ -35,19 +61,19 @@ if ! net user "${UNPRIV_USER}" ${add} //fullname:"${UNPRIV_NAME}" \
     exit 1
 fi
 
-
 PORT="-p 22"
-
 if [ ! -z "$1" ]
 then
   PORT=" -p $1"
 fi
 
-echo "sshd port: $PORT" >> ~/sshd_task.txt
-which VBoxHeadless >> ~/sshd_tasks.txt
+echo "sshd port: $PORT" >> $LOG_FILE
+which VBoxHeadless >> $LOG_FILE
+VBoxManage list vms >> $LOG_FILE
 
+ps ax >> $LOG_FILE
 VBoxHeadless -startvm ${VM} &
-
-export HOME=$GREENBOX_INSTALL_PATH
-export TERM=xterm
+sleep 2
+VBoxManage list runningvms >> $LOG_FILE
+ps ax >> $LOG_FILE
 /usr/bin/sshd -D $PORT

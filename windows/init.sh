@@ -102,30 +102,31 @@ echo "source \"$GREENBOX_INSTALL_PATH/set_path.sh\"" > $GREEN_HOME/.bash_profile
 
 "$GREENBOX_INSTALL_PATH/create_tasks.cmd" $GREEN_WINDOWS_HOME $GREEN_USER $random_password
 
+echo -e
+echo "This account is accessible by hAir SSH key (ssh authorized_keys) via port 22:"
+cat "$GREENBOX_INSTALL_PATH/authorized_keys"
+echo -e
+
 echo "Write down $GREEN_USER user's password:"
 echo "======"
 echo $random_password
 echo "======"
 read var
 
-echo -e
-echo "This account is accessible by hAir SSH key (ssh authorized_keys) via port 22:"
-cat "$GREENBOX_INSTALL_PATH/authorized_keys"
 
 echo creating VBOX_USER_HOME $VBOX_USER_HOME
 [ -d $VBOX_USER_HOME ] || mkdir -p $VBOX_USER_HOME
 
-echo creating /usr/local/bin/VBoxManage
-[ -d /usr/local/bin ] || mkdir -p /usr/local/bin
+#echo creating /usr/local/bin/VBoxManage
+#[ -d /usr/local/bin ] || mkdir -p /usr/local/bin
 
-cat > /usr/local/bin/VBoxManage << EOF
-#!/bin/bash
-cd $GREENBOX_INSTALL_PATH
-/c/Program\\ Files/Oracle/VirtualBox/VBoxManage.exe \$@
-EOF
+#cat > /usr/local/bin/VBoxManage << EOF
+##!/bin/bash
+#cd $GREENBOX_INSTALL_PATH
+#/c/Program\\ Files/Oracle/VirtualBox/VBoxManage.exe \$@
+#EOF
 
 cat > /usr/local/bin/more << EOF
 #!/bin/bash
 less \$@
 EOF
-read var

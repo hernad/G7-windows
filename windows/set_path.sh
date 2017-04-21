@@ -5,9 +5,12 @@ then
   GREENBOX_INSTALL_PATH="C:\\G7_bringout"
 fi
 
-GREENBOX_INSTALL_PATH=$(cygpath -w $GREENBOX_INSTALL_PATH)
+export GREENBOX_INSTALL_PATH=$(cygpath $GREENBOX_INSTALL_PATH)
 
-export PATH="$GREENBOX_INSTALL_PATH:$PATH"
+PF=$(cygpath $PROGRAMFILES)
+PF=$(echo $PF | sed -e 's/\n//')
+
+export PATH="$GREENBOX_INSTALL_PATH":$PATH
 #echo "exe PATH=$PATH"
 
 if [ ! -z "$VBOX_MSI_INSTALL_PATH" ]; then

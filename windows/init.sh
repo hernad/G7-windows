@@ -2,6 +2,21 @@
 
 trap '[ "$?" -eq 0 ] || read -p "init.sh: Looks like something went wrong in step ´$STEP´... Press any key to continue..."' EXIT
 
+STEP="Input parameter GREENBOX_INSTALL_PATH"
+if [ -z "$1" ]
+then
+  echo "usage: ./$0 GREENBOX_INSTALL_PATH"
+  exit 1
+fi
+
+GREENBOX_INSTALL_PATH="$1"
+echo "GREENBOX_INSTALL_PATH_DEBUG: $GREENBOX_INSTALL_PATH"
+
+GREENBOX_INSTALL_PATH=$(cygpath $GREENBOX_INSTALL_PATH)
+GREENBOX_INSTALL_PATH=$(echo $GREENBOX_INSTALL_PATH | sed -e 's/\n//')
+
+echo "GREENBOX_INSTALL_PATH: $GREENBOX_INSTALL_PATH"
+
 function isadmin()
 {
     net session > /dev/null 2>&1
@@ -21,24 +36,6 @@ then
   echo "You have to run this script as admin user!"
   exit 1
 fi
-
-STEP="Input parameter GREENBOX_INSTALL_PATH"
-if [ -z "$1" ]
-then
-  echo "usage: ./$0 GREENBOX_INSTALL_PATH"
-  exit 1
-fi
-
-GREENBOX_INSTALL_PATH="$1"
-echo "GREENBOX_INSTALL_PATH_DEBUG: $GREENBOX_INSTALL_PATH"
-
-GREENBOX_INSTALL_PATH=$(cygpath $GREENBOX_INSTALL_PATH)
-GREENBOX_INSTALL_PATH=$(echo $GREENBOX_INSTALL_PATH | sed -e 's/\n//')
-
-echo "GREENBOX_INSTALL_PATH: $GREENBOX_INSTALL_PATH"
-
-
-export PATH="$PF:$PATH"
 
 GREEN_USER="greenbox"
 GREEN_NAME="greenbox"
@@ -114,5 +111,16 @@ read var
 echo -e
 echo "This account is accessible by hAir SSH key (ssh authorized_keys) via port 22:"
 cat "$GREENBOX_INSTALL_PATH/authorized_keys"
+
+echo creating VBOX_USER_HOME $VBOX_USER_HOME
+[ -d $VBOX_USER_HOME ] || mkdir -p $VBOX_USER_HOME
+
+echo creating /usr/local/bin/VBoxManage
+[ -d /usr/local/bin ] || mkdir -p /usr/local/bin
+
+cat > /usr/local/bin/VBoxManage << EOF
+#!/bin/bash
+/c/Program\\ Files/Oracle/VirtualBox/VBoxManage.exe \$@
+EOF
 
 read var

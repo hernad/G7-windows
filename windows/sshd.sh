@@ -3,16 +3,18 @@
 # default virtualbox name: greenbox
 VM=${DOCKER_MACHINE_NAME:-greenbox}
 
+if [ -z $"GREENBOX_INSTALL_PATH" ]
+then
+  GREENBOX_INSTALL_PATH=/c/G7_greenbox
+else
+  GREENBOX_INSTALL_PATH=$(cygpath $GREENBOX_INSTALL_PATH)
+fi
+
+cd $GREENBOX_INSTALL_PATH
+source $GREENBOX_INSTALL_PATH/set_path.sh
+
 echo "=== start sshd / vbox ${VM} from task scheduler $(date)  ==" >> ~/sshd_task.txt
 
-if [ ! -z "$VBOX_MSI_INSTALL_PATH" ]; then
-  VBOX_INSTALL_PATH=$(cygpath $VBOX_MSI_INSTALL_PATH)
-  VBOX_INSTALL_PATH=$(echo $VBOX_INSTALL_PATH | sed -e 's/\n//')
-  export PATH="${VBOX_INSTALL_PATH}":$PATH
-else
-  VBOX_INSTALL_PATH=${VBOX_INSTALL_PATH:-$PF/Oracle/VirtualBox/}
-  export PATH="${VBOX_INSTALL_PATH}":$PATH
-fi
 
 [ -d /var/log ] || mkdir -p /var/log
 [ -f /etc/ssh/ssh_host_rsa_key ] || ssh-keygen -P "" -f /etc/ssh/ssh_host_rsa_key

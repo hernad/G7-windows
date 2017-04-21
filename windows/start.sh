@@ -2,6 +2,17 @@
 
 trap '[ "$?" -eq 0 ] || read -p "start.sh: Looks like something went wrong in step ´$STEP´... Press any key to continue..."' EXIT
 
+if [ -z $"GREENBOX_INSTALL_PATH" ]
+then
+  GREENBOX_INSTALL_PATH=/c/G7_greenbox
+else
+  GREENBOX_INSTALL_PATH=$(cygpath $GREENBOX_INSTALL_PATH)
+fi
+
+cd $GREENBOX_INSTALL_PATH
+
+source $GREENBOX_INSTALL_PATH/set_path.sh
+
 function isadmin()
 {
     net session > /dev/null 2>&1
@@ -81,8 +92,6 @@ then
   exit 1
 fi
 
-$GREENBOX_INSTALL_PATH/set_path.sh
-
 #echo $PATH
 
 # default virtualbox name: greenbox
@@ -121,12 +130,13 @@ if  [[ $all_proxy != socks* ]]; then
   unset all_proxy
 fi
 
+STEP="Check which $DOCKER_MACHINE"
 if ! which $DOCKER_MACHINE 2> /dev/null ; then
   echo "Docker Machine is not installed. Please re-run the GreenBox Installer and try again."
   exit 1
 fi
 
-
+STEP="Check which $VBOX_MANAGE"
 if  ! which $VBOX_MANAGE 2> /dev/null ; then
   echo "VirtualBox is not installed. Please re-run the GreenBox Installer and try again."
   exit 1

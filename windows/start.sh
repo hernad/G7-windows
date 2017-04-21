@@ -27,26 +27,33 @@ function isadmin()
 }
 
 function vbox_forward_ports() {
-  echo "Setup port forward: HOST 2222, $1 guest port 22"
-  VBoxManage modifyvm $1 --natpf1 "ssh,tcp,,2222,,22"
 
-  echo "Setup port forward: HOST 80, $1 guest port 80"
-  VBoxManage modifyvm $1 --natpf1 "ssh,tcp,,80,,80"
+  VM=$1
 
-  echo "Setup port forward: HOST 443, $1 guest port 443"
-  VBoxManage modifyvm $1 --natpf1 "ssh,tcp,,443,,443"
+  VBoxManage controlvm ${VM} savestate
 
-  echo "Setup UDP port forward: HOST 53, $1 guest port 53"
-  VBoxManage modifyvm $1 --natpf1 "ssh,udp,,53,,53"
+  echo "Setup port forward: HOST 2222, $VM guest port 22"
+  VBoxManage modifyvm $VM --natpf1 "ssh2222,tcp,,2222,,22"
 
-  echo "Setup TCP port forward: HOST 2376, $1 guest port 2376"
-  VBoxManage modifyvm $1 --natpf1 "ssh,udp,,2376,,2376"
+  echo "Setup port forward: HOST 80, $VM guest port 80"
+  VBoxManage modifyvm $VM --natpf1 "http,tcp,,80,,80"
+
+  echo "Setup port forward: HOST 443, $VM guest port 443"
+  VBoxManage modifyvm $VM --natpf1 "https,tcp,,443,,443"
+
+  echo "Setup UDP port forward: HOST 53, $VM guest port 53"
+  VBoxManage modifyvm $VM --natpf1 "dns,udp,,53,,53"
+
+  echo "Setup TCP port forward: HOST 2376, $VM guest port 2376"
+  VBoxManage modifyvm $VM --natpf1 "docker,tcp,,2376,,2376"
 
   for port in {54320..54330}
   do echo $port ;
     echo "Setup port forward: HOST $port, $1 guest port $port"
-    VBoxManage modifyvm $1 --natpf1 "ssh,tcp,,$port,,$port"
+    VBoxManage modifyvm $1 --natpf1 "psql$port,tcp,,$port,,$port"
   done
+
+  VBoxManage startvm ${VM}  --type headless
 
 }
 

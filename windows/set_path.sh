@@ -14,7 +14,7 @@ else
   export PATH="${VBOX_INSTALL_PATH}":$PATH
 fi
 
-export VBOX_USER_HOME=$(cygpath -w $GREENBOX_INSTALL_PATH/.VirtualBox)
+export VBOX_USER_HOME=$(cygpath $GREENBOX_INSTALL_PATH/.VirtualBox)
 
 cat << EOF
 

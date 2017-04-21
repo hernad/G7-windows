@@ -63,7 +63,7 @@ then
   #else
   #   export HOMEPATH="C:\\Documents and Settings\\greenbox"
   #fi
-  export VBOX_USER_HOME="$(cygpath -w $GREENBOX_INSTALL_PATH/.VirtualBox)"
+  export VBOX_USER_HOME="$(cygpath $GREENBOX_INSTALL_PATH/.VirtualBox)"
 fi
 
 

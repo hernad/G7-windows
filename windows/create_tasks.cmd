@@ -1,7 +1,8 @@
 
-set TASK_USER=%1
-set TASK_PASSWORD=%2
-set GREENBOX_INSTALL_PATH=%3
+set GREENBOX_INSTALL_PATH=%1
+set TASK_USER=%2
+set TASK_PASSWORD=%3
+
 
 
 REM SchTasks /Create /F /SC ONSTART /TN "Hello world" /ru %TASK_USER% /rp %TASK_PASSWORD% ^

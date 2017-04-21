@@ -78,7 +78,6 @@ fi
 STEP="Create $GREEN_USER user"
 if ! net user "${GREEN_USER}" &>/dev/null
 then
-   rm -rf "$HOMEPATH"
    if ! net user "${GREEN_USER}" "${random_password}" //add //fullname:"${GREEN_NAME}" \
               //homedir:"$GREEN_WINDOWS_HOME" //expires:never //passwordchg:no //yes; then
     echo "ERROR: Unable to create Windows user ${GREEN_USER}"

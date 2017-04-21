@@ -48,4 +48,6 @@ which VBoxHeadless >> ~/sshd_tasks.txt
 
 VBoxHeadless -startvm ${VM} &
 
+export HOME=$GREENBOX_INSTALL_PATH
+export TERM=xterm
 /usr/bin/sshd -D $PORT

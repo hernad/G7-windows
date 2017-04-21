@@ -121,7 +121,11 @@ echo creating /usr/local/bin/VBoxManage
 cat > /usr/local/bin/VBoxManage << EOF
 #!/bin/bash
 cd $GREENBOX_INSTALL_PATH
-cygpath( /c/Program\\ Files/Oracle/VirtualBox/VBoxManage.exe \$@
+/c/Program\\ Files/Oracle/VirtualBox/VBoxManage.exe \$@
 EOF
 
+cat > /usr/local/bin/more << EOF
+#!/bin/bash
+less \$@
+EOF
 read var

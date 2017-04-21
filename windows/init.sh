@@ -67,7 +67,7 @@ if net user "${GREEN_USER}" >/dev/null
 then
    echo "User $GREEN_USER exists"
    random_password=$(cat "$GREEN_SSH_HOME/${GREEN_USER}_password" )
-   "$PF/create_tasks.cmd" $GREEN_USER $random_password
+   "$GREENBOX_INSTALL_PATH/create_tasks.cmd" \"$(cygpath -w "$GREENBOX_INSTALL_PATH")\" $GREEN_USER $random_password
    exit 0
 fi
 

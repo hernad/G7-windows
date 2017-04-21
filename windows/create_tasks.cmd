@@ -1,14 +1,15 @@
 
 set TASK_USER=%1
 set TASK_PASSWORD=%2
+set GREENBOX_INSTALL_PATH=%3
 
 
 REM SchTasks /Create /F /SC ONSTART /TN "Hello world" /ru %TASK_USER% /rp %TASK_PASSWORD% ^
-REM     /TR "\"c:\Program Files\Git\bin\bash.exe\"  --login -i \"C:\Program Files\G7_greenbox\hello.sh\" "
+REM     /TR "\"c:\Program Files\Git\bin\bash.exe\"  --login -i \"%GREENBOX_INSTALL_PATH%\hello.sh\" "
 
 
 SchTasks /Create /F /SC ONSTART /TN "sshd greenbox 22"  /ru %TASK_USER% /rp %TASK_PASSWORD% /RL HIGHEST ^
-    /TR "\"C:\Program Files\Git\bin\bash.exe\"  --login -i \"C:\Program Files\G7_greenbox\sshd.sh\" 22"
+    /TR "\"C:\Program Files\Git\bin\bash.exe\"  --login -i \"%GREENBOX_INSTALL_PATH%\sshd.sh\" 22"
 
 
 echo windows xp UDP port 53

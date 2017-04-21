@@ -81,19 +81,7 @@ then
   exit 1
 fi
 
-PF=$(cygpath $PROGRAMFILES)
-PF=$(echo $PF | sed -e 's/\n//')
-export PATH="$PF/G7_greenbox:$PATH"
-#echo "exe PATH=$PATH"
-
-if [ ! -z "$VBOX_MSI_INSTALL_PATH" ]; then
-  VBOX_INSTALL_PATH=$(cygpath $VBOX_MSI_INSTALL_PATH)
-  VBOX_INSTALL_PATH=$(echo $VBOX_INSTALL_PATH | sed -e 's/\n//')
-  export PATH="${VBOX_INSTALL_PATH}":$PATH
-else
-  VBOX_INSTALL_PATH=${VBOX_INSTALL_PATH:-$PF/Oracle/VirtualBox/}
-  export PATH="${VBOX_INSTALL_PATH}":$PATH
-fi
+./set_path.sh
 
 #echo $PATH
 
@@ -134,13 +122,13 @@ if  [[ $all_proxy != socks* ]]; then
 fi
 
 if ! which $DOCKER_MACHINE 2> /dev/null ; then
-  echo "Docker Machine is not installed. Please re-run the Toolbox Installer and try again."
+  echo "Docker Machine is not installed. Please re-run the GreenBox Installer and try again."
   exit 1
 fi
 
 
 if  ! which $VBOX_MANAGE 2> /dev/null ; then
-  echo "VirtualBox is not installed. Please re-run the Toolbox Installer and try again."
+  echo "VirtualBox is not installed. Please re-run the GreenBox Installer and try again."
   exit 1
 fi
 

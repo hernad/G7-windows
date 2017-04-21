@@ -29,7 +29,7 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 ;ArchitecturesAllowed=x64
 ;ArchitecturesInstallIn64BitMode=x64
-DefaultDirName={pf}\{#MyAppName}
+DefaultDirName={sd}\{#MyAppName}
 DefaultGroupName=Greenbox
 DisableProgramGroupPage=yes
 DisableWelcomePage=no
@@ -117,7 +117,7 @@ WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i 
 ;Type: filesandordirs; Name: "{localappdata}\..\Roaming\Kitematic"
 
 [Registry]
-Root: HKCU; Subkey: "Environment"; ValueType:string; ValueName:"DOCKER_TOOLBOX_INSTALL_PATH"; ValueData:"{app}" ; Flags: preservestringtype uninsdeletevalue;
+Root: HKCU; Subkey: "Environment"; ValueType:string; ValueName:"GREENBOX_INSTALL_PATH"; ValueData:"{app}" ; Flags: preservestringtype uninsdeletevalue;
 
 [Code]
 #include "base64.iss"
@@ -130,7 +130,7 @@ var
   filepath: String;
   ansiresult: AnsiString;
 begin
-  dirpath := ExpandConstant('{userappdata}\DockerToolbox');
+  dirpath := ExpandConstant('{userappdata}\GreenBox');
   filepath := dirpath + '\id.txt';
   ForceDirectories(dirpath);
 

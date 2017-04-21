@@ -1,8 +1,8 @@
 #!/bin/bash
 
-PF=$(cygpath $PROGRAMFILES)
+GREENBOX_INSTALL_PATH=$(cygpath $GREENBOX_INSTALL_PATH)
 PF=$(echo $PF | sed -e 's/\n//')
-export PATH="$PF/G7_greenbox:$PATH"
+export PATH="$GREENBOX_INSTALL_PATH:$PATH"
 #echo "exe PATH=$PATH"
 
 if [ ! -z "$VBOX_MSI_INSTALL_PATH" ]; then

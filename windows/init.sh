@@ -22,9 +22,17 @@ then
   exit 1
 fi
 
-PF=$(cygpath $PROGRAMFILES)
-PF=$(echo $PF | sed -e 's/\n//')
-PF=$PF/G7_greenbox
+STEP="Input parameter GREENBOX_INSTALL_PATH"
+if [ -z "$1" ]
+then
+  echo "usage: ./$0 GREENBOX_INSTALL_PATH"
+  exit 1
+fi
+
+GREENBOX_INSTALL_PATH=$1
+GREENBOX_INSTALL_PATH=$(cygpath $GREENBOX_INSTALL_PATH)
+GREENBOX_INSTALL_PATH=$(echo $PF | sed -e 's/\n//')
+
 
 export PATH="$PF:$PATH"
 
@@ -43,12 +51,13 @@ then
   OS="W7"
 fi
 
-if [ $OS == "W7" ] || [ $OS == "W10" ]
-then
-     HOMEPATH="C:\\Users\\$GREEN_USER"
-else
-     HOMEPATH="C:\\Documents and Settings\\$GREEN_USER"
-fi
+#if [ $OS == "W7" ] || [ $OS == "W10" ]
+#then
+#     HOMEPATH="C:\\Users\\$GREEN_USER"
+#else
+#     HOMEPATH="C:\\Documents and Settings\\$GREEN_USER"
+#fi
+HOMEPATH="$GREENBOX_INSTALL_PATH"
 
 GREEN_SSH_HOME=$(cygpath $HOMEPATH/.ssh)
 GREEN_HOME=$(cygpath $HOMEPATH)
@@ -67,7 +76,7 @@ if ! net user "${GREEN_USER}" >/dev/null
 then
    rm -rf "$HOMEPATH"
    if ! net user "${GREEN_USER}" "${random_password}" //add //fullname:"${GREEN_NAME}" \
-              //homedir:"$HOMEPATH" //passwordchg:no //profile:"$HOMEPATH" //yes; then
+              //homedir:"$(cygpath -w $HOMEPATH)" //expires:never //passwordchg:no //yes; then
     echo "ERROR: Unable to create Windows user ${GREEN_USER}"
     exit 1
    fi

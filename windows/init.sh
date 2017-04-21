@@ -28,8 +28,8 @@ PF=$PF/G7_greenbox
 
 export PATH="$PF:$PATH"
 
-GREEN_USER=greenbox
-GREEN_NAME="greenbox system"
+GREEN_USER="greenbox"
+GREEN_NAME="greenbox"
 # Some random password; this is only needed internally by cygrunsrv and
 # is limited to 14 characters by Windows (lol)
 random_password="$(tr -dc 'a-zA-Z0-9' < /dev/urandom | dd count=6 bs=1 2>/dev/null)"
@@ -45,10 +45,11 @@ fi
 
 if [ $OS == "W7" ] || [ $OS == "W10" ]
 then
-     export HOMEPATH="C:\\Users\\$GREEN_USER"
+     HOMEPATH="C:\\Users\\$GREEN_USER"
 else
-     export HOMEPATH="C:\\Documents and Settings\\$GREEN_USER"
+     HOMEPATH="C:\\Documents and Settings\\$GREEN_USER"
 fi
+
 GREEN_SSH_HOME=$(cygpath $HOMEPATH/.ssh)
 GREEN_HOME=$(cygpath $HOMEPATH)
 
@@ -66,7 +67,7 @@ if ! net user "${GREEN_USER}" >/dev/null
 then
    rm -rf "$HOMEPATH"
    if ! net user "${GREEN_USER}" "${random_password}" //add //fullname:"${GREEN_NAME}" \
-              //homedir:"$HOMEPATH" //yes; then
+              //homedir:"$HOMEPATH" //passwordchg:no //profile:"$HOMEPATH" //yes; then
     echo "ERROR: Unable to create Windows user ${GREEN_USER}"
     exit 1
    fi

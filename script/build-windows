@@ -2,7 +2,7 @@
 
 set -e
 
-INSTALER_EXE=G7-windows-i386.exe
+INSTALER_EXE=G7-windows-x86_64.exe
 
 docker build -t windows-installer -f Dockerfile.windows .
 CONTAINER="$(docker run -d windows-installer)"

@@ -26,7 +26,6 @@ export VBOX_USER_HOME=$(cygpath $GREENBOX_INSTALL_PATH/.VirtualBox)
 
 cat << EOF
 
-
                         ##         .
                   ## ## ##        ==
                ## ## ## ## ##    ===                 |
@@ -43,4 +42,4 @@ cat << EOF
 
 EOF
 
-echo $PATH
+#echo $PATH

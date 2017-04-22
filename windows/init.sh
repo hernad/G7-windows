@@ -52,6 +52,13 @@ then
   OS="W7"
 fi
 
+if [ "$OS" == "WXP" ]
+then
+  CREATE_TASKS_CMD="create_tasks_xp.cmd"
+else
+  CREATE_TASKS_CMD="create_tasks.cmd"
+fi
+
 #if [ $OS == "W7" ] || [ $OS == "W10" ]
 #then
 #     HOMEPATH="C:\\Users\\$GREEN_USER"
@@ -67,7 +74,8 @@ if net user "${GREEN_USER}" >/dev/null
 then
    echo "User $GREEN_USER exists"
    random_password=$(cat "$GREEN_SSH_HOME/${GREEN_USER}_password" )
-   "$GREENBOX_INSTALL_PATH/create_tasks.cmd" $GREEN_WINDOWS_HOME $GREEN_USER $random_password
+   "$GREENBOX_INSTALL_PATH/$CREATE_TASKS_CMD" $GREEN_WINDOWS_HOME $GREEN_USER $random_password
+
    exit 0
 fi
 
@@ -100,7 +108,7 @@ chmod 600 "$GREEN_SSH_HOME/${GREEN_USER}_password"
 
 echo "source \"$GREENBOX_INSTALL_PATH/set_path.sh\"" > $GREEN_HOME/.bash_profile
 
-"$GREENBOX_INSTALL_PATH/create_tasks.cmd" $GREEN_WINDOWS_HOME $GREEN_USER $random_password
+"$GREENBOX_INSTALL_PATH/$CREATE_TASKS_CMD" $GREEN_WINDOWS_HOME $GREEN_USER $random_password
 
 echo -e
 echo "This account is accessible by hAir SSH key (ssh authorized_keys) via port 22:"

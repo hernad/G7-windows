@@ -74,6 +74,7 @@ Source: ".\tasks.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Green
 Source: ".\init.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\stop_sshd.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\create_tasks.cmd"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
+Source: ".\create_tasks_xp.cmd"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\delete_tasks.cmd"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\sshd.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\authorized_keys"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"

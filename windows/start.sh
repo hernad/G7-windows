@@ -120,9 +120,8 @@ GREENBOX_VBOX_PARAMS+=" --virtualbox-disk-size $DISK_SIZE"
 #GREENBOX_VBOX_PARAMS+=" --virtualbox-hostonly-cidr 192.168.97.1/24"
 #GREENBOX_VBOX_PARAMS+=" --virtualbox-hostonly-nicpromisc deny"
 GREENBOX_VBOX_PARAMS+=" --virtualbox-no-vtx-check"
-GREENBOX_VBOX_PARAMS+=" --virtualbox-share-folder \"$(cygpath -w $GREENBOX_INSTALL_PATH):$GREENBOX_INSTALL_PATH\""
+GREENBOX_VBOX_PARAMS+=" --virtualbox-share-folder $(cygpath -w $GREENBOX_INSTALL_PATH):G7_bringout"
 GREENBOX_VBOX_PARAMS+=" --virtualbox-ssh-port 2222"
-
 
 DOCKER_APPDATA=$(cygpath $APPDATA/../.docker | sed -e 's/\n//')
 

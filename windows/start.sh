@@ -230,8 +230,20 @@ then
   done
 
   vbox_forward_ports ${VM}
-
-fi
+  STEP="Checking is VirtualBox.xml on right place"
+  #  <MachineEntry uuid="{5aed4ee0-2b4c-4711-bcab-1caab80762b2}" src="C:\G7_bringout\.VirtualBox\.docker\machine\machines\greenbox\greenbox\greenbox.vbox"/>
+  if ! cat .VirtualBox/VirtualBox.xml | grep src.*G7_bringout.*greenbox\.vbox
+  then
+     echo "find right VirtualBox.xml which contains greenbox.vbox in directory similar to /c/Users/greenbox/.VirtualBox"
+     echo "then move that directory to /c/G7_bringout/.Virtualbox, then fix path in src= section of VirtualBox.xml"
+     echo "test is everything ok by restarting OS"
+     echo -e
+     echo "Press any key to continue ..."
+     read var
+     exit 1
+  else
+     echo ".VirtualBox/VirtualBox.ml seems to be OK"
+  fi
 
 STEP="Checking status on $VM"
 VM_STATUS="$(${DOCKER_MACHINE} status ${VM} 2>&1)"
@@ -248,7 +260,6 @@ STEP="Finalize"
 [  "$first_install" == "0" ] && clear
 
 cat << EOF
-
 
                         ##         .
                   ## ## ##        ==

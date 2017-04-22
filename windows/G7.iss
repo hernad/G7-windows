@@ -1,7 +1,7 @@
 ; inno setup http://www.jrsoftware.org/isinfo.php
 
 #define MyAppName "G7_bringout"
-#define MyAppExe "G7-windows-i386"
+#define MyAppExe "G7-windows-x86_64"
 #define MyAppPublisher "bring.out"
 #define MyAppURL "https://www.bring.out.ba"
 #define MyAppContact "https://www.bring.out.ba"

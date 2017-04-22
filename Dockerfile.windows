@@ -18,8 +18,7 @@ RUN cd innosetup && \
 
 
 ENV DOCKER_VERSION 17.04.0-ce
-#ENV ARCH x86_64
-ENV ARCH i386
+ENV ARCH x86_64
 
 
 #ENV DOCKER_MACHINE_VERSION 0.10.0
@@ -27,13 +26,14 @@ ENV ARCH i386
 
 
 # 5.0.x works on Windows XP
-ENV VIRTUALBOX_VERSION 5.0.36
-ENV VIRTUALBOX_REVISION 114008
+ENV VIRTUALBOX_VERSION 5.1.20
+ENV VIRTUALBOX_REVISION 114628
 
-#ENV GIT_VERSION 2.12.0
+ENV GIT_VERSION 2.12.2
+ENV GIT_ARCH 64
+
 # Git 2.10.0 is the last version compatible with Windows XP
-ENV GIT_VERSION 2.10.0
-ENV GIT_ARCH 32
+#ENV GIT_VERSION 2.10.0
 
 RUN mkdir /bundle
 
@@ -48,26 +48,25 @@ RUN curl -fsSL -o dockerbins.zip "https://${DOCKER_ENDPOINT}/builds/Windows/${AR
     mv docker/docker.exe . && \
     rm -r docker/ dockerbins.zip
 
-#RUN curl -fsSL -o docker-machine.exe "https://github.com/docker/machine/releases/download/v$DOCKER_MACHINE_VERSION/docker-machine-Windows-x86_64.exe"
+
 #RUN curl -fsSL -o docker-compose.exe "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-Windows-x86_64.exe"
 
 
-#RUN curl -fsSL -o Git.exe "https://github.com/git-for-windows/git/releases/download/v$GIT_VERSION.windows.1/Git-$GIT_VERSION-64-bit.exe"
 RUN curl -fsSL -o Git.exe "https://github.com/git-for-windows/git/releases/download/v$GIT_VERSION.windows.1/Git-$GIT_VERSION-${GIT_ARCH}-bit.exe"
 
 RUN curl -fsSL -o virtualbox.exe "http://download.virtualbox.org/virtualbox/$VIRTUALBOX_VERSION/VirtualBox-$VIRTUALBOX_VERSION-$VIRTUALBOX_REVISION-Win.exe" \
 	&& echo "$(curl -fsSL 'https://virtualbox.org/download/hashes/'"$VIRTUALBOX_VERSION"'/SHA256SUMS' | awk '$2 ~ /-Win.exe$/ { print $1 }') *virtualbox.exe" | sha256sum -c -
 
-#RUN wine virtualbox.exe -extract -silent -path . && \
-#	  rm virtualbox.exe && \
-#	  rm *x86.msi && \
-#	  mv *_amd64.msi VirtualBox_amd64.msi
-
-# nas interesuje instalacija na 32bitnu masinu
 RUN wine virtualbox.exe -extract -silent -path . && \
-    	  rm virtualbox.exe && \
-    	  rm *_amd64.msi && \
-    	  mv *x86.msi VirtualBox.msi
+	  rm virtualbox.exe && \
+	  rm *x86.msi && \
+	  mv *_amd64.msi VirtualBox_amd64.msi
+
+# ovo je za 32bitnu masinu
+# RUN wine virtualbox.exe -extract -silent -path . && \
+#    	  rm virtualbox.exe && \
+#    	  rm *_amd64.msi && \
+#    	  mv *x86.msi VirtualBox.msi
 
 
 #COPY blobs/vs2013_vcredist_x86.exe /bundle/
@@ -77,7 +76,7 @@ RUN wine virtualbox.exe -extract -silent -path . && \
 
 # G7 installer version
 ENV INSTALLER_VERSION 6.1.2
-RUN curl -fsSL -o docker-machine.exe "http://download.bring.out.ba/docker-machine-Windows-i386.exe"
+RUN curl -fsSL -o docker-machine.exe "http://download.bring.out.ba/docker-machine-Windows-${ARCH}.exe"
 
 # Add installer resources
 COPY windows /installer

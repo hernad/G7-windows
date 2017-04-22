@@ -138,3 +138,6 @@ cat > /usr/local/bin/more << EOF
 #!/bin/bash
 less \$@
 EOF
+
+mkpasswd > /etc/passwd
+mkgroup > /etc/group

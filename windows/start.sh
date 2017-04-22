@@ -203,11 +203,7 @@ then
 
   STEP="Run docker-machine $GREENBOX_VBOX_PARAMS"
   "${DOCKER_MACHINE}" create -d virtualbox $PROXY_ENV $GREENBOX_VBOX_PARAMS "${VM}"
-  if [ $? != 0 ]
-  then
-     echo "docker-machine $GREENBOX_VBOX_PARAMS $VM ERROR!"
-     exit 1
-  fi
+
 
   STEP="Waiting for greenbox to install docker ...."
   FAIL=1

@@ -3,6 +3,9 @@
 trap '[ "$?" -eq 0 ] || read -p "start.sh: Looks like something went wrong in step ´$STEP´... Press any key to continue..."' EXIT
 first_install=0
 
+DISK_SIZE=55000
+MEM_SIZE=1152
+
 if [ -z "$GREENBOX_INSTALL_PATH" ]
 then
   GREENBOX_INSTALL_PATH=/c/G7_bringout
@@ -107,16 +110,19 @@ fi
 # default virtualbox name: greenbox
 VM=${DOCKER_MACHINE_NAME:-greenbox}
 
-echo "Setting up vbox machine with 1152 MB RAM/99 GB HDD ..."
+echo "Setting up vbox machine with $MEM_SIZE MB RAM/$DISK_SIZE MB HDD ..."
 
 #ako zelimo vec gotovu vm importovati --virtualbox-import-greenbox-vm
 
-GREENBOX_VBOX_PARAMS="  --virtualbox-memory 1152"
+GREENBOX_VBOX_PARAMS="  --virtualbox-memory $MEM_SIZE"
 GREENBOX_VBOX_PARAMS+=" --virtualbox-boot2docker-url http://download.bring.out.ba/greenbox.iso"
-GREENBOX_VBOX_PARAMS+=" --virtualbox-disk-size 99000"
+GREENBOX_VBOX_PARAMS+=" --virtualbox-disk-size $DISK_SIZE"
 #GREENBOX_VBOX_PARAMS+=" --virtualbox-hostonly-cidr 192.168.97.1/24"
 #GREENBOX_VBOX_PARAMS+=" --virtualbox-hostonly-nicpromisc deny"
 GREENBOX_VBOX_PARAMS+=" --virtualbox-no-vtx-check"
+GREENBOX_VBOX_PARAMS+=" --virtualbox-share-folder \"$(cygpath -w $GREENBOX_INSTALL_PATH):$GREENBOX_INSTALL_PATH\""
+GREENBOX_VBOX_PARAMS+=" --virtualbox-ssh-port 2222"
+
 
 DOCKER_APPDATA=$(cygpath $APPDATA/../.docker | sed -e 's/\n//')
 

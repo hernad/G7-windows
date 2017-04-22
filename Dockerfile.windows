@@ -16,15 +16,13 @@ RUN cd innosetup && \
     curl -fsSL -o is-unicode.exe http://files.jrsoftware.org/is/5/isetup-5.5.8-unicode.exe && \
     wine "./innounp.exe" -e "is-unicode.exe"
 
-# installer components
-ENV INSTALLER_VERSION 6.1.0
 
 ENV DOCKER_VERSION 17.04.0-ce
 #ENV ARCH x86_64
 ENV ARCH i386
 
 
-ENV DOCKER_MACHINE_VERSION 0.10.0
+#ENV DOCKER_MACHINE_VERSION 0.10.0
 #ENV DOCKER_COMPOSE_VERSION 1.11.2
 
 
@@ -53,8 +51,6 @@ RUN curl -fsSL -o dockerbins.zip "https://${DOCKER_ENDPOINT}/builds/Windows/${AR
 #RUN curl -fsSL -o docker-machine.exe "https://github.com/docker/machine/releases/download/v$DOCKER_MACHINE_VERSION/docker-machine-Windows-x86_64.exe"
 #RUN curl -fsSL -o docker-compose.exe "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-Windows-x86_64.exe"
 
-RUN curl -fsSL -o docker-machine.exe "http://download.bring.out.ba/docker-machine-Windows-i386.exe"
-
 
 #RUN curl -fsSL -o Git.exe "https://github.com/git-for-windows/git/releases/download/v$GIT_VERSION.windows.1/Git-$GIT_VERSION-64-bit.exe"
 RUN curl -fsSL -o Git.exe "https://github.com/git-for-windows/git/releases/download/v$GIT_VERSION.windows.1/Git-$GIT_VERSION-${GIT_ARCH}-bit.exe"
@@ -79,6 +75,9 @@ RUN wine virtualbox.exe -extract -silent -path . && \
 #ENV GREENBOX_VERSION 3.6.2
 #RUN curl -kfsSL -o greenbox.iso https://download.bring.out.ba/greenbox-${GREENBOX_VERSION}.iso
 
+# G7 installer version
+ENV INSTALLER_VERSION 6.1.0
+RUN curl -fsSL -o docker-machine.exe "http://download.bring.out.ba/docker-machine-Windows-i386.exe"
 
 # Add installer resources
 COPY windows /installer

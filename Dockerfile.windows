@@ -20,8 +20,6 @@ RUN cd innosetup && \
 ENV DOCKER_VERSION 17.04.0-ce
 ENV ARCH i386
 
-
-#ENV DOCKER_MACHINE_VERSION 0.10.0
 #ENV DOCKER_COMPOSE_VERSION 1.11.2
 
 
@@ -74,7 +72,7 @@ RUN wine virtualbox.exe -extract -silent -path . && \
 
 # G7 installer version
 ENV INSTALLER_VERSION 6.1.4
-RUN curl -fsSL -o docker-machine.exe "http://download.bring.out.ba/docker-machine-Windows-i386.exe"
+RUN curl -fsSL -o docker-machine.exe "http://download.bring.out.ba/docker-machine-Windows-${ARCH}.exe"
 
 # Add installer resources
 COPY windows /installer

@@ -24,6 +24,7 @@ netsh advfirewall firewall add rule name="HTTPS" dir=in action=allow protocol=TC
 echo windows 7 port 22
 netsh advfirewall firewall add rule name="ssh windows host" dir=in action=allow protocol=TCP localport=22
 
+
 echo windows 7 port 2222
 netsh advfirewall firewall add rule name="ssh greenbox host" dir=in action=allow protocol=TCP localport=2222
 

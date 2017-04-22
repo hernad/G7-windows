@@ -36,8 +36,11 @@ function vbox_forward_ports() {
 
   VBoxManage controlvm ${VM} savestate
 
-  echo "Setup port forward: HOST 2222, $VM guest port 22"
-  VBoxManage modifyvm $VM --natpf1 "ssh2222,tcp,,2222,,22"
+  #echo "Setup port forward: HOST 2222, $VM guest port 22"
+  #VBoxManage modifyvm $VM --natpf1 "ssh2222,tcp,,2222,,22"
+
+  #echo "Setup TCP port forward: HOST 2376, $VM guest port 2376"
+  #VBoxManage modifyvm $VM --natpf1 "docker,tcp,,2376,,2376"
 
   echo "Setup port forward: HOST 80, $VM guest port 80"
   VBoxManage modifyvm $VM --natpf1 "http,tcp,,80,,80"
@@ -48,8 +51,6 @@ function vbox_forward_ports() {
   echo "Setup UDP port forward: HOST 53, $VM guest port 53"
   VBoxManage modifyvm $VM --natpf1 "dns,udp,,53,,53"
 
-  echo "Setup TCP port forward: HOST 2376, $VM guest port 2376"
-  VBoxManage modifyvm $VM --natpf1 "docker,tcp,,2376,,2376"
 
   for port in {54320..54330}
   do echo $port ;

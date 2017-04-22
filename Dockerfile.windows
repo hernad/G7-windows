@@ -60,7 +60,7 @@ RUN curl -fsSL -o virtualbox.exe "http://download.virtualbox.org/virtualbox/$VIR
 RUN wine virtualbox.exe -extract -silent -path . && \
 	  rm virtualbox.exe && \
 	  rm *x86.msi && \
-	  mv *_amd64.msi VirtualBox_amd64.msi
+	  mv *_amd64.msi VirtualBox.msi
 
 # ovo je za 32bitnu masinu
 # RUN wine virtualbox.exe -extract -silent -path . && \

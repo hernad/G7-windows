@@ -125,9 +125,9 @@ read var
 echo creating VBOX_USER_HOME $VBOX_USER_HOME
 [ -d $VBOX_USER_HOME ] || mkdir -p $VBOX_USER_HOME
 
-#echo creating /usr/local/bin/VBoxManage
-#[ -d /usr/local/bin ] || mkdir -p /usr/local/bin
+[ -d /usr/local/bin ] || mkdir -p /usr/local/bin
 
+#echo creating /usr/local/bin/VBoxManage
 #cat > /usr/local/bin/VBoxManage << EOF
 ##!/bin/bash
 #cd $GREENBOX_INSTALL_PATH

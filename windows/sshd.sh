@@ -26,14 +26,6 @@ TERM=xterm
 EOF
 
 
-cat > "$HOME/.bash_profile"  << EOF
-#!/bin/bash
-source ~/set_path.sh
-cd
-echo -e
-echo "HOME=\$(pwd)"
-EOF
-
 
 echo "=== start sshd / vbox ${VM} from task scheduler $(date)  ==" > $LOG_FILE
 

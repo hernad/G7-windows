@@ -85,6 +85,14 @@ chmod 600 "$GREEN_SSH_HOME/${GREEN_USER}_password"
 
 cat > $HOMEPATH/.bash_profile << EOF
 #!/bin/bash
+if [ -z "\$GREENBOX_INSTALL_PATH" ]
+then
+  GREENBOX_INSTALL_PATH=/c/G7_bringout
+else
+  GREENBOX_INSTALL_PATH=$(cygpath \$GREENBOX_INSTALL_PATH)
+fi
+cd \$GREENBOX_INSTALL_PATH
+
 source "\$GREENBOX_INSTALL_PATH/g7_common.sh"
 echo "VBoxManage ( VBOX_USER_HOME: \$VBOX_USER_HOME ) list vms:"
 VBoxManage list vms

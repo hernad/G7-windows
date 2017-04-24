@@ -2,18 +2,16 @@
 
 trap '[ "$?" -eq 0 ] || read -p "stop_sshd.sh: Looks like something went wrong in step ´$STEP´... Press any key to continue..."' EXIT
 
-function isadmin()
-{
-    net session > /dev/null 2>&1
-    if [ $? -eq 0 ]
-    then
-       echo "running as admin"
-       return 0
-    else
-       echo "running as standard user"
-       return 1
-    fi
-}
+if [ -z "$GREENBOX_INSTALL_PATH" ]
+then
+  GREENBOX_INSTALL_PATH=/c/G7_bringout
+else
+  GREENBOX_INSTALL_PATH=$(cygpath $GREENBOX_INSTALL_PATH)
+fi
+
+cd $GREENBOX_INSTALL_PATH
+source $GREENBOX_INSTALL_PATH/set_path.sh
+
 
 #STEP="Is running user greenbox?"
 #if [ `whoami` != greenbox ]
@@ -29,11 +27,4 @@ then
   exit 1
 fi
 
-
-SSHDPIDS=$(ps -W | grep sshd | grep -v grep | awk '{ print $1 }')
-
-for pid in $SSHDPIDS
-do
-  echo "killing sshd pid $pid"
-  kill $pid
-done
+kill_all sshd

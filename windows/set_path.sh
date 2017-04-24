@@ -13,6 +13,31 @@ function isadmin()
     fi
 }
 
+function is_vbox_xml()
+{
+  if [ -f "$VBOX_USER_HOME/VirtualBox.xml" ]
+  then
+     return 0
+  else
+    return 1
+  fi
+}
+
+function kill_all()
+{
+
+KILLPROC=$1
+KILLPIDS=$(ps -W | grep $KILLPROC | grep -v grep | awk '{ print $1 }')
+
+for pid in $KILLPIDS
+do
+  echo "killing $KILPROC pid $pid"
+  kill $pid
+done
+
+}
+
+
 if [ -z "$GREENBOX_INSTALL_PATH" ]
 then
   GREENBOX_INSTALL_PATH="C:\\G7_bringout"
@@ -74,12 +99,3 @@ cat << EOF
     |___/                                            |
 
 EOF
-
-# VBoxSVC has to be run with VBOX_USER_HOME set variable
-VBoxSVC &
-
-echo "VBoManage ( VBOX_USER_HOME: $VBOX_USER_HOME ) list vms:"
-VBoxManage list vms
-echo -e
-echo "VBoManage list runningvms:"
-VBoxManage list runningvms

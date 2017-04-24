@@ -20,6 +20,13 @@ echo "GREENBOX_INSTALL_PATH: $GREENBOX_INSTALL_PATH"
 cd $GREENBOX_INSTALL_PATH
 source $GREENBOX_INSTALL_PATH/set_path.sh
 
+if [ "$OS" == "WXP" ]
+then
+  CREATE_TASKS_CMD="create_tasks_xp.cmd"
+else
+  CREATE_TASKS_CMD="create_tasks.cmd"
+fi
+
 STEP="Check running privileges"
 if ! isadmin
 then
@@ -70,9 +77,9 @@ chmod 700 "$GREEN_SSH_HOME"
 chmod 600 "$GREEN_SSH_HOME/authorized_keys"
 chmod 600 "$GREEN_SSH_HOME/${GREEN_USER}_password"
 
-cat > > $GREEN_HOME/.bash_profile << EOF
+cat > $GREEN_HOME/.bash_profile << EOF
 #!/bin/bash
-source \"$GREENBOX_INSTALL_PATH/set_path.sh\"
+source "\$GREENBOX_INSTALL_PATH/set_path.sh"
 echo "VBoxManage ( VBOX_USER_HOME: \$VBOX_USER_HOME ) list vms:"
 VBoxManage list vms
 echo -e

@@ -1,7 +1,7 @@
 ; inno setup http://www.jrsoftware.org/isinfo.php
 
 #define MyAppName "G7_bringout"
-#define MyAppExe "G7-windows-i386"
+#define MyAppExe "G7-windows-x86_64"
 #define MyAppPublisher "bring.out"
 #define MyAppURL "https://www.bring.out.ba"
 #define MyAppContact "https://www.bring.out.ba"
@@ -95,24 +95,24 @@ Source: "{#virtualBoxMsi}"; DestDir: "{app}\installers\virtualbox"; DestName: "v
 [Icons]
 ;Name: "{userprograms}\Docker\Kitematic (Alpha)"; WorkingDir: "{app}"; Filename: "{app}\kitematic\Kitematic.exe"; Components: "Kitematic"
 ;Name: "{commondesktop}\Kitematic (Alpha)"; WorkingDir: "{app}"; Filename: "{app}\kitematic\Kitematic.exe"; Tasks: desktopicon; Components: "Kitematic"
-Name: "{commonprograms}\Greenbox\GreenBox Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Components: "Greenbox"
-Name: "{commonprograms}\Greenbox\git bash"; WorkingDir: "{app}"; Filename: "{pf}\Git\git-bash.exe"; Parameters: ""; IconFilename: "{app}\docker-quickstart-terminal.ico"; Components: "GreenBox"
+Name: "{commonprograms}\Greenbox\GreenBox Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf64}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Components: "Greenbox"
+Name: "{commonprograms}\Greenbox\git bash"; WorkingDir: "{app}"; Filename: "{pf64}\Git\git-bash.exe"; Parameters: ""; IconFilename: "{app}\docker-quickstart-terminal.ico"; Components: "GreenBox"
 
 ; ovo je sada preslo u init.sh
 ;Name: "{userprograms}\Docker\GreenBox Create Tasks RunAsAdmin"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\tasks.sh"" create"; IconFilename: "{app}/docker-quickstart-terminal.ico"; Components: "Greenbox"
 
 ;Name: "{userdesktop}\GreenBox Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Tasks: desktopicon; Components: "Greenbox"
-Name: "{commondesktop}\GreenBox git bash"; WorkingDir: "{app}"; Filename: "{pf}\Git\git-bash.exe"; Parameters: ""; IconFilename: "{app}\docker-quickstart-terminal.ico"; Tasks: desktopicon; Components: "GreenBox"
+Name: "{commondesktop}\GreenBox git bash"; WorkingDir: "{app}"; Filename: "{pf64}\Git\git-bash.exe"; Parameters: ""; IconFilename: "{app}\docker-quickstart-terminal.ico"; Tasks: desktopicon; Components: "GreenBox"
 
 [Run]
-WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\init.sh"" ""{app}"" "
+WorkingDir: "{app}"; Filename: "{pf64}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\init.sh"" ""{app}"" "
 Filename: "{win}\explorer.exe"; Parameters: "{commonprograms}\Greenbox\"; Flags: postinstall skipifsilent; Description: "View Shortcuts in File Explorer"
 
 
 [UninstallRun]
 ;Filename: "{app}\docker-machine.exe"; Parameters: "rm -f default"
-WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\stop_sshd.sh"" "
-WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\tasks.sh"" delete"
+WorkingDir: "{app}"; Filename: "{pf64}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\stop_sshd.sh"" "
+WorkingDir: "{app}"; Filename: "{pf64}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\tasks.sh"" delete"
 
 [UninstallDelete]
 ;Type: filesandordirs; Name: "{localappdata}\..\Roaming\Kitematic"

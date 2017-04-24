@@ -78,7 +78,7 @@ EOF
 # VBoxSVC has to be run with VBOX_USER_HOME set variable
 VBoxSVC &
 
-echo "VBoManage list vms ( VBOX_USER_HOME: $VBOX_USER_HOME ):"
+echo "VBoManage ( VBOX_USER_HOME: $VBOX_USER_HOME ) list vms:"
 VBoxManage list vms
 echo -e
 echo "VBoManage list runningvms:"

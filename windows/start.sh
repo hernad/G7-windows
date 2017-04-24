@@ -15,7 +15,7 @@ fi
 
 cd $GREENBOX_INSTALL_PATH
 
-source $GREENBOX_INSTALL_PATH/set_path.sh
+source $GREENBOX_INSTALL_PATH/g7_common.sh
 
 function isadmin()
 {

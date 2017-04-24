@@ -18,7 +18,7 @@ export GREENBOX_INSTALL_PATH=$(echo $GREENBOX_INSTALL_PATH | sed -e 's/\n//')
 echo "GREENBOX_INSTALL_PATH: $GREENBOX_INSTALL_PATH"
 
 cd $GREENBOX_INSTALL_PATH
-source $GREENBOX_INSTALL_PATH/set_path.sh
+source $GREENBOX_INSTALL_PATH/g7_common.sh
 
 if [ "$OS" == "WXP" ]
 then
@@ -79,7 +79,7 @@ chmod 600 "$GREEN_SSH_HOME/${GREEN_USER}_password"
 
 cat > $GREEN_HOME/.bash_profile << EOF
 #!/bin/bash
-source "\$GREENBOX_INSTALL_PATH/set_path.sh"
+source "\$GREENBOX_INSTALL_PATH/g7_common.sh"
 echo "VBoxManage ( VBOX_USER_HOME: \$VBOX_USER_HOME ) list vms:"
 VBoxManage list vms
 echo -e
@@ -117,7 +117,7 @@ else
   GREENBOX_INSTALL_PATH=$(cygpath \$GREENBOX_INSTALL_PATH)
 fi
 cd \$GREENBOX_INSTALL_PATH
-source "\$GREENBOX_INSTALL_PATH/set_path.sh"
+source "\$GREENBOX_INSTALL_PATH/g7_common.sh --silent"
 
 if ! is_vbox_xml
 then
@@ -138,7 +138,7 @@ else
   GREENBOX_INSTALL_PATH=$(cygpath \$GREENBOX_INSTALL_PATH)
 fi
 cd \$GREENBOX_INSTALL_PATH
-source "\$GREENBOX_INSTALL_PATH/set_path.sh"
+source "\$GREENBOX_INSTALL_PATH/g7_common.sh --silent"
 
 if ! is_vbox_xml
 then

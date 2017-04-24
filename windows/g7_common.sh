@@ -31,8 +31,8 @@ KILLPIDS=$(ps -W | grep $KILLPROC | grep -v grep | awk '{ print $1 }')
 
 for pid in $KILLPIDS
 do
-  echo "killing $KILPROC pid $pid"
-  kill $pid
+  #echo "killing $KILPROC pid $pid"
+  kill $pid &>/dev/null
 done
 
 }

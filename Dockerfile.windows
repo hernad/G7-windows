@@ -63,7 +63,7 @@ RUN wine virtualbox.exe -extract -silent -path . && \
 
 #COPY blobs/vs2013_vcredist_x86.exe /bundle/
 
-#ENV GREENBOX_VERSION 3.6.2
+#ENV GREENBOX_VERSION 3.6.3
 #RUN curl -kfsSL -o greenbox.iso https://download.bring.out.ba/greenbox-${GREENBOX_VERSION}.iso
 
 # G7 installer version

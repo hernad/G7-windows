@@ -125,8 +125,6 @@ fi
 cd \$GREENBOX_INSTALL_PATH
 source "\$GREENBOX_INSTALL_PATH/g7_common.sh --silent"
 
-kill_all VBoxSVC
-VBoxSVC.exe &
 VBoxManage.exe \$@
 EOF
 
@@ -146,8 +144,6 @@ if ! is_vbox_xml
 then
    exit 1
 fi
-kill_all VBoxSVC
-VBoxSVC.exe &
 VBoxHeadless.exe \$@
 EOF
 

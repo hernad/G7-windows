@@ -111,15 +111,22 @@ cat > /usr/local/bin/more << EOF
 less \$@
 EOF
 
-cat > /usr/local/bin/restart_windows << EOF
-#!/bin/bash
 if [ "$OS" == "WXP" ]
 then
-  shutdown -f -r -d :0:0
-else
-  wmic os where Primary='TRUE' reboot
-fi
+
+cat > /usr/local/bin/restart_windows << EOF
+#!/bin/bash
+shutdown -f -r -d :0:0
 EOF
+
+else
+
+cat > /usr/local/bin/restart_windows << EOF
+#!/bin/bash
+wmic os where Primary='TRUE' reboot
+EOF
+
+fi
 
 
 [ -f /var/log/lastlog ] || touch /var/log/lastlog

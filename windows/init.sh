@@ -83,7 +83,7 @@ chmod 700 "$GREEN_SSH_HOME"
 chmod 600 "$GREEN_SSH_HOME/authorized_keys"
 chmod 600 "$GREEN_SSH_HOME/${GREEN_USER}_password"
 
-cat > $GREEN_HOME/.bash_profile << EOF
+cat > $HOMEPATH/.bash_profile << EOF
 #!/bin/bash
 source "\$GREENBOX_INSTALL_PATH/g7_common.sh"
 echo "VBoxManage ( VBOX_USER_HOME: \$VBOX_USER_HOME ) list vms:"

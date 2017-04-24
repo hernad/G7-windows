@@ -10,7 +10,7 @@ else
 fi
 
 cd $GREENBOX_INSTALL_PATH
-source $GREENBOX_INSTALL_PATH/set_path.sh
+source $GREENBOX_INSTALL_PATH/g7_common.sh
 
 LOG_FILE=$HOME/onboot_tasks.log
 SSHD_LOG_FILE=$HOME/sshd.log

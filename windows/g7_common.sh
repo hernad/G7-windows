@@ -81,7 +81,7 @@ export HOMEPATH="$GREENBOX_INSTALL_PATH"
 export GREEN_SSH_HOME=$(cygpath $HOMEPATH/.ssh)
 export GREEN_WINDOWS_HOME=$(cygpath -w $HOMEPATH)
 
-
+if [  "$1" != "--silent"  ] ; then
 cat << EOF
 
                         ##         .
@@ -99,3 +99,4 @@ cat << EOF
     |___/                                            |
 
 EOF
+fi

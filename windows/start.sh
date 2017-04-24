@@ -59,8 +59,8 @@ function vbox_forward_ports() {
   done
 
   VBoxManage startvm ${VM}  --type headless
-  echo "Wait 5 sec ..."
-  sleep 5
+  echo "Wait 2 sec ..."
+  sleep 2
 
 }
 
@@ -76,20 +76,6 @@ then
 fi
 
 # http://www.askvg.com/list-of-environment-variables-in-windows-xp-vista-and-7/
-
-START_PARAM="interactive"
-if [ ! -z "$1"  ]
-then
-  START_PARAM="$1" # boot
-
-  #if [ $OS == "W7" ] || [ $OS == "W10" ]
-  #then
-  #   export HOMEPATH="\\Users\\greenbox"
-  #else
-  #   export HOMEPATH="C:\\Documents and Settings\\greenbox"
-  #fi
-  export VBOX_USER_HOME="$(cygpath $GREENBOX_INSTALL_PATH/.VirtualBox)"
-fi
 
 
 STEP="Is running user greenbox?"
@@ -159,31 +145,12 @@ if  ! which $VBOX_MANAGE 2> /dev/null ; then
 fi
 
 
-if [ "$START_PARAM" == "boot" ]
-then
-   echo "--- start via task scheduler on boot $(date) ---" > ~/start_on_boot.log
-   echo "PATH: $PATH" >> ~/start_on_boot.log
-   echo "VBOX_USER_HOME: $VBOX_USER_HOME" >> ~/start_on_boot.log
-   echo "starting headless $VM" >> ~/start_on_boot.log
-   VBoxHeadless -startvm $VM &
-   $VBOX_MANAGE list vms &>> ~/start_on_boot.log
-   exit 0
-fi
-
 "${VBOX_MANAGE}" list vms | grep \""${VM}"\" &> /dev/null
 VM_EXISTS_CODE=$?
 
-#set -e
+STEP="Checking does machine $VM exists"
 
-STEP="Checking if machine $VM exists"
-
-if [ $VM_EXISTS_CODE != 0 ] && [  $START_PARAM == "boot" ]
-then
-   echo "VM $VM error!" >> ~/start_on_boot.log
-   exit 1
-fi
-
-if [ $VM_EXISTS_CODE != 0 ]
+if [ "$VM_EXISTS_CODE" != "0" ]
 then
 
   first_install=1
@@ -230,6 +197,7 @@ then
   done
 
   vbox_forward_ports ${VM}
+
   STEP="Checking is VirtualBox.xml on right place"
   #  <MachineEntry uuid="{5aed4ee0-2b4c-4711-bcab-1caab80762b2}" src="C:\G7_bringout\.VirtualBox\.docker\machine\machines\greenbox\greenbox\greenbox.vbox"/>
   if ! cat .VirtualBox/VirtualBox.xml | grep src.*G7_bringout.*greenbox\.vbox
@@ -244,6 +212,8 @@ then
   else
      echo ".VirtualBox/VirtualBox.ml seems to be OK"
   fi
+
+fi
 
 STEP="Checking status on $VM"
 VM_STATUS="$(${DOCKER_MACHINE} status ${VM} 2>&1)"
@@ -289,10 +259,6 @@ docker () {
 }
 export -f docker
 
-if [ $# -eq 0 ]; then
-  echo "Start interactive shell"
-  exec "$BASH" --login -i
-else
-  echo "Start shell with command"
-  exec "$BASH" -c "$*"
-fi
+
+echo "Start interactive shell"
+exec "$BASH" --login -i

@@ -80,7 +80,7 @@ Source: ".\sshd.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenb
 Source: ".\authorized_keys"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 
 ;Source: ".\cygrunsrv.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: "Git"
-Source: ".\editrights.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: "Git"
+Source: ".\editrights.exe"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 
 Source: "{#dockerMachineCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerMachine"
 ;Source: "{#dockerComposeCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "DockerCompose"

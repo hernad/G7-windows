@@ -16,13 +16,20 @@ export PATH="$GREENBOX_INSTALL_PATH":$PATH
 if [ ! -z "$VBOX_MSI_INSTALL_PATH" ]; then
   VBOX_INSTALL_PATH=$(cygpath $VBOX_MSI_INSTALL_PATH)
   VBOX_INSTALL_PATH=$(echo $VBOX_INSTALL_PATH | sed -e 's/\n//')
-  export PATH="${VBOX_INSTALL_PATH}":$PATH
+  export PATH=$PATH:"${VBOX_INSTALL_PATH}"
 else
   VBOX_INSTALL_PATH=${VBOX_INSTALL_PATH:-$PF/Oracle/VirtualBox/}
-  export PATH="${VBOX_INSTALL_PATH}":$PATH
+  export PATH=$PATH:"${VBOX_INSTALL_PATH}"
 fi
 
-export VBOX_USER_HOME=$(cygpath $GREENBOX_INSTALL_PATH/.VirtualBox)
+VBOX_USER_HOME=$(cygpath $GREENBOX_INSTALL_PATH/.VirtualBox)
+export VBOX_USER_HOME=$(cygpath -w $VBOX_USER_HOME)
+
+export PATH=/usr/local/bin:$PATH
+
+export HOME_ORIG=$HOME
+export HOME=$GREENBOX_INSTALL_PATH
+export TERM=xterm
 
 cat << EOF
 
@@ -41,6 +48,9 @@ cat << EOF
     |___/                                            |
 
 EOF
+
+# VBoxSVC has to be run with VBOX_USER_HOME set variable
+VBoxSVC &
 
 echo "VBoManage list vms ( VBOX_USER_HOME: $VBOX_USER_HOME ):"
 VBoxManage list vms

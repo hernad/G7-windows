@@ -128,12 +128,19 @@ echo creating VBOX_USER_HOME $VBOX_USER_HOME
 [ -d /usr/local/bin ] || mkdir -p /usr/local/bin
 [ -d /var/log ] || mkdir -p /var/log
 
-#echo creating /usr/local/bin/VBoxManage
-#cat > /usr/local/bin/VBoxManage << EOF
-##!/bin/bash
-#cd $GREENBOX_INSTALL_PATH
-#/c/Program\\ Files/Oracle/VirtualBox/VBoxManage.exe \$@
-#EOF
+echo creating /usr/local/bin/VBoxManage
+cat > /usr/local/bin/VBoxManage << EOF
+#!/bin/bash
+VBoxSVC.exe &
+VBoxManage.exe \$@
+EOF
+
+echo creating /usr/local/bin/VBoxHeadless
+cat > /usr/local/bin/VBoxHeadless << EOF
+#!/bin/bash
+VBoxSVC.exe &
+VBoxHeadless.exe \$@
+EOF
 
 cat > /usr/local/bin/more << EOF
 #!/bin/bash

@@ -140,7 +140,13 @@ less \$@
 EOF
 
 cat > /usr/local/bin/restart_windows << EOF
-wmic os where Primary='TRUE' reboot
+#!/bin/bash
+if [ "$OS" == "WXP" ]
+then
+  shutdown -f -r -d :0:0
+else
+ wmic os where Primary='TRUE' reboot
+fi
 EOF
 
 mkpasswd > /etc/passwd

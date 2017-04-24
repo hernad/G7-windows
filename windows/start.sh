@@ -116,8 +116,8 @@ DOCKER_APPDATA=$(cygpath $APPDATA/../.docker | sed -e 's/\n//')
 #mkdir -p ~/.docker/machine/cache/
 #cp -av "$DOCKER_APPDATA/machine/cache/greenbox.iso"  ~/.docker/machine/cache/boot2docker.iso
 
-DOCKER_MACHINE=docker-machine.exe
-VBOX_MANAGE=VBoxManage.exe
+DOCKER_MACHINE=docker-machine
+VBOX_MANAGE=VBoxManage
 
 
 BLUE='\033[1;34m'

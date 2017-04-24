@@ -70,7 +70,15 @@ chmod 700 "$GREEN_SSH_HOME"
 chmod 600 "$GREEN_SSH_HOME/authorized_keys"
 chmod 600 "$GREEN_SSH_HOME/${GREEN_USER}_password"
 
-echo "source \"$GREENBOX_INSTALL_PATH/set_path.sh\"" > $GREEN_HOME/.bash_profile
+cat > > $GREEN_HOME/.bash_profile << EOF
+#!/bin/bash
+source \"$GREENBOX_INSTALL_PATH/set_path.sh\"
+echo "VBoxManage ( VBOX_USER_HOME: \$VBOX_USER_HOME ) list vms:"
+VBoxManage list vms
+echo -e
+echo "VBoManage list runningvms:"
+VBoxManage list runningvms
+EOF
 
 "$GREENBOX_INSTALL_PATH/$CREATE_TASKS_CMD" $GREEN_WINDOWS_HOME $GREEN_USER $random_password
 
@@ -95,6 +103,20 @@ echo creating VBOX_USER_HOME $VBOX_USER_HOME
 echo creating /usr/local/bin/VBoxManage
 cat > /usr/local/bin/VBoxManage << EOF
 #!/bin/bash
+if [ -z "\$GREENBOX_INSTALL_PATH" ]
+then
+  GREENBOX_INSTALL_PATH=/c/G7_bringout
+else
+  GREENBOX_INSTALL_PATH=$(cygpath \$GREENBOX_INSTALL_PATH)
+fi
+cd \$GREENBOX_INSTALL_PATH
+source "\$GREENBOX_INSTALL_PATH/set_path.sh"
+
+if ! is_vbox_xml
+then
+   exit 0
+fi
+kill_all VBoxSVC
 VBoxSVC.exe &
 VBoxManage.exe \$@
 EOF
@@ -102,6 +124,20 @@ EOF
 echo creating /usr/local/bin/VBoxHeadless
 cat > /usr/local/bin/VBoxHeadless << EOF
 #!/bin/bash
+if [ -z "\$GREENBOX_INSTALL_PATH" ]
+then
+  GREENBOX_INSTALL_PATH=/c/G7_bringout
+else
+  GREENBOX_INSTALL_PATH=$(cygpath \$GREENBOX_INSTALL_PATH)
+fi
+cd \$GREENBOX_INSTALL_PATH
+source "\$GREENBOX_INSTALL_PATH/set_path.sh"
+
+if ! is_vbox_xml
+then
+   exit 1
+fi
+kill_all VBoxSVC
 VBoxSVC.exe &
 VBoxHeadless.exe \$@
 EOF

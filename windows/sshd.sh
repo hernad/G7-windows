@@ -44,12 +44,13 @@ echo "=== start sshd / vbox ${VM} from task scheduler $(date)  ==" > $LOG_FILE
 EMPTY_DIR="/var/empty"
 [ -d /var/empty ] || mkdir -p /var/empty
 
-echo "adding user sshd"
+
 UNPRIV_USER=sshd # DO NOT CHANGE; this username is hardcoded in the openssh code
 UNPRIV_NAME="Privilege separation user for sshd"
 
 if ! net user "${UNPRIV_USER}" >/dev/null
 then
+  echo "adding user sshd"
   # The unprivileged sshd user (for privilege separation)
   if ! net user "${UNPRIV_USER}" //add //fullname:"${UNPRIV_NAME}" \
               //homedir:"$(cygpath -w ${EMPTY_DIR})" //active:no; then
@@ -78,7 +79,7 @@ echo -e >> $LOG_FILE
 if VBoxManage list vms | grep -q ${VM}
 then
    #sleep 5
-   echo "starting VBoxHeadless ${VM}" >> $LOGFILE
+   echo "starting VBoxHeadless ${VM}" >> $LOG_FILE
    VBoxHeadless -startvm ${VM} 2>> $LOG_FILE &
    sleep 2
    echo "VBoxManage list runningvms:" >> $LOG_FILE
@@ -86,7 +87,7 @@ then
    echo -e >> $LOG_FILE
    ps ax >> $LOG_FILE
 else
-   echo "There is no VBOX ${VM} created"
+   echo "There is no VBOX ${VM} created" >> $LOG_FILE
 fi
 
 # sshd must be THE LAST COMMAND in this file; RUN SSHD AFTER VBoxHeadless

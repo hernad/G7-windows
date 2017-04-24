@@ -31,5 +31,9 @@ netsh advfirewall firewall add rule name="ssh greenbox host" dir=in action=allow
 echo windows 7 port 2376
 netsh advfirewall firewall add rule name="docker admin port" dir=in action=allow protocol=TCP localport=2376
 
+netsh advfirewall firewall add rule name="Allow VBoxHeadless" dir=in action=allow program="c:\program files\oracle\virtualbox\VirtualBox.exe"
+netsh advfirewall firewall add rule name="Allow VBoxHeadless" dir=in action=allow program="c:\program files\oracle\virtualbox\VBoxHeadless.exe"
+netsh advfirewall firewall add rule name="Allow VBoxHeadless" dir=in action=allow program="c:\program files\oracle\virtualbox\VBoxManage.exe"
+
 echo run tasks immediately
 SchTasks /Run /I /TN "sshd greenbox 22"

@@ -42,4 +42,8 @@ cat << EOF
 
 EOF
 
-#echo $PATH
+echo "VBoManage list vms:"
+VBoxManage list vms
+echo -e
+echo "VBoManage list runningvms:"
+VBoxManage list runningvms

@@ -139,5 +139,9 @@ cat > /usr/local/bin/more << EOF
 less \$@
 EOF
 
+cat > /usr/local/bin/restart_windows << EOF
+ wmic os where Primary='TRUE' reboot
+EOF
+
 mkpasswd > /etc/passwd
 mkgroup > /etc/group

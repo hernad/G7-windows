@@ -123,7 +123,7 @@ else
   GREENBOX_INSTALL_PATH=$(cygpath \$GREENBOX_INSTALL_PATH)
 fi
 cd \$GREENBOX_INSTALL_PATH
-source "\$GREENBOX_INSTALL_PATH/g7_common.sh --silent"
+source "\$GREENBOX_INSTALL_PATH/g7_common.sh" --silent
 
 VBoxManage.exe \$@
 EOF
@@ -138,7 +138,7 @@ else
   GREENBOX_INSTALL_PATH=$(cygpath \$GREENBOX_INSTALL_PATH)
 fi
 cd \$GREENBOX_INSTALL_PATH
-source "\$GREENBOX_INSTALL_PATH/g7_common.sh --silent"
+source "\$GREENBOX_INSTALL_PATH/g7_common.sh" --silent
 
 if ! is_vbox_xml
 then

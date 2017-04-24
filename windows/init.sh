@@ -13,22 +13,12 @@ GREENBOX_INSTALL_PATH="$1"
 echo "GREENBOX_INSTALL_PATH_DEBUG: $GREENBOX_INSTALL_PATH"
 
 GREENBOX_INSTALL_PATH=$(cygpath $GREENBOX_INSTALL_PATH)
-GREENBOX_INSTALL_PATH=$(echo $GREENBOX_INSTALL_PATH | sed -e 's/\n//')
+export GREENBOX_INSTALL_PATH=$(echo $GREENBOX_INSTALL_PATH | sed -e 's/\n//')
 
 echo "GREENBOX_INSTALL_PATH: $GREENBOX_INSTALL_PATH"
 
-function isadmin()
-{
-    net session > /dev/null 2>&1
-    if [ $? -eq 0 ]
-    then
-       echo "running as admin"
-       return 0
-    else
-       echo "running as standard user"
-       return 1
-    fi
-}
+cd $GREENBOX_INSTALL_PATH
+source $GREENBOX_INSTALL_PATH/set_path.sh
 
 STEP="Check running privileges"
 if ! isadmin
@@ -42,32 +32,6 @@ GREEN_NAME="greenbox"
 # Some random password; this is only needed internally by cygrunsrv and
 # is limited to 14 characters by Windows (lol)
 random_password="$(tr -dc 'a-zA-Z0-9' < /dev/urandom | dd count=6 bs=1 2>/dev/null)"
-OS="W10"
-if uname -s | grep -q 5.1
-then
-  OS="WXP"
-fi
-if uname -s | grep -q 6.1
-then
-  OS="W7"
-fi
-
-if [ "$OS" == "WXP" ]
-then
-  CREATE_TASKS_CMD="create_tasks_xp.cmd"
-else
-  CREATE_TASKS_CMD="create_tasks.cmd"
-fi
-
-#if [ $OS == "W7" ] || [ $OS == "W10" ]
-#then
-#     HOMEPATH="C:\\Users\\$GREEN_USER"
-#else
-#     HOMEPATH="C:\\Documents and Settings\\$GREEN_USER"
-#fi
-HOMEPATH="$GREENBOX_INSTALL_PATH"
-GREEN_SSH_HOME=$(cygpath $HOMEPATH/.ssh)
-GREEN_WINDOWS_HOME=$(cygpath -w $HOMEPATH)
 
 STEP="$GREEN_USER exists?"
 if net user "${GREEN_USER}" >/dev/null

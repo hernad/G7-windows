@@ -1,5 +1,18 @@
 #!/bin/bash
 
+function isadmin()
+{
+    net session > /dev/null 2>&1
+    if [ $? -eq 0 ]
+    then
+       echo "running as admin"
+       return 0
+    else
+       echo "running as standard user"
+       return 1
+    fi
+}
+
 if [ -z "$GREENBOX_INSTALL_PATH" ]
 then
   GREENBOX_INSTALL_PATH="C:\\G7_bringout"
@@ -30,6 +43,19 @@ export PATH=/usr/local/bin:$PATH
 export HOME_ORIG=$HOME
 export HOME=$GREENBOX_INSTALL_PATH
 export TERM=xterm
+
+export HOMEPATH="$GREENBOX_INSTALL_PATH"
+#if [ $OS == "W7" ] || [ $OS == "W10" ]
+#then
+#     HOMEPATH="C:\\Users\\$GREEN_USER"
+#else
+#     HOMEPATH="C:\\Documents and Settings\\$GREEN_USER"
+#fi
+
+
+export GREEN_SSH_HOME=$(cygpath $HOMEPATH/.ssh)
+export GREEN_WINDOWS_HOME=$(cygpath -w $HOMEPATH)
+
 
 cat << EOF
 

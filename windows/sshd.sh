@@ -15,6 +15,7 @@ export HOME=$GREENBOX_INSTALL_PATH
 export TERM=xterm
 
 LOG_FILE=$HOME/onboot_tasks.log
+LOG_FILE=$HOME/sshd.log
 
 # cp /c/G7_bringout/.ssh -> /c/Users/greenbox.bringout-PC.004/
 [ -d "$HOME_ORIG/.ssh" ] || cp -av $GREENBOX_INSTALL_PATH/.ssh "$HOME_ORIG"/
@@ -80,16 +81,18 @@ ps ax >> $LOG_FILE
 echo -e >> $LOG_FILE
 if VBoxManage list vms | grep -q ${VM}
 then
-   sleep 5
+   #sleep 5
    echo "starting VBoxHeadless ${VM}" >> $LOGFILE
    VBoxHeadless -startvm ${VM} 2>> $LOG_FILE &
    sleep 2
+   echo "VBoxManage list runningvms:" >> $LOG_FILE
+   VBoxManage list runningvms >> $LOG_FILE
+   echo -e >> $LOG_FILE
+   ps ax >> $LOG_FILE
+else
+   echo "There is no VBOX ${VM} created"
 fi
-echo "VBoxManage list runningvms:" >> $LOG_FILE
-VBoxManage list runningvms >> $LOG_FILE
-echo -e >> $LOG_FILE
-ps ax >> $LOG_FILE
 
 # sshd must be THE LAST COMMAND in this file; RUN SSHD AFTER VBoxHeadless
 echo "sshd port: $PORT" >> $LOG_FILE
-/usr/bin/sshd -D $PORT 2 >> $LOG_FILE &
+/usr/bin/sshd -D $PORT -e 2>> $SSHD_LOG_FILE &

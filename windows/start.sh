@@ -154,9 +154,7 @@ if [ "$VM_EXISTS_CODE" != "0" ]
 then
 
   first_install=1
-  # kada se via task scheduler pokrene ovo ne radi kako treba
-  #"${DOCKER_MACHINE}" rm -f "${VM}" &> /dev/null || :
-  #rm -rf ~/.docker/machine/machines/"${VM}"
+  docker-machine rm -f ${VM}
 
   #set proxy variables if they exists
   if [ "${HTTP_PROXY}" ]; then

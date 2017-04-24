@@ -145,7 +145,7 @@ if [ "$OS" == "WXP" ]
 then
   shutdown -f -r -d :0:0
 else
- wmic os where Primary='TRUE' reboot
+  wmic os where Primary='TRUE' reboot
 fi
 EOF
 

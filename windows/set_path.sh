@@ -1,5 +1,18 @@
 #!/bin/bash
 
+function isadmin()
+{
+    net session > /dev/null 2>&1
+    if [ $? -eq 0 ]
+    then
+       echo "running as admin"
+       return 0
+    else
+       echo "running as standard user"
+       return 1
+    fi
+}
+
 if [ -z "$GREENBOX_INSTALL_PATH" ]
 then
   GREENBOX_INSTALL_PATH="C:\\G7_bringout"
@@ -16,13 +29,33 @@ export PATH="$GREENBOX_INSTALL_PATH":$PATH
 if [ ! -z "$VBOX_MSI_INSTALL_PATH" ]; then
   VBOX_INSTALL_PATH=$(cygpath $VBOX_MSI_INSTALL_PATH)
   VBOX_INSTALL_PATH=$(echo $VBOX_INSTALL_PATH | sed -e 's/\n//')
-  export PATH="${VBOX_INSTALL_PATH}":$PATH
+  export PATH=$PATH:"${VBOX_INSTALL_PATH}"
 else
   VBOX_INSTALL_PATH=${VBOX_INSTALL_PATH:-$PF/Oracle/VirtualBox/}
-  export PATH="${VBOX_INSTALL_PATH}":$PATH
+  export PATH=$PATH:"${VBOX_INSTALL_PATH}"
 fi
 
-export VBOX_USER_HOME=$(cygpath $GREENBOX_INSTALL_PATH/.VirtualBox)
+VBOX_USER_HOME=$(cygpath $GREENBOX_INSTALL_PATH/.VirtualBox)
+export VBOX_USER_HOME=$(cygpath -w $VBOX_USER_HOME)
+
+export PATH=/usr/local/bin:$PATH
+
+export HOME_ORIG=$HOME
+export HOME=$GREENBOX_INSTALL_PATH
+export TERM=xterm
+
+export HOMEPATH="$GREENBOX_INSTALL_PATH"
+#if [ $OS == "W7" ] || [ $OS == "W10" ]
+#then
+#     HOMEPATH="C:\\Users\\$GREEN_USER"
+#else
+#     HOMEPATH="C:\\Documents and Settings\\$GREEN_USER"
+#fi
+
+
+export GREEN_SSH_HOME=$(cygpath $HOMEPATH/.ssh)
+export GREEN_WINDOWS_HOME=$(cygpath -w $HOMEPATH)
+
 
 cat << EOF
 
@@ -42,7 +75,10 @@ cat << EOF
 
 EOF
 
-echo "VBoManage list vms ( VBOX_USER_HOME: $VBOX_USER_HOME ):"
+# VBoxSVC has to be run with VBOX_USER_HOME set variable
+VBoxSVC &
+
+echo "VBoManage ( VBOX_USER_HOME: $VBOX_USER_HOME ) list vms:"
 VBoxManage list vms
 echo -e
 echo "VBoManage list runningvms:"

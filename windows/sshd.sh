@@ -2,7 +2,6 @@
 
 # default virtualbox name: greenbox
 VM=${DOCKER_MACHINE_NAME:-greenbox}
-
 if [ -z "$GREENBOX_INSTALL_PATH" ]
 then
   GREENBOX_INSTALL_PATH=/c/G7_bringout
@@ -10,9 +9,8 @@ else
   GREENBOX_INSTALL_PATH=$(cygpath $GREENBOX_INSTALL_PATH)
 fi
 
-HOME_ORIG=$HOME
-export HOME=$GREENBOX_INSTALL_PATH
-export TERM=xterm
+cd $GREENBOX_INSTALL_PATH
+source $GREENBOX_INSTALL_PATH/set_path.sh
 
 LOG_FILE=$HOME/onboot_tasks.log
 SSHD_LOG_FILE=$HOME/sshd.log
@@ -36,9 +34,6 @@ echo -e
 echo "HOME=\$(pwd)"
 EOF
 
-
-cd $GREENBOX_INSTALL_PATH
-source $GREENBOX_INSTALL_PATH/set_path.sh
 
 echo "=== start sshd / vbox ${VM} from task scheduler $(date)  ==" > $LOG_FILE
 

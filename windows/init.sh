@@ -126,6 +126,7 @@ echo creating VBOX_USER_HOME $VBOX_USER_HOME
 [ -d $VBOX_USER_HOME ] || mkdir -p $VBOX_USER_HOME
 
 [ -d /usr/local/bin ] || mkdir -p /usr/local/bin
+[ -d /var/log ] || mkdir -p /var/log
 
 #echo creating /usr/local/bin/VBoxManage
 #cat > /usr/local/bin/VBoxManage << EOF
@@ -148,6 +149,9 @@ else
   wmic os where Primary='TRUE' reboot
 fi
 EOF
+
+
+[ -f /var/log/lastlog ] || touch /var/log/lastlog
 
 mkpasswd > /etc/passwd
 mkgroup > /etc/group

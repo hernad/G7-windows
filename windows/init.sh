@@ -140,7 +140,8 @@ less \$@
 EOF
 
 cat > /usr/local/bin/restart_windows << EOF
-wmic os where Primary='TRUE' reboot
+ wmic os where Primary='TRUE' reboot
+>>>>>>> i386
 EOF
 
 mkpasswd > /etc/passwd

@@ -15,7 +15,7 @@ export HOME=$GREENBOX_INSTALL_PATH
 export TERM=xterm
 
 LOG_FILE=$HOME/onboot_tasks.log
-LOG_FILE=$HOME/sshd.log
+SSHD_LOG_FILE=$HOME/sshd.log
 
 # cp /c/G7_bringout/.ssh -> /c/Users/greenbox.bringout-PC.004/
 [ -d "$HOME_ORIG/.ssh" ] || cp -av $GREENBOX_INSTALL_PATH/.ssh "$HOME_ORIG"/

@@ -42,7 +42,7 @@ cat << EOF
 
 EOF
 
-echo "VBoManage list vms:"
+echo "VBoManage list vms ( VBOX_USER_HOME: $VBOX_USER_HOME ):"
 VBoxManage list vms
 echo -e
 echo "VBoManage list runningvms:"

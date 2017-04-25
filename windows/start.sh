@@ -12,7 +12,6 @@ then
 else
   GREENBOX_INSTALL_PATH=$(cygpath $GREENBOX_INSTALL_PATH)
 fi
-
 cd $GREENBOX_INSTALL_PATH
 
 source $GREENBOX_INSTALL_PATH/g7_common.sh
@@ -44,7 +43,6 @@ echo "Setting up vbox machine with $MEM_SIZE MB RAM/$DISK_SIZE MB HDD ..."
 GREENBOX_VBOX_PARAMS="  --virtualbox-memory $MEM_SIZE"
 GREENBOX_VBOX_PARAMS+=" --virtualbox-boot2docker-url http://download.bring.out.ba/greenbox.iso"
 GREENBOX_VBOX_PARAMS+=" --virtualbox-disk-size $DISK_SIZE"
-#GREENBOX_VBOX_PARAMS+=" --virtualbox-hostonly-nicpromisc deny"
 GREENBOX_VBOX_PARAMS+=" --virtualbox-no-vtx-check"
 GREENBOX_VBOX_PARAMS+=" --virtualbox-share-folder $(cygpath -w $GREENBOX_INSTALL_PATH):G7_bringout"
 GREENBOX_VBOX_PARAMS+=" --virtualbox-ssh-port 2222"
@@ -134,9 +132,6 @@ then
   done
 
   vbox_forward_ports ${VM}
-
-  #STEP="Checking is VirtualBox.xml on right place"
-  #heck_vbox_xml
 
 fi
 

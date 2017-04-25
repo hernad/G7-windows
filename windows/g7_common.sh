@@ -37,7 +37,6 @@ done
 
 }
 
-
 if [ -z "$GREENBOX_INSTALL_PATH" ]
 then
   GREENBOX_INSTALL_PATH="C:\\G7_bringout"
@@ -77,6 +76,19 @@ export HOMEPATH="$GREENBOX_INSTALL_PATH"
 #     HOMEPATH="C:\\Documents and Settings\\$GREEN_USER"
 #fi
 
+
+
+# http://www.askvg.com/list-of-environment-variables-in-windows-xp-vista-and-7/
+#NT-5.0 = W2000 #NT-5.1 = XP #NT-6.0 = Vista #NT-6.1 = W7
+OS="W10"
+if uname -s | grep -q 5.1
+then
+  OS="WXP"
+fi
+if uname -s | grep -q 6.1
+then
+  OS="W7"
+fi
 
 export GREEN_SSH_HOME=$(cygpath $HOMEPATH/.ssh)
 export GREEN_WINDOWS_HOME=$(cygpath -w $HOMEPATH)

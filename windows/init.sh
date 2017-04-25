@@ -182,20 +182,3 @@ fi
 
 mkpasswd > /etc/passwd
 mkgroup > /etc/group
-
-
-#GREENBOX_SID=`cat /etc/passwd | grep ^greenbox | awk  -F: '{ print $5 }'  | awk -F, '{ print $2 }'`
-
-#https://superuser.com/questions/664756/modifying-registry-from-cygwin-not-working
-# reg add "HKCU\Control Panel\PowerCfg" /v CurrentPowerPolicy /t REG_SZ /d 3 /f
-# http://stackoverflow.com/questions/22945786/access-the-registry-of-another-user-with-chef/28224034#28224034
-
-# HKEY_USERS\\#{ get_user_sid.call }\\Environment
-# http://stackoverflow.com/questions/6523979/how-to-persistently-set-a-variable-in-windows-7-from-a-batch-file
-# /v Path /t REG_SZ /d "%path%;c:\newpath"
-
-#https://superuser.com/questions/422672/adding-userprofile-to-a-command-in-the-windows-registry
-#reg add "HKEY_USERS\\$GREENBOX_SID\\Environment" //v VBOX_USER_HOME //t REG_EXPAND_SZ //d $(cygpath -w $GREENBOX_INSTALL_PATH)
-
-# ovo radi:
-reg add "HKEY_CURRENT_USER\\Environment"  //f //v VBOX_USER_HOME //t REG_SZ //d "C:\\G7_bringout\\.VirtualBox"

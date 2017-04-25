@@ -16,24 +16,22 @@ LOG_FILE=$HOME/onboot_tasks.log
 SSHD_LOG_FILE=$HOME/sshd.log
 
 
-
 # cp /c/G7_bringout/.ssh -> /c/Users/greenbox.bringout-PC.004/
 if [ ! -d "$USERPROFILE/.ssh" ] ; then
-    echo "$USERPROFILE" > $GREENBOX_INSTALL_PATH/USERPROFILE.envar
-    cp -av $GREENBOX_INSTALL_PATH/.ssh "$USERPROFILE"/
 
-    cat > "$USERPROFILE/.ssh/environment"  << EOF
-    HOME=/c/G7_bringout
-    TERM=xterm
-    EOF
+echo "$USERPROFILE" > $GREENBOX_INSTALL_PATH/USERPROFILE.envar
+cp -av $GREENBOX_INSTALL_PATH/.ssh "$USERPROFILE"/
+
+cat > "$USERPROFILE/.ssh/environment"  << EOF
+HOME=/c/G7_bringout
+TERM=xterm
+EOF
+
 fi
 
 sed -i -e 's/\#PermitUserEnvironment no/PermitUserEnvironment yes/' /etc/ssh/sshd_config
 
-
-
 echo "=== start sshd / vbox ${VM} from task scheduler $(date)  ==" > $LOG_FILE
-
 
 [ -d /var/log ] || mkdir -p /var/log
 [ -f /etc/ssh/ssh_host_rsa_key ] || ssh-keygen -P "" -f /etc/ssh/ssh_host_rsa_key
@@ -65,10 +63,6 @@ fi
 cd $GREENBOX_INSTALL_PATH
 echo "pwd: $(pwd)" >> $LOG_FILE
 
-#if is_vbox_xml ; then
-
-echo "VBoxManage list running vms" >> $LOG_FILE
-which VBoxHeadless >> $LOG_FILE
 
 echo "VBoxManage list vms:" >> $LOG_FILE
 VBoxManage list vms >> $LOG_FILE

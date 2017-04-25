@@ -71,7 +71,7 @@ Source: "{#dockerCli}"; DestDir: "{app}"; Flags: ignoreversion; Components: "Gre
 Source: ".\g7_common.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\start.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\tasks.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
-Source: ".\init.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
+Source: ".\install.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\stop_sshd.sh"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\create_tasks.cmd"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
 Source: ".\create_tasks_xp.cmd"; DestDir: "{app}"; Flags: ignoreversion; Components: "Greenbox"
@@ -98,14 +98,14 @@ Source: "{#virtualBoxMsi}"; DestDir: "{app}\installers\virtualbox"; DestName: "v
 Name: "{commonprograms}\Greenbox\GreenBox Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Components: "Greenbox"
 Name: "{commonprograms}\Greenbox\git bash"; WorkingDir: "{app}"; Filename: "{pf}\Git\git-bash.exe"; Parameters: ""; IconFilename: "{app}\docker-quickstart-terminal.ico"; Components: "GreenBox"
 
-; ovo je sada preslo u init.sh
+; ovo je sada preslo u install.sh
 ;Name: "{userprograms}\Docker\GreenBox Create Tasks RunAsAdmin"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\tasks.sh"" create"; IconFilename: "{app}/docker-quickstart-terminal.ico"; Components: "Greenbox"
 
 ;Name: "{userdesktop}\GreenBox Quickstart Terminal"; WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\start.sh"""; IconFilename: "{app}/docker-quickstart-terminal.ico"; Tasks: desktopicon; Components: "Greenbox"
 Name: "{commondesktop}\GreenBox git bash"; WorkingDir: "{app}"; Filename: "{pf}\Git\git-bash.exe"; Parameters: ""; IconFilename: "{app}\docker-quickstart-terminal.ico"; Tasks: desktopicon; Components: "GreenBox"
 
 [Run]
-WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\init.sh"" ""{app}"" "
+WorkingDir: "{app}"; Filename: "{pf}\Git\bin\bash.exe"; Parameters: "--login -i ""{app}\install.sh"" ""{app}"" "
 Filename: "{win}\explorer.exe"; Parameters: "{commonprograms}\Greenbox\"; Flags: postinstall skipifsilent; Description: "View Shortcuts in File Explorer"
 
 

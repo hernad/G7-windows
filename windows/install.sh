@@ -1,6 +1,6 @@
 #!/bin/bash
 
-trap '[ "$?" -eq 0 ] || read -p "init.sh: Looks like something went wrong in step ´$STEP´... Press any key to continue..."' EXIT
+trap '[ "$?" -eq 0 ] || read -p ": Looks like something went wrong in step ´$STEP´... Press any key to continue..."' EXIT
 
 STEP="Input parameter GREENBOX_INSTALL_PATH"
 if [ -z "$1" ]
@@ -37,10 +37,6 @@ fi
 GREEN_USER="greenbox"
 GREEN_NAME="greenbox"
 
-editrights -a SeAssignPrimaryTokenPrivilege -u $GREEN_USER
-editrights -a SeCreateTokenPrivilege -u $GREEN_USER
-editrights -a SeTcbPrivilege -u $GREEN_USER
-editrights -a SeServiceLogonRight -u $GREEN_USER
 
 # Some random password; this is only needed internally by cygrunsrv and
 # is limited to 14 characters by Windows (lol)
@@ -75,6 +71,11 @@ if ! (net localgroup "${admingroup}" | grep -q '^'"${GREEN_USER}"'$'); then
     fi
 fi
 
+editrights -a SeAssignPrimaryTokenPrivilege -u $GREEN_USER
+editrights -a SeCreateTokenPrivilege -u $GREEN_USER
+editrights -a SeTcbPrivilege -u $GREEN_USER
+editrights -a SeServiceLogonRight -u $GREEN_USER
+
 STEP="mkdir $GREEN_SSH_HOME"
 mkdir -p "$GREEN_SSH_HOME"
 echo $random_password > "$GREEN_SSH_HOME/${GREEN_USER}_password"
@@ -94,7 +95,6 @@ fi
 cd \$GREENBOX_INSTALL_PATH
 
 source "\$GREENBOX_INSTALL_PATH/g7_common.sh"
-#echo "VBoxManage ( VBOX_USER_HOME: \$VBOX_USER_HOME ) list vms:"
 echo "VBoxManage ( USERPROFILE: \$USERPROFILE ) list vms:"
 VBoxManage list vms
 echo -e
@@ -149,10 +149,6 @@ fi
 cd \$GREENBOX_INSTALL_PATH
 source "\$GREENBOX_INSTALL_PATH/g7_common.sh" --silent
 
-#if ! is_vbox_xml
-#then
-#   exit 1
-#fi
 VBoxHeadless.exe \$@
 EOF
 

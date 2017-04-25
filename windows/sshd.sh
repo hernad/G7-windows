@@ -60,7 +60,7 @@ fi
 cd $GREENBOX_INSTALL_PATH
 echo "pwd: $(pwd)" >> $LOG_FILE
 
-if is_vbox_xml ; then
+#if is_vbox_xml ; then
 
 echo "VBoxManage list running vms" >> $LOG_FILE
 which VBoxHeadless >> $LOG_FILE
@@ -73,9 +73,9 @@ echo -e >> $LOG_FILE
 if VBoxManage list vms | grep -q ${VM}
 then
    #sleep 5
-   echo "starting VBoxHeadless ${VM}" >> $LOG_FILE
-   VBoxHeadless -startvm ${VM} 2>> $LOG_FILE &
-   sleep 2
+   #echo "starting VBoxHeadless ${VM}" >> $LOG_FILE
+   #VBoxHeadless -startvm ${VM} 2>> $LOG_FILE &
+   #sleep 2
    echo "VBoxManage list runningvms:" >> $LOG_FILE
    VBoxManage list runningvms >> $LOG_FILE
    echo -e >> $LOG_FILE
@@ -84,7 +84,7 @@ else
    echo "There is no VBOX ${VM} created" >> $LOG_FILE
 fi
 
-fi
+#fi
 
 # sshd must be THE LAST COMMAND in this file; RUN SSHD AFTER VBoxHeadless
 echo "sshd port: $PORT" >> $LOG_FILE

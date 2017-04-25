@@ -89,8 +89,8 @@ function vbox_forward_ports() {
   VM=$1
   VBoxManage controlvm ${VM} savestate
 
-  #echo "Setup port forward: HOST 2222, $VM guest port 22"
-  #VBoxManage modifyvm $VM --natpf1 "ssh2222,tcp,,2222,,22"
+  echo "Setup port forward: HOST 2222, $VM guest port 22"
+  VBoxManage modifyvm $VM --natpf1 "ssh-greenbox,tcp,,2222,,22"
 
   echo "Setup TCP port forward: HOST 2376, $VM guest port 2376"
   VBoxManage modifyvm $VM --natpf1 "docker-greenbox,tcp,,2376,,2376"

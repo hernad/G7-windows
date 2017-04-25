@@ -82,7 +82,7 @@ else
    echo "There is no VBOX ${VM} created" >> $LOG_FILE
 fi
 
-if -f HOST_IP
+if [ -f HOST_IP ]
 then
 #VBoxManage setproperty websrvauthlibrary null
 VBoxManage setproperty websrvauthlibrary default

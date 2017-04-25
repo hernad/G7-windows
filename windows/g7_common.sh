@@ -74,12 +74,7 @@ export HOME=$GREENBOX_INSTALL_PATH
 export TERM=xterm
 
 export HOMEPATH="$GREENBOX_INSTALL_PATH"
-#if [ $OS == "W7" ] || [ $OS == "W10" ]
-#then
-#     HOMEPATH="C:\\Users\\$GREEN_USER"
-#else
-#     HOMEPATH="C:\\Documents and Settings\\$GREEN_USER"
-#fi
+
 
 function set_vbox_user_home() {
 

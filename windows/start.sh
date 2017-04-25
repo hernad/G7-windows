@@ -106,6 +106,7 @@ then
   STEP="Run docker-machine $GREENBOX_VBOX_PARAMS"
   "${DOCKER_MACHINE}" create -d virtualbox $PROXY_ENV $GREENBOX_VBOX_PARAMS "${VM}"
 
+  vbox_forward_ports ${VM}
 
   STEP="Waiting for greenbox to install docker ...."
   FAIL=1
@@ -131,7 +132,7 @@ then
      fi
   done
 
-  vbox_forward_ports ${VM}
+
 
 fi
 

@@ -75,10 +75,9 @@ ps ax >> $LOG_FILE
 echo -e >> $LOG_FILE
 if VBoxManage list vms | grep -q ${VM}
 then
-   #sleep 5
-   #echo "starting VBoxHeadless ${VM}" >> $LOG_FILE
-   #VBoxHeadless -startvm ${VM} 2>> $LOG_FILE &
-   #sleep 2
+   echo "starting VBoxHeadless ${VM}" >> $LOG_FILE
+   VBoxManage startvm ${VM} --type headless 2>> $LOG_FILE
+   sleep 1
    echo "VBoxManage list runningvms:" >> $LOG_FILE
    VBoxManage list runningvms >> $LOG_FILE
    echo -e >> $LOG_FILE
@@ -87,8 +86,14 @@ else
    echo "There is no VBOX ${VM} created" >> $LOG_FILE
 fi
 
-#fi
+if -f HOST_IP
+then
+#VBoxManage setproperty websrvauthlibrary null
+VBoxManage setproperty websrvauthlibrary default
+VBoxWebSrv --logfile vbox_websrv.log --host $(cat HOST_IP) >> $LOG_FILE &
+else
+  echo "HOST_IP file has to be defined to run WBoxWebSrv !" >> $LOG_FILE
+fi
 
-# sshd must be THE LAST COMMAND in this file; RUN SSHD AFTER VBoxHeadless
 echo "sshd port: $PORT" >> $LOG_FILE
-/usr/bin/sshd -D $PORT -e 2>> $SSHD_LOG_FILE &
+/usr/bin/sshd -D $PORT -e 2>> $SSHD_LOG_FILE # NO FORK NO FORK!

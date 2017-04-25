@@ -76,7 +76,74 @@ export HOMEPATH="$GREENBOX_INSTALL_PATH"
 #     HOMEPATH="C:\\Documents and Settings\\$GREEN_USER"
 #fi
 
+function set_vbox_user_home() {
 
+  #GREENBOX_SID=`cat /etc/passwd | grep ^greenbox | awk  -F: '{ print $5 }'  | awk -F, '{ print $2 }'`
+
+  #https://superuser.com/questions/664756/modifying-registry-from-cygwin-not-working
+  # reg add "HKCU\Control Panel\PowerCfg" /v CurrentPowerPolicy /t REG_SZ /d 3 /f
+  # http://stackoverflow.com/questions/22945786/access-the-registry-of-another-user-with-chef/28224034#28224034
+
+  # HKEY_USERS\\#{ get_user_sid.call }\\Environment
+  # http://stackoverflow.com/questions/6523979/how-to-persistently-set-a-variable-in-windows-7-from-a-batch-file
+  # /v Path /t REG_SZ /d "%path%;c:\newpath"
+
+  #https://superuser.com/questions/422672/adding-userprofile-to-a-command-in-the-windows-registry
+  #reg add "HKEY_USERS\\$GREENBOX_SID\\Environment" //v VBOX_USER_HOME //t REG_EXPAND_SZ //d $(cygpath -w $GREENBOX_INSTALL_PATH)
+
+  # ovo radi:
+  reg add "HKEY_CURRENT_USER\\Environment"  //f //v VBOX_USER_HOME //t REG_SZ //d "$VBOX_USER_HOME"
+
+}
+
+
+function vbox_forward_ports() {
+
+  VM=$1
+  VBoxManage controlvm ${VM} savestate
+
+  #echo "Setup port forward: HOST 2222, $VM guest port 22"
+  #VBoxManage modifyvm $VM --natpf1 "ssh2222,tcp,,2222,,22"
+
+  #echo "Setup TCP port forward: HOST 2376, $VM guest port 2376"
+  #VBoxManage modifyvm $VM --natpf1 "docker,tcp,,2376,,2376"
+
+  echo "Setup port forward: HOST 80, $VM guest port 80"
+  VBoxManage modifyvm $VM --natpf1 "http,tcp,,80,,80"
+
+  echo "Setup port forward: HOST 443, $VM guest port 443"
+  VBoxManage modifyvm $VM --natpf1 "https,tcp,,443,,443"
+
+  echo "Setup UDP port forward: HOST 53, $VM guest port 53"
+  VBoxManage modifyvm $VM --natpf1 "dns,udp,,53,,53"
+
+  for port in {54320..54330}
+  do echo $port ;
+    echo "Setup port forward: HOST $port, $1 guest port $port"
+    VBoxManage modifyvm $1 --natpf1 "psql$port,tcp,,$port,,$port"
+  done
+
+  VBoxManage startvm ${VM}  --type headless
+  echo "Wait 2 sec ..."
+  sleep 2
+
+}
+
+function check_vbox_xml() {
+#  <MachineEntry uuid="{5aed4ee0-2b4c-4711-bcab-1caab80762b2}" src="C:\G7_bringout\.VirtualBox\.docker\machine\machines\greenbox\greenbox\greenbox.vbox"/>
+if ! cat .VirtualBox/VirtualBox.xml | grep src.*G7_bringout.*greenbox\.vbox
+then
+  echo "find right VirtualBox.xml which contains greenbox.vbox in directory similar to /c/Users/greenbox/.VirtualBox"
+  echo "then move that directory to /c/G7_bringout/.Virtualbox, then fix path in src= section of VirtualBox.xml"
+  echo "test is everything ok by restarting OS"
+  echo -e
+  echo "Press any key to continue ..."
+  read var
+  exit 1
+else
+  echo ".VirtualBox/VirtualBox.xml seems to be OK"
+fi
+}
 
 # http://www.askvg.com/list-of-environment-variables-in-windows-xp-vista-and-7/
 #NT-5.0 = W2000 #NT-5.1 = XP #NT-6.0 = Vista #NT-6.1 = W7

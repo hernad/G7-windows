@@ -13,15 +13,15 @@ function isadmin()
     fi
 }
 
-function is_vbox_xml()
-{
-  if [ -f "$VBOX_USER_HOME/VirtualBox.xml" ]
-  then
-     return 0
-  else
-    return 1
-  fi
-}
+# function is_vbox_xml()
+# {
+#  if [ -f "$VBOX_USER_HOME/VirtualBox.xml" ]
+#  then
+#     return 0
+#  else
+#    return 1
+#  fi
+# }
 
 function kill_all()
 {
@@ -59,12 +59,15 @@ else
   export PATH=$PATH:"${VBOX_INSTALL_PATH}"
 fi
 
-VBOX_USER_HOME=$(cygpath $GREENBOX_INSTALL_PATH/.VirtualBox)
-export VBOX_USER_HOME=$(cygpath -w $VBOX_USER_HOME)
+#VBOX_USER_HOME=$(cygpath $GREENBOX_INSTALL_PATH/.VirtualBox)
+#export VBOX_USER_HOME=$(cygpath -w $VBOX_USER_HOME)
 
 export PATH=/usr/local/bin:$PATH
 
-export HOME_ORIG=$HOME
+if [ -f HOME_ORIG.envar ] ; then
+  export HOME_ORIG="$(cat HOME_ORIG.envar)"
+fi
+
 export HOME=$GREENBOX_INSTALL_PATH
 export TERM=xterm
 

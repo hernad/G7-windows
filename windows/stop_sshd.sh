@@ -29,4 +29,4 @@ fi
 
 kill_all sshd
 
-reg delete "HKEY_CURRENT_USER\\Environment" /f //v VBOX_USER_HOME
+#reg delete "HKEY_CURRENT_USER\\Environment" //f //v VBOX_USER_HOME

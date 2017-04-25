@@ -135,8 +135,8 @@ then
 
   vbox_forward_ports ${VM}
 
-  STEP="Checking is VirtualBox.xml on right place"
-  check_vbox_xml
+  #STEP="Checking is VirtualBox.xml on right place"
+  #heck_vbox_xml
 
 fi
 

@@ -16,7 +16,10 @@ LOG_FILE=$HOME/onboot_tasks.log
 SSHD_LOG_FILE=$HOME/sshd.log
 
 # cp /c/G7_bringout/.ssh -> /c/Users/greenbox.bringout-PC.004/
-[ -d "$HOME_ORIG/.ssh" ] || cp -av $GREENBOX_INSTALL_PATH/.ssh "$HOME_ORIG"/
+if [ ! -d "$HOME_ORIG/.ssh" ] ; then
+    echo "$HOME_ORIG" > $GREENBOX_INSTALL_PATH/HOME_ORIG.envar
+    cp -av $GREENBOX_INSTALL_PATH/.ssh "$HOME_ORIG"/
+fi
 
 sed -i -e 's/\#PermitUserEnvironment no/PermitUserEnvironment yes/' /etc/ssh/sshd_config
 

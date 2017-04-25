@@ -94,7 +94,8 @@ fi
 cd \$GREENBOX_INSTALL_PATH
 
 source "\$GREENBOX_INSTALL_PATH/g7_common.sh"
-echo "VBoxManage ( VBOX_USER_HOME: \$VBOX_USER_HOME ) list vms:"
+#echo "VBoxManage ( VBOX_USER_HOME: \$VBOX_USER_HOME ) list vms:"
+echo "VBoxManage ( USERPROFILE: \$HOME_ORIG ) list vms:"
 VBoxManage list vms
 echo -e
 echo "VBoManage list runningvms:"
@@ -115,8 +116,8 @@ echo "======"
 read var
 
 
-echo creating VBOX_USER_HOME $VBOX_USER_HOME
-[ -d $VBOX_USER_HOME ] || mkdir -p $VBOX_USER_HOME
+#echo creating VBOX_USER_HOME $VBOX_USER_HOME
+#[ -d $VBOX_USER_HOME ] || mkdir -p $VBOX_USER_HOME
 
 [ -d /usr/local/bin ] || mkdir -p /usr/local/bin
 [ -d /var/log ] || mkdir -p /var/log

@@ -62,10 +62,12 @@ fi
 #VBOX_USER_HOME=$(cygpath $GREENBOX_INSTALL_PATH/.VirtualBox)
 #export VBOX_USER_HOME=$(cygpath -w $VBOX_USER_HOME)
 
-export PATH=/usr/local/bin:$PATH
+#export PATH=/usr/local/bin:$PATH
 
-if [ -f HOME_ORIG.envar ] ; then
-  export HOME_ORIG="$(cat HOME_ORIG.envar)"
+if [ -f USERPROFILE.envar ] ; then
+  export USERPROFILE="$(cat USERPROFILE.envar)"
+else
+  export USERPROFILE="$HOME"
 fi
 
 export HOME=$GREENBOX_INSTALL_PATH

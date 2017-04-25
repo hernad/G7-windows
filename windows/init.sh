@@ -95,7 +95,7 @@ cd \$GREENBOX_INSTALL_PATH
 
 source "\$GREENBOX_INSTALL_PATH/g7_common.sh"
 #echo "VBoxManage ( VBOX_USER_HOME: \$VBOX_USER_HOME ) list vms:"
-echo "VBoxManage ( USERPROFILE: \$HOME_ORIG ) list vms:"
+echo "VBoxManage ( USERPROFILE: \$USERPROFILE ) list vms:"
 VBoxManage list vms
 echo -e
 echo "VBoManage list runningvms:"

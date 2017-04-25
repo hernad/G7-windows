@@ -15,18 +15,20 @@ source $GREENBOX_INSTALL_PATH/g7_common.sh
 LOG_FILE=$HOME/onboot_tasks.log
 SSHD_LOG_FILE=$HOME/sshd.log
 
+
+
 # cp /c/G7_bringout/.ssh -> /c/Users/greenbox.bringout-PC.004/
-if [ ! -d "$HOME_ORIG/.ssh" ] ; then
-    echo "$HOME_ORIG" > $GREENBOX_INSTALL_PATH/HOME_ORIG.envar
-    cp -av $GREENBOX_INSTALL_PATH/.ssh "$HOME_ORIG"/
+if [ ! -d "$USERPROFILE/.ssh" ] ; then
+    echo "$USERPROFILE" > $GREENBOX_INSTALL_PATH/USERPROFILE.envar
+    cp -av $GREENBOX_INSTALL_PATH/.ssh "$USERPROFILE"/
+
+    cat > "$USERPROFILE/.ssh/environment"  << EOF
+    HOME=/c/G7_bringout
+    TERM=xterm
+    EOF
 fi
 
 sed -i -e 's/\#PermitUserEnvironment no/PermitUserEnvironment yes/' /etc/ssh/sshd_config
-
-cat > "$HOME_ORIG/.ssh/environment"  << EOF
-HOME=/c/G7_bringout
-TERM=xterm
-EOF
 
 
 

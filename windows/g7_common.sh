@@ -1,8 +1,10 @@
 #!/bin/bash
 
+NET_EXE=/c/Windows/system32/net.exe
+
 function isadmin()
 {
-    net session > /dev/null 2>&1
+    $NET_EXE session > /dev/null 2>&1
     if [ $? -eq 0 ]
     then
        echo "running as admin"

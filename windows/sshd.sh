@@ -43,11 +43,11 @@ EMPTY_DIR="/var/empty"
 UNPRIV_USER=sshd # DO NOT CHANGE; this username is hardcoded in the openssh code
 UNPRIV_NAME="Privilege separation user for sshd"
 
-if ! net user "${UNPRIV_USER}" >/dev/null
+if ! $NET_EXE user "${UNPRIV_USER}" >/dev/null
 then
   echo "adding user sshd"
   # The unprivileged sshd user (for privilege separation)
-  if ! net user "${UNPRIV_USER}" //add //fullname:"${UNPRIV_NAME}" \
+  if ! $NET_EXE user "${UNPRIV_USER}" //add //fullname:"${UNPRIV_NAME}" \
               //homedir:"$(cygpath -w ${EMPTY_DIR})" //active:no; then
       echo "ERROR: Unable to create Windows user ${UNPRIV_USER}"
      exit 1

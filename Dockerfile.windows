@@ -71,7 +71,7 @@ RUN wine virtualbox.exe -extract -silent -path . && \
 #RUN curl -kfsSL -o greenbox.iso https://download.bring.out.ba/greenbox-${GREENBOX_VERSION}.iso
 
 # G7 installer version
-ENV INSTALLER_VERSION 7.0.12
+ENV INSTALLER_VERSION 7.1.0
 RUN curl -fsSL -o docker-machine.exe "http://download.bring.out.ba/docker-machine-Windows-${ARCH}.exe"
 
 # Add installer resources

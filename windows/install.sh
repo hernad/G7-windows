@@ -43,7 +43,7 @@ GREEN_NAME="greenbox"
 random_password="$(tr -dc 'a-zA-Z0-9' < /dev/urandom | dd count=6 bs=1 2>/dev/null)"
 
 STEP="$GREEN_USER exists?"
-if net user "${GREEN_USER}" >/dev/null
+if $NET_EXE user "${GREEN_USER}" >/dev/null
 then
    echo "User $GREEN_USER exists"
    random_password=$(cat "$GREEN_SSH_HOME/${GREEN_USER}_password" )
@@ -53,9 +53,9 @@ then
 fi
 
 STEP="Create $GREEN_USER user"
-if ! net user "${GREEN_USER}" &>/dev/null
+if ! $NET_EXE user "${GREEN_USER}" &>/dev/null
 then
-   if ! net user "${GREEN_USER}" "${random_password}" //add //fullname:"${GREEN_NAME}" \
+   if ! $NET_EXE user "${GREEN_USER}" "${random_password}" //add //fullname:"${GREEN_NAME}" \
               //homedir:"$GREEN_WINDOWS_HOME" //expires:never //passwordchg:no //yes; then
     echo "ERROR: Unable to create Windows user ${GREEN_USER}"
     exit 1
@@ -64,8 +64,8 @@ fi
 
 STEP="Add user $GREEN_USER to the Administrators group if necessary"
 admingroup="$(mkgroup -l | awk -F: '{if ($2 == "S-1-5-32-544") print $1;}')"
-if ! (net localgroup "${admingroup}" | grep -q '^'"${GREEN_USER}"'$'); then
-    if ! net localgroup "${admingroup}" "${GREEN_USER}" //add; then
+if ! ($NET_EXE localgroup "${admingroup}" | grep -q '^'"${GREEN_USER}"'$'); then
+    if ! $NET_EXE localgroup "${admingroup}" "${GREEN_USER}" //add; then
         echo "ERROR: Unable to add user ${GREEN_USER} to group ${admingroup}"
         exit 1
     fi

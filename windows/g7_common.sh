@@ -15,16 +15,6 @@ function isadmin()
     fi
 }
 
-# function is_vbox_xml()
-# {
-#  if [ -f "$VBOX_USER_HOME/VirtualBox.xml" ]
-#  then
-#     return 0
-#  else
-#    return 1
-#  fi
-# }
-
 function kill_all()
 {
 
@@ -92,10 +82,10 @@ function vbox_forward_ports() {
   VBoxManage controlvm ${VM} savestate
 
   echo "Setup port forward: HOST 2222, $VM guest port 22"
-  VBoxManage modifyvm $VM --natpf1 "ssh-greenbox,tcp,,2222,,22"
+  VBoxManage modifyvm $VM --natpf1 "greenbox-ssh,tcp,,2222,,22"
 
   echo "Setup TCP port forward: HOST 2376, $VM guest port 2376"
-  VBoxManage modifyvm $VM --natpf1 "docker-greenbox,tcp,,2376,,2376"
+  VBoxManage modifyvm $VM --natpf1 "greenbox-docker,tcp,,2376,,2376"
 
   echo "Setup port forward: HOST 80, $VM guest port 80"
   VBoxManage modifyvm $VM --natpf1 "http,tcp,,80,,80"
@@ -118,21 +108,6 @@ function vbox_forward_ports() {
 
 }
 
-#function check_vbox_xml() {
-##  <MachineEntry uuid="{5aed4ee0-2b4c-4711-bcab-1caab80762b2}" src="C:\G7_bringout\.VirtualBox\.docker\machine\machines\greenbox\greenbox\greenbox.vbox"/>
-#if ! cat .VirtualBox/VirtualBox.xml | grep src.*G7_bringout.*greenbox\.vbox
-#then
-#  echo "find right VirtualBox.xml which contains greenbox.vbox in directory similar to /c/Users/greenbox/.VirtualBox"
-#  echo "then move that directory to /c/G7_bringout/.Virtualbox, then fix path in src= section of VirtualBox.xml"
-#  echo "test is everything ok by restarting OS"
-#  echo -e
-#  echo "Press any key to continue ..."
-#  read var
-#  exit 1
-#else
-#  echo ".VirtualBox/VirtualBox.xml seems to be OK"
-#fi
-#}
 
 
 # http://www.askvg.com/list-of-environment-variables-in-windows-xp-vista-and-7/
